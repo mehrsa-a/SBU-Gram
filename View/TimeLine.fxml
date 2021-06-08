@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TimeLineController">
+  <tabs>
+    <Tab text="TimeLine">
+         <content>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="600.0">
+               <children>
+                  <ImageView fitHeight="39.0" fitWidth="26.0" layoutX="560.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/refresh.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#1c1194" layoutX="253.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TimeLine">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <JFXButton layoutX="564.0" layoutY="7.0" onAction="#refresh" text="." textFill="WHITE" />
+                  <JFXListView fx:id="PostList" layoutY="43.0" prefHeight="429.0" prefWidth="600.0" />
+               </children>
+            </AnchorPane>
+         </content>
+    </Tab>
+    <Tab text="Add Post">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <JFXTextField fx:id="title" focusColor="#1c1194" layoutX="39.0" layoutY="36.0" promptText="title" unFocusColor="#1c1194" />
+                  <JFXTextArea fx:id="post" focusColor="#1c1194" layoutX="39.0" layoutY="106.0" prefHeight="186.0" prefWidth="337.0" promptText="what's up?" unFocusColor="#1c1194" />
+                  <JFXButton layoutX="511.0" layoutY="279.0" onAction="#addPhoto" text="add photo" textFill="#1c1194" />
+                  <JFXButton layoutX="304.0" layoutY="358.0" onAction="#publish" text="PUBLISH" textFill="#1c1194">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <ImageView fx:id="image" fitHeight="166.0" fitWidth="200.0" layoutX="386.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Accounts">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <JFXListView fx:id="accounts" layoutX="1.0" layoutY="41.0" prefHeight="431.0" prefWidth="600.0" />
+                  <JFXTextField focusColor="#1c1194" layoutX="62.0" layoutY="7.0" promptText="search" unFocusColor="#1c1194" />
+                  <ImageView fitHeight="30.0" fitWidth="33.0" layoutX="22.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/search.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content></Tab>
+    <Tab text="Profile">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="234.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/user.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton layoutX="257.0" layoutY="164.0" onAction="#editProfile" text="Edit Profile" textFill="#1c1194">
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXButton>
+                  <JFXListView fx:id="myPosts" layoutY="206.0" prefHeight="265.0" prefWidth="600.0" />
+                  <Label fx:id="Bio" layoutX="382.0" layoutY="24.0" prefHeight="162.0" prefWidth="201.0" text="add your Biography from Edit Profile" />
+                  <JFXButton layoutX="22.0" layoutY="117.0" onAction="#logOut" text="LOG OUT" textFill="RED">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <Label fx:id="username" layoutX="33.0" layoutY="40.0" text="username" textFill="#1c1194">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content></Tab>
+  </tabs>
+</TabPane>

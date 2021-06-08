@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditProfileController">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0">
+         <children>
+            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="261.0" promptText="first name" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="261.0" promptText="last name" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="106.0" layoutY="309.0" promptText="phone number" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="309.0" promptText="e-mail" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="360.0" promptText="location" unFocusColor="#1c1194" />
+            <JFXButton layoutX="118.0" layoutY="151.0" onAction="#setProfile" text="change profile photo" textFill="#1c1194">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </JFXButton>
+            <JFXTextArea focusColor="#1c1194" layoutX="276.0" layoutY="22.0" prefHeight="123.0" prefWidth="310.0" promptText="Bio" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="360.0" promptText="birthday" unFocusColor="#1c1194" />
+            <ImageView fx:id="image" fitHeight="139.0" fitWidth="135.0" layoutX="98.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/user.png" />
+               </image>
+            </ImageView>
+            <JFXTextField focusColor="#1c1194" layoutX="210.0" layoutY="402.0" promptText="gender" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="207.0" promptText="new password" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="207.0" promptText="confirm pass word" unFocusColor="#1c1194" />
+            <Text fill="#1c1194" layoutX="14.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="change password:">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Text>
+            <Text fx:id="username" fill="#1c1194" layoutX="19.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <JFXButton layoutX="59.0" layoutY="443.0" onAction="#logOut" text="LOG OUT" textFill="RED">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="457.0" layoutY="443.0" onAction="#confirm" text="CONFIRM" textFill="#1c1194">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

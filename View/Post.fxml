@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="postPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="profile" fitHeight="95.0" fitWidth="94.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/user.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="username" layoutX="127.0" layoutY="21.0" text="username">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="name" layoutX="127.0" layoutY="59.0" text="name" />
+      <Label fx:id="title" layoutX="250.0" layoutY="43.0" prefHeight="35.0" prefWidth="289.0" text="                    Title" textFill="#1c1194">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="post" layoutX="63.0" layoutY="138.0" prefHeight="194.0" prefWidth="278.0" text="Post" />
+      <ImageView fx:id="image" fitHeight="194.0" fitWidth="194.0" layoutX="345.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="date" layoutX="129.0" layoutY="90.0" text="Date" />
+      <ImageView fx:id="notLiked" fitHeight="27.0" fitWidth="19.0" layoutX="66.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/like.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="liked" fitHeight="19.0" fitWidth="19.0" layoutX="66.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/liked.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="numberOfLikes" layoutX="94.0" layoutY="351.0" text="0" />
+      <JFXButton layoutX="66.0" layoutY="347.0" onAction="#like" text="." textFill="WHITE" />
+      <ImageView fitHeight="25.0" fitWidth="19.0" layoutX="227.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/retweet.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="numberOfReposts" layoutX="259.0" layoutY="351.0" text="0" />
+      <JFXButton layoutX="227.0" layoutY="347.0" onAction="#repost" text="." textFill="WHITE" />
+      <ImageView fitHeight="25.0" fitWidth="19.0" layoutX="359.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/comment.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="359.0" layoutY="344.0" onAction="#viewComments" text="." textFill="#fffdfd" />
+      <Label fx:id="numberOfComments" layoutX="386.0" layoutY="348.0" text="0" />
+      <JFXButton layoutX="16.0" layoutY="12.0" onAction="#viewProfile" prefHeight="94.0" prefWidth="94.0" text="." />
+   </children>
+</AnchorPane>

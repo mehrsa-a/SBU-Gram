@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LogInController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="201.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/icon.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="username" focusColor="#1c1194" layoutX="207.0" layoutY="223.0" prefHeight="27.0" prefWidth="135.0" promptText="username" unFocusColor="#1c1194" />
+      <JFXPasswordField fx:id="password" focusColor="#1c1194" layoutX="208.0" layoutY="278.0" promptText="password" unFocusColor="#1c1194" />
+      <JFXCheckBox fx:id="visiblePassword" checkedColor="#1c1194" layoutX="358.0" layoutY="288.0" onAction="#showPassword" text="see password" unCheckedColor="#1c1194">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </JFXCheckBox>
+      <Label fx:id="wrong" layoutX="193.0" layoutY="320.0" prefHeight="13.0" prefWidth="166.0" text="!!!WRONG USERNAME OR PASSWORD!!!" textFill="RED" visible="false">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="logIn" layoutX="242.0" layoutY="333.0" onAction="#logIn" prefHeight="32.0" prefWidth="67.0" text="LOG IN" textFill="#1c1194" />
+      <Text fill="#1c1194" layoutX="200.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LOG IN PAGE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="207.0" layoutY="407.0" strokeType="OUTSIDE" strokeWidth="0.0" text="don't have an account?" />
+      <JFXButton fx:id="signUp" layoutX="335.0" layoutY="393.0" onAction="#signUp" text="SIGN UP" textFill="#1c1194">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </JFXButton>
+      <JFXTextField fx:id="visiblePass" focusColor="#1c1194" layoutX="208.0" layoutY="278.0" promptText="password" unFocusColor="#1c1194" visible="false" />
+   </children>
+   <effect>
+      <DropShadow>
+         <color>
+            <Color red="1.0" green="0.9969135522842407" blue="0.9969135522842407" />
+         </color>
+      </DropShadow>
+   </effect>
+</Pane>

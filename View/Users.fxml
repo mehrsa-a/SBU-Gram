@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.UsersController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="234.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/user.png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutX="20.0" layoutY="164.0" onAction="#follow" prefHeight="29.0" prefWidth="557.0" text="follow" textFill="#1c1194">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXListView fx:id="Posts" layoutY="206.0" prefHeight="265.0" prefWidth="600.0" />
+            <Label fx:id="Bio" layoutX="382.0" layoutY="24.0" prefHeight="133.0" prefWidth="201.0" text="add your Biography from Edit Profile" />
+            <Label fx:id="username" layoutX="33.0" layoutY="40.0" text="username" textFill="#1c1194">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="post" layoutX="50.0" layoutY="97.0" text="0" />
+            <Label fx:id="follower" layoutX="128.0" layoutY="97.0" text="0" />
+            <Label fx:id="following" layoutX="208.0" layoutY="97.0" text="0" />
+            <Text layoutX="39.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="posts" />
+            <Text layoutX="107.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="followers" />
+            <Text layoutX="186.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="following" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

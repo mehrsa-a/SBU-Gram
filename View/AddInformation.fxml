@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddInformationController">
+   <children>
+      <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="194.0" promptText="first name" unFocusColor="#1c1194" />
+      <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="194.0" promptText="last name" unFocusColor="#1c1194" />
+      <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="257.0" promptText="phone number" unFocusColor="#1c1194" />
+      <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="257.0" promptText="e-mail" unFocusColor="#1c1194" />
+      <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="316.0" promptText="location" unFocusColor="#1c1194" />
+      <JFXButton layoutX="126.0" layoutY="152.0" onAction="#setProfile" text="set profile photo" textFill="#1c1194">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </JFXButton>
+      <JFXTextArea focusColor="#1c1194" layoutX="269.0" layoutY="22.0" prefHeight="123.0" prefWidth="310.0" promptText="Bio" unFocusColor="#1c1194" />
+      <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="316.0" promptText="birthday" unFocusColor="#1c1194" />
+      <JFXButton layoutX="213.0" layoutY="411.0" onAction="#signup" text="SIGN UP" textFill="#1c1194" />
+      <JFXButton layoutX="301.0" layoutY="411.0" onAction="#skip" text="SKIP" textFill="#1c1194" />
+      <Text layoutX="177.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="already have an account?" />
+      <JFXButton layoutX="321.0" layoutY="443.0" onAction="#login" text="LOG IN" textFill="#1c1194">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image" fitHeight="139.0" fitWidth="135.0" layoutX="98.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/user.png" />
+         </image>
+      </ImageView>
+      <JFXTextField focusColor="#1c1194" layoutX="207.0" layoutY="365.0" promptText="gender" unFocusColor="#1c1194" />
+   </children>
+</Pane>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CommentsController">
+   <children>
+      <JFXListView fx:id="comments" layoutY="36.0" prefHeight="329.0" prefWidth="600.0" />
+      <Text fill="#1c1194" layoutX="232.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comments">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <JFXTextField fx:id="cm" focusColor="#1c1194" layoutX="53.0" layoutY="370.0" prefHeight="25.0" prefWidth="539.0" promptText="add a comment..." unFocusColor="#1c1194" />
+      <ImageView fitHeight="25.0" fitWidth="24.0" layoutX="22.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/comment.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="22.0" layoutY="369.0" onAction="#addComment" prefHeight="25.0" prefWidth="24.0" text="." textFill="WHITE" />
+      <ImageView fitHeight="25.0" fitWidth="33.0" layoutX="13.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/back.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="13.0" layoutY="6.0" onAction="#back" prefHeight="25.0" prefWidth="25.0" text="." textFill="WHITE" />
+   </children>
+</AnchorPane>
