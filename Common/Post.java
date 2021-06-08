@@ -5,11 +5,12 @@ import javafx.scene.image.ImageView;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Post implements Serializable {
+public class Post implements Serializable, Comparable {
+    public static long serialVersionUID=123456L;
     private User user;
     private String title;
     private String text;
-    private ImageView image;
+    private byte[] image;
     private int like;
     private int repost;
     private int comment;
@@ -41,7 +42,7 @@ public class Post implements Serializable {
         this.like = like;
     }
 
-    public void setImage(ImageView image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -81,7 +82,7 @@ public class Post implements Serializable {
         return like;
     }
 
-    public ImageView getImage() {
+    public byte[] getImage() {
         return image;
     }
 
@@ -95,5 +96,10 @@ public class Post implements Serializable {
 
     public User getUser() {
         return user;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

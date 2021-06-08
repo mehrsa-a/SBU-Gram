@@ -8,9 +8,9 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Map;
 
-public class ConnectClient {
+public class ConnectClient{
     public static String serverAddress="localhost";
-    public static final int port=1113;
+    public static final int port=2005;
     public static Socket socket;
     public static ObjectOutputStream objectOutputStream;
     public static ObjectInputStream objectInputStream;

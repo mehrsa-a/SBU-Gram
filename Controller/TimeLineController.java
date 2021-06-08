@@ -20,21 +20,35 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static Model.Main.currentPost;
-import static Model.Main.currentUser;
+import static Model.Main.*;
 
 public class TimeLineController {
     public Label Bio;
     public ImageView image;
     public JFXTextField title;
     public JFXTextArea post;
-    public ArrayList<Post> posts=new ArrayList<>();
     public JFXListView<Post> PostList=new JFXListView<>();
     public JFXListView<Post> myPosts=new JFXListView<>();
-    public static JFXListView<User> accounts=new JFXListView<>();
+    public JFXListView<User> accounts=new JFXListView<>();
     public static Label username;
 
-    public void refresh(ActionEvent actionEvent) {
+    public void initialize(){
+        accounts.setItems(FXCollections.observableArrayList(Main.users));
+        accounts.setCellFactory(accounts -> new UserItem());
+        PostList.setItems(FXCollections.observableArrayList(posts));
+        PostList.setCellFactory(PostList -> new PostItem());
+        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
+        myPosts.setCellFactory(myPosts -> new PostItem());
+    }
+
+    public void refresh(ActionEvent actionEvent) throws IOException {
+        new PageLoader().load("Timeline");
+        accounts.setItems(FXCollections.observableArrayList(Main.users));
+        accounts.setCellFactory(accounts -> new UserItem());
+        PostList.setItems(FXCollections.observableArrayList(posts));
+        PostList.setCellFactory(PostList -> new PostItem());
+        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
+        myPosts.setCellFactory(myPosts -> new PostItem());
     }
 
     public void editProfile(ActionEvent actionEvent) throws IOException {
@@ -55,15 +69,15 @@ public class TimeLineController {
         currentPost.setUser(currentUser);
         currentPost.setTitle(title.getText());
         currentPost.setText(post.getText());
-        if(image!=null){
-            currentPost.setImage(image);
-        }
         posts.add(currentPost);
         currentUser.getPosts().add(currentPost);
-        //PostList.getItems().add(currentPost);
+        ClientAPI.addPost(currentPost);
+        Main.update();
+        ClientAPI.getAllPosts();
+        ClientAPI.getMyPosts();
         PostList.setItems(FXCollections.observableArrayList(posts));
         PostList.setCellFactory(PostList -> new PostItem());
-        myPosts.setItems(FXCollections.observableArrayList(posts));
+        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
         currentPost=new Post();
         title.setText("");

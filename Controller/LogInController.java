@@ -1,10 +1,7 @@
 package Controller;
 
-import Model.ClientAPI;
-import Model.Main;
-import Model.PageLoader;
+import Model.*;
 import Common.User;
-import Model.UserItem;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
@@ -13,14 +10,16 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static Controller.SignUpController.users;
-import static Controller.TimeLineController.accounts;
+import static Controller.TimeLineController.*;
 import static Model.Main.currentUser;
+import static Model.Main.posts;
 
 public class LogInController {
     @FXML
@@ -67,8 +66,9 @@ public class LogInController {
         if(check!=null){
             currentUser=check;
             //TimeLineController.username.setText(currentUser.getUsername());
-            accounts.setItems(FXCollections.observableArrayList(users));
-            accounts.setCellFactory(accounts -> new UserItem());
+            Main.update();
+            ClientAPI.getAllPosts();
+            ClientAPI.getMyPosts();
             new PageLoader().load("TimeLine");
         } else{
             wrong.setVisible(true);

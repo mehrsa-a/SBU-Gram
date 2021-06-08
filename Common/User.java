@@ -4,11 +4,12 @@ import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class User implements Serializable {
     private String username;
     private String password;
-    private ImageView image;
+    private byte[] image;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -52,11 +53,11 @@ public class User implements Serializable {
         this.follower = follower;
     }
 
-    public ImageView getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(ImageView image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

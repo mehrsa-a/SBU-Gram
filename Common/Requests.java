@@ -4,6 +4,8 @@ public enum Requests {
     newUsername,
     login,
     signup,
+    getPosts,
+    getMyPosts,
     setPofile,
     setInformatin,
     addPost,

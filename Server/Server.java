@@ -8,9 +8,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Server implements Runnable{
-    public static final int port=1113;
+    public static final int port=2005;
     private static boolean isServerUp=true;
     public static Map<String, User> users=null;
     public static Set<Post> posts=null;

@@ -43,17 +43,16 @@ public class ClientHandler implements Runnable {
                     case signup:
                         answer = ServerAPI.signUp(income);
                         break;
-                    /*case UPDATE_PROFILE:
-                        answer = API.updateProfile(income);
+                    case addPost:
+                        answer = ServerAPI.addPost(income);
                         break;
-                    case LOGOUT:
-                        answer = API.logout(income);
-                        clientOnline = false;
+                    case getPosts:
+                        answer = ServerAPI.getPosts(income);
                         break;
-                    case SEND_MAIL:
-                        answer = API.sendMail(income);
+                    case getMyPosts:
+                        answer = ServerAPI.getMyPosts(income);
                         break;
-                    case CHECK_MAIL:
+                    /*case CHECK_MAIL:
                         answer = API.checkMail(income);
                         break;
                     case TRASH_MAIL:
