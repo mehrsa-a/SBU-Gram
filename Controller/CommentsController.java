@@ -1,0 +1,34 @@
+package Controller;
+
+import Model.Main;
+import Model.PageLoader;
+import Common.Post;
+import Model.PostItem;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+
+public class CommentsController {
+    public ArrayList<Post> comment=new ArrayList<>();
+    public JFXListView<Post> comments=new JFXListView<>();
+    public Post currentComment=new Post();
+    public JFXTextField cm;
+
+    public void addComment(ActionEvent actionEvent) {
+        currentComment.setTitle("in reply to "+ Main.currentPost.getUser().getUsername());
+        currentComment.setText(cm.getText());
+        comment.add(currentComment);
+        comments.setItems(FXCollections.observableArrayList(comment));
+        comments.setCellFactory(PostList -> new PostItem());
+        cm.setText("");
+    }
+
+    public void back(ActionEvent actionEvent) throws IOException {
+        new PageLoader().load("TimeLine");
+    }
+}
