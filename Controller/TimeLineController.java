@@ -30,10 +30,14 @@ public class TimeLineController {
     public JFXListView<Post> PostList=new JFXListView<>();
     public JFXListView<Post> myPosts=new JFXListView<>();
     public JFXListView<User> accounts=new JFXListView<>();
-    public static Label username;
+    public Label username;
+    public Label post1;
+    public Label follower;
+    public Label following;
 
     public void initialize(){
-        accounts.setItems(FXCollections.observableArrayList(Main.users));
+        username.setText(currentUser.getUsername());
+        accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
         PostList.setItems(FXCollections.observableArrayList(posts));
         PostList.setCellFactory(PostList -> new PostItem());
@@ -42,8 +46,12 @@ public class TimeLineController {
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {
+        Main.update();
+        ClientAPI.getAllPosts();
+        ClientAPI.getMyPosts();
+        ClientAPI.getAllUsers();
         new PageLoader().load("Timeline");
-        accounts.setItems(FXCollections.observableArrayList(Main.users));
+        accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
         PostList.setItems(FXCollections.observableArrayList(posts));
         PostList.setCellFactory(PostList -> new PostItem());
@@ -66,6 +74,7 @@ public class TimeLineController {
     }
 
     public void publish(ActionEvent actionEvent) {
+        Post currentPost = new Post();
         currentPost.setUser(currentUser);
         currentPost.setTitle(title.getText());
         currentPost.setText(post.getText());

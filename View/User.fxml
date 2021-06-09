@@ -27,7 +27,8 @@
       <Text layoutX="261.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="posts" />
       <Text layoutX="351.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="followers" />
       <Text layoutX="453.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="following" />
-      <JFXButton layoutX="244.0" layoutY="154.0" onAction="#follow" prefHeight="25.0" prefWidth="269.0" text="FOLLOW" textFill="#1c1194" />
+      <JFXButton fx:id="followingButton" layoutX="244.0" layoutY="154.0" onAction="#follow" prefHeight="25.0" prefWidth="269.0" text="FOLLOW" textFill="#1c1194" />
       <JFXButton layoutX="29.0" layoutY="33.0" onAction="#viewProfile" prefHeight="134.0" prefWidth="134.0" text="." />
+      <JFXButton fx:id="unfollowing" layoutX="244.0" layoutY="154.0" onAction="#unfollow" prefHeight="25.0" prefWidth="269.0" text="UNFOLLOW" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

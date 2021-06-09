@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Main extends Application {
@@ -21,13 +23,16 @@ public class Main extends Application {
     public static Post currentPost=new Post();
     public static User currentUser=new User();
     public static List<Post> posts=new CopyOnWriteArrayList<>();
-    public static List<User> users=new CopyOnWriteArrayList<>();
+    public static Map<String, User> users=new ConcurrentHashMap<>();
 
     public static void update(){
         if(ClientAPI.getAllPosts()!=null){
             posts=new CopyOnWriteArrayList<>(ClientAPI.getAllPosts());
         }
-        //users=new CopyOnWriteArrayList<>();
+        Map<String, User> map = ClientAPI.getAllUsers();
+        if(map!=null){
+            users = map;
+        }
         if(ClientAPI.getAllOfMyPosts()!=null){
             currentUser.getPosts().clear();
             currentUser.getPosts().addAll(ClientAPI.getAllOfMyPosts());

@@ -6,14 +6,15 @@ import Common.User;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Server implements Runnable{
-    public static final int port=2005;
+    public static final int port=2053;
     private static boolean isServerUp=true;
-    public static Map<String, User> users=null;
+    public static Map<String, User> users=new HashMap<>();
     public static Set<Post> posts=null;
     public static ServerSocket serverSocket=null;
 

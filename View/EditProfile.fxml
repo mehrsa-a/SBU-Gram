@@ -10,23 +10,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditProfileController">
+<AnchorPane prefHeight="475.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditProfileController">
    <children>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="590.0">
          <children>
             <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="261.0" promptText="first name" unFocusColor="#1c1194" />
             <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="261.0" promptText="last name" unFocusColor="#1c1194" />
             <JFXTextField focusColor="#1c1194" layoutX="106.0" layoutY="309.0" promptText="phone number" unFocusColor="#1c1194" />
             <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="309.0" promptText="e-mail" unFocusColor="#1c1194" />
             <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="360.0" promptText="location" unFocusColor="#1c1194" />
-            <JFXButton layoutX="118.0" layoutY="151.0" onAction="#setProfile" text="change profile photo" textFill="#1c1194">
+            <JFXButton layoutX="118.0" layoutY="169.0" onAction="#setProfile" text="change profile photo" textFill="#1c1194">
                <font>
                   <Font size="9.0" />
                </font>
             </JFXButton>
-            <JFXTextArea focusColor="#1c1194" layoutX="276.0" layoutY="22.0" prefHeight="123.0" prefWidth="310.0" promptText="Bio" unFocusColor="#1c1194" />
+            <JFXTextArea focusColor="#1c1194" layoutX="276.0" layoutY="53.0" prefHeight="126.0" prefWidth="310.0" promptText="Bio" unFocusColor="#1c1194" />
             <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="360.0" promptText="birthday" unFocusColor="#1c1194" />
-            <ImageView fx:id="image" fitHeight="139.0" fitWidth="135.0" layoutX="98.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="image" fitHeight="126.0" fitWidth="128.0" layoutX="103.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/user.png" />
                </image>
@@ -39,7 +39,7 @@
                   <Font size="9.0" />
                </font>
             </Text>
-            <Text fx:id="username" fill="#1c1194" layoutX="19.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username">
+            <Text fx:id="username" fill="#1c1194" layoutX="20.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username">
                <font>
                   <Font size="18.0" />
                </font>
@@ -54,6 +54,17 @@
                   <Font size="14.0" />
                </font>
             </JFXButton>
+            <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/back.png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutX="14.0" layoutY="10.0" onAction="#back" prefHeight="12.0" prefWidth="29.0" text="." textFill="WHITE" />
+            <Text fill="#1c1194" layoutX="219.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Profile">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
    </children>

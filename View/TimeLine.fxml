@@ -24,7 +24,7 @@
                         <Image url="@../images/refresh.png" />
                      </image>
                   </ImageView>
-                  <Text fill="#1c1194" layoutX="253.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TimeLine">
+                  <Text fill="#1c1194" layoutX="241.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TimeLine">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -48,6 +48,11 @@
                      </font>
                   </JFXButton>
                   <ImageView fx:id="image" fitHeight="166.0" fitWidth="200.0" layoutX="386.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fill="#1c1194" layoutX="229.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Post" wrappingWidth="96.140625">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
                </children></AnchorPane>
       </content>
     </Tab>
@@ -62,6 +67,11 @@
                         <Image url="@../images/search.png" />
                      </image>
                   </ImageView>
+                  <Text fill="#1c1194" layoutX="333.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accounts">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
          </content></Tab>
@@ -69,27 +79,38 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="234.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="133.0" fitWidth="136.0" layoutX="240.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/user.png" />
                      </image>
                   </ImageView>
-                  <JFXButton layoutX="257.0" layoutY="164.0" onAction="#editProfile" text="Edit Profile" textFill="#1c1194">
+                  <JFXButton layoutX="263.0" layoutY="170.0" onAction="#editProfile" text="Edit Profile" textFill="#1c1194">
                      <font>
                         <Font size="14.0" />
                      </font></JFXButton>
                   <JFXListView fx:id="myPosts" layoutY="206.0" prefHeight="265.0" prefWidth="600.0" />
-                  <Label fx:id="Bio" layoutX="382.0" layoutY="24.0" prefHeight="162.0" prefWidth="201.0" text="add your Biography from Edit Profile" />
-                  <JFXButton layoutX="22.0" layoutY="117.0" onAction="#logOut" text="LOG OUT" textFill="RED">
+                  <Label fx:id="Bio" layoutX="384.0" layoutY="38.0" prefHeight="162.0" prefWidth="201.0" text="add your Biography from Edit Profile" />
+                  <JFXButton layoutX="18.0" layoutY="172.0" onAction="#logOut" text="LOG OUT" textFill="RED">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </JFXButton>
-                  <Label fx:id="username" layoutX="33.0" layoutY="40.0" text="username" textFill="#1c1194">
+                  <Label fx:id="username" layoutX="39.0" layoutY="62.0" text="username" textFill="#1c1194">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <Label fx:id="post1" layoutX="50.0" layoutY="110.0" text="0" />
+                  <Label fx:id="follower" layoutX="127.0" layoutY="111.0" text="0" />
+                  <Label fx:id="following" layoutX="204.0" layoutY="110.0" text="0" />
+                  <Text layoutX="39.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="posts" />
+                  <Text layoutX="107.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="followers" />
+                  <Text layoutX="183.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="following" />
+                  <Text fill="#1c1194" layoutX="218.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Profile">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
          </content></Tab>

@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class User implements Serializable {
+public class User implements Serializable, Comparable {
+    public static long serialVersionUID=123457L;
     private String username;
     private String password;
     private byte[] image;
@@ -20,6 +21,16 @@ public class User implements Serializable {
     private ArrayList<Post> posts=new ArrayList<>();
     private ArrayList<User> follower=new ArrayList<>();
     private ArrayList<User> following=new ArrayList<>();
+    private final long createdTime = Time.getMilli();
+    private final String timeString = Time.getTime();
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
 
     public User(){
 
@@ -139,5 +150,17 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        User other=(User) o;
+        if(this.createdTime<other.createdTime){
+            return 1;
+        }
+        else if(this.createdTime>other.createdTime){
+            return -1;
+        }
+        return 1;
     }
 }

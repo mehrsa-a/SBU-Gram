@@ -52,10 +52,10 @@ public class ClientHandler implements Runnable {
                     case getMyPosts:
                         answer = ServerAPI.getMyPosts(income);
                         break;
-                    /*case CHECK_MAIL:
-                        answer = API.checkMail(income);
+                    case getUsers:
+                        answer = ServerAPI.getUsers(income);
                         break;
-                    case TRASH_MAIL:
+                    /*case TRASH_MAIL:
                         answer = API.trashMail(income);
                         break;
                     case READ_MAIL:

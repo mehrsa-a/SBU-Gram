@@ -32,4 +32,7 @@ public class EditProfileController {
 
     public void confirm(ActionEvent actionEvent) {
     }
+
+    public void back(ActionEvent actionEvent) {
+    }
 }

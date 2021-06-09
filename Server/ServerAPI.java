@@ -5,13 +5,13 @@ import Common.Requests;
 import Common.User;
 
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ServerAPI {
+
+    private static Comparator<Post> timeCompare = (a, b) -> -1 * Long.compare(a.getCreatedTime(), b.getCreatedTime());
+
 
     public static Map<String, Object> login(Map<String, Object> received){
         String username=(String) received.get("username");
@@ -66,6 +66,7 @@ public class ServerAPI {
         List<Post> sent = Server
                 .posts
                 .stream()
+                .sorted(timeCompare)
                 .filter(a-> a.getUser().getUsername().equals(username))
                 .collect (Collectors.toList());
         ans.put("myPosts", sent);
@@ -73,13 +74,41 @@ public class ServerAPI {
     }
 
     public static Map<String,Object> addPost(Map<String,Object> income){
-
         Post post = (Post) income.get("post");
         Server.posts.add(post);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
+        List<Post> sent = new ArrayList<>(Server.posts);
         ans.put("request", Requests.addPost);
+        //ans.put("post", sent);
         ans.put("answer", new Boolean(true));
+        return ans;
+    }
+
+    public static Map<String,Object> getUsers(Map<String,Object> income){
+        User user = (User) income.get("user");
+        String username = user.getUsername();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getUsers);
+        List<User> temp= Server
+                .users
+                .values()
+                .stream()
+                .filter(a -> !a.getUsername().equals(username))
+                .collect(Collectors.toList());
+        List<String> help= Server
+                .users
+                .keySet()
+                .stream()
+                .filter(a -> !a.equals(username))
+                .collect(Collectors.toList());
+        Map<String, User> sent = new HashMap<>();
+        int i=0;
+        for(String s: help){
+            sent.put(s, temp.get(i));
+            i++;
+        }
+        ans.put("users", sent);
         return ans;
     }
 }

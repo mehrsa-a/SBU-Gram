@@ -28,10 +28,10 @@ public class AddInformationController {
     }
 
     public void signup(ActionEvent actionEvent) throws IOException {
-        TimeLineController.username.setText(currentUser.getUsername());
         Main.update();
         ClientAPI.getAllPosts();
         ClientAPI.getMyPosts();
+        ClientAPI.getAllUsers();
         new PageLoader().load("TimeLine");
     }
 
@@ -39,6 +39,7 @@ public class AddInformationController {
         Main.update();
         ClientAPI.getAllPosts();
         ClientAPI.getMyPosts();
+        ClientAPI.getAllUsers();
         new PageLoader().load("TimeLine");
         //TimeLineController.username.setText(currentUser.getUsername());
     }

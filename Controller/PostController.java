@@ -37,7 +37,7 @@ public class PostController {
     }
 
     public AnchorPane init(){
-        username.setText(currentUser.getUsername());
+        username.setText(currentPost.getUser().getUsername());
         title.setText(currentPost.getTitle());
         post.setText(currentPost.getText());
         return postPane;

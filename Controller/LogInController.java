@@ -69,6 +69,7 @@ public class LogInController {
             Main.update();
             ClientAPI.getAllPosts();
             ClientAPI.getMyPosts();
+            ClientAPI.getAllUsers();
             new PageLoader().load("TimeLine");
         } else{
             wrong.setVisible(true);

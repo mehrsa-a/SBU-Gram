@@ -73,4 +73,25 @@ public class ClientAPI {
         toSend.put("post", post);
         ConnectClient.serve(toSend);
     }
+
+    public static Map<String, Object> getUsers(){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getUsers);
+        toSend.put("user", Main.currentUser);
+        toSend.put("users", Main.users);
+        Map<String,Object> received = ConnectClient.serve(toSend);
+        return received;
+    }
+
+    public static Map<String, User> getAllUsers(){
+        Map<String,Object> all=getUsers();
+        return (Map<String, User>) all.get("users");
+    }
+
+    /*public static void follow(){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.follow);
+        toSend.put("user", Main.currentUser);
+        toSend.put("followed", Main.currentUser);
+    }*/
 }

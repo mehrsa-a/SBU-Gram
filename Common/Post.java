@@ -17,6 +17,16 @@ public class Post implements Serializable, Comparable {
     private ArrayList<User> liked=new ArrayList<>();
     private ArrayList<User> reposted=new ArrayList<>();
     private ArrayList<User> commented=new ArrayList<>();
+    private final long createdTime = Time.getMilli();
+    private final String timeString = Time.getTime();
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
 
     public void setCommented(ArrayList<User> commented) {
         this.commented = commented;
@@ -100,6 +110,13 @@ public class Post implements Serializable, Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return 0;
+        Post other = (Post) o;
+        if(this.createdTime<other.createdTime){
+            return 1;
+        }
+        else if(this.createdTime>other.createdTime){
+            return -1;
+        }
+        return 1;
     }
 }
