@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ClientAPI;
 import Model.Main;
 import Model.PageLoader;
 import Common.User;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.List;
 
 import static Model.Main.currentUser;
 
@@ -24,19 +26,34 @@ public class UserController {
     public AnchorPane userPane;
     public JFXButton followingButton;
     public JFXButton unfollowing;
+    public static User target;
 
     public UserController(User user) throws IOException {
-        currentUser=user;
+        target=user;
+        //currentUser=user;
         new PageLoader().load("User", this);
     }
 
     public AnchorPane init(){
-        username.setText(currentUser.getUsername());
+        username.setText(target.getUsername());
+        String temp=ClientAPI.getNumbers(target);
+        followingNum=Integer.parseInt(temp.substring(0, temp.indexOf("|")));
+        following.setText(String.valueOf(followerNum));
+        followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")));
+        follower.setText(String.valueOf(followerNum));
+        postNum=Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1));
+        post.setText(String.valueOf(postNum));
+        List<String> targetFollowers=ClientAPI.getFollowers(target);
+        if(targetFollowers.contains(currentUser.getUsername())){
+            unfollowing.setVisible(true);
+            followingButton.setVisible(false);
+        }
         return userPane;
     }
 
     public void follow(ActionEvent actionEvent) {
-        followerNum++;
+        String temp= ClientAPI.follow(target);
+        followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
         follower.setText(String.valueOf(followerNum));
         unfollowing.setVisible(true);
         followingButton.setVisible(false);

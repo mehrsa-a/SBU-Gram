@@ -9,6 +9,8 @@ public enum Requests {
     addPost,
     getUsers,
     follow,
+    getNumbers,
+    getFollowers,
     unfollow,
     viewProfile,
     setPofile,

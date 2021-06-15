@@ -43,6 +43,10 @@ public class TimeLineController {
         PostList.setCellFactory(PostList -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
+        String temp=ClientAPI.getNumbers(currentUser);
+        following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
+        follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
+        post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {
@@ -51,12 +55,17 @@ public class TimeLineController {
         ClientAPI.getMyPosts();
         ClientAPI.getAllUsers();
         new PageLoader().load("Timeline");
+        username.setText(currentUser.getUsername());
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
         PostList.setItems(FXCollections.observableArrayList(posts));
         PostList.setCellFactory(PostList -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
+        String temp=ClientAPI.getNumbers(currentUser);
+        following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
+        follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
+        post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
     }
 
     public void editProfile(ActionEvent actionEvent) throws IOException {

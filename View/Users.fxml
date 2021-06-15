@@ -18,12 +18,12 @@
                   <Image url="@../images/user.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="followingButton" layoutX="21.0" layoutY="172.0" onAction="#follow" prefHeight="29.0" prefWidth="557.0" text="FOLLOW" textFill="#1c1194">
+            <JFXButton fx:id="followingButton" layoutX="26.0" layoutY="172.0" onAction="#follow" prefHeight="29.0" prefWidth="557.0" text="FOLLOW" textFill="#1c1194">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <JFXListView fx:id="Posts" layoutY="206.0" prefHeight="265.0" prefWidth="600.0" />
+            <JFXListView fx:id="Posts" layoutY="205.0" prefHeight="295.0" prefWidth="600.0" />
             <Label fx:id="Bio" layoutX="384.0" layoutY="39.0" prefHeight="133.0" prefWidth="201.0" text="add your Biography from Edit Profile" />
             <Label fx:id="username" layoutX="33.0" layoutY="40.0" text="username" textFill="#1c1194">
                <font>
@@ -42,7 +42,7 @@
                </image>
             </ImageView>
             <JFXButton layoutX="13.0" layoutY="12.0" onAction="#back" prefHeight="25.0" prefWidth="28.0" text="." textFill="WHITE" />
-            <JFXButton fx:id="unfollowing" layoutX="22.0" layoutY="164.0" onAction="#unfollow" prefHeight="29.0" prefWidth="557.0" text="UNFOLLOW" textFill="RED" visible="false" />
+            <JFXButton fx:id="unfollowing" layoutX="20.0" layoutY="172.0" onAction="#unfollow" prefHeight="29.0" prefWidth="557.0" text="UNFOLLOW" textFill="RED" visible="false" />
             <Text fill="#1c1194" layoutX="265.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile">
                <font>
                   <Font size="24.0" />

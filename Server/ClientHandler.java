@@ -55,13 +55,15 @@ public class ClientHandler implements Runnable {
                     case getUsers:
                         answer = ServerAPI.getUsers(income);
                         break;
-                    /*case TRASH_MAIL:
-                        answer = API.trashMail(income);
+                    case follow:
+                        answer = ServerAPI.follow(income);
                         break;
-                    case READ_MAIL:
-                        answer = API.readMail(income);
+                    case getNumbers:
+                        answer = ServerAPI.getNumbers(income);
                         break;
-*/
+                    case getFollowers:
+                        answer = ServerAPI.getFollowers(income);
+                        break;
                 }
                 objectOutputStream.writeObject(answer);
                 objectOutputStream.flush();

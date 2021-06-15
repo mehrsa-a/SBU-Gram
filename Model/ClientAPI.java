@@ -15,6 +15,7 @@ public class ClientAPI {
         toSend.put("request", Requests.login);
         toSend.put("username",username);
         toSend.put("password",password);
+        //Main.currentUser=new User(username, password);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
             return null;
@@ -34,6 +35,7 @@ public class ClientAPI {
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.signup);
         toSend.put("user", user);
+        //Main.currentUser=user;
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
             return null;
@@ -88,10 +90,37 @@ public class ClientAPI {
         return (Map<String, User>) all.get("users");
     }
 
-    /*public static void follow(){
+    public static String follow(User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.follow);
         toSend.put("user", Main.currentUser);
-        toSend.put("followed", Main.currentUser);
-    }*/
+        toSend.put("followed", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (String) received.get("answer");
+    }
+
+    public static String getNumbers(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getNumbers);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (String) received.get("answer");
+    }
+
+    public static List<String> getFollowers(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getFollowers);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<String>) received.get("answer");
+    }
 }
