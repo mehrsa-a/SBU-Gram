@@ -33,9 +33,11 @@ public class Main extends Application {
         if(map!=null){
             users = map;
         }
-        if(ClientAPI.getAllOfMyPosts()!=null){
-            currentUser.getPosts().clear();
-            currentUser.getPosts().addAll(ClientAPI.getAllOfMyPosts());
+        for(User u: users.values()){
+            if(ClientAPI.getAllOfMyPosts(u)!=null){
+                u.getPosts().clear();
+                u.getPosts().addAll(ClientAPI.getAllOfMyPosts(u));
+            }
         }
     }
 

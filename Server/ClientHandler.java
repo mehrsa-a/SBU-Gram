@@ -64,6 +64,9 @@ public class ClientHandler implements Runnable {
                     case getFollowers:
                         answer = ServerAPI.getFollowers(income);
                         break;
+                    case unfollow:
+                        answer = ServerAPI.unfollow(income);
+                        break;
                 }
                 objectOutputStream.writeObject(answer);
                 objectOutputStream.flush();

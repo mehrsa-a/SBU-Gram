@@ -28,7 +28,7 @@ public class SignUpController {
     public Label shortPass;
     public Label matchPass;
     public Label truePassword;
-    public static ArrayList<User> users=new ArrayList<>();
+    //public static ArrayList<User> users=new ArrayList<>();
 
     public void showPass(ActionEvent actionEvent) {
         if (!showNewPassword.isVisible()) {
@@ -61,6 +61,7 @@ public class SignUpController {
         }
         return true;
     }
+
     public void continueSign(ActionEvent actionEvent) throws IOException {
         String user=newUsername.getText();
         String pass, confirm;
@@ -98,7 +99,7 @@ public class SignUpController {
             truePassword.setVisible(false);
             currentUser=new User(user, pass);
             ClientAPI.signUp(currentUser);
-            users.add(currentUser); //its gonna be delete soon
+            Main.users.put(user, currentUser);
             new PageLoader().load("AddInformation");
         }
     }

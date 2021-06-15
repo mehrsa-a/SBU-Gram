@@ -16,10 +16,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static Controller.SignUpController.users;
 import static Controller.TimeLineController.*;
-import static Model.Main.currentUser;
-import static Model.Main.posts;
+import static Model.Main.*;
 
 public class LogInController {
     @FXML
@@ -68,7 +66,9 @@ public class LogInController {
             //TimeLineController.username.setText(currentUser.getUsername());
             Main.update();
             ClientAPI.getAllPosts();
-            ClientAPI.getMyPosts();
+            for(User u: users.values()){
+                ClientAPI.getMyPosts(u);
+            }
             ClientAPI.getAllUsers();
             new PageLoader().load("TimeLine");
         } else{

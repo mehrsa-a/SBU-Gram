@@ -117,8 +117,8 @@ public class ServerAPI {
         User followed= (User) income.get("followed");
         Server.users.get(user.getUsername()).getFollowing().add(followed);
         Server.users.get(followed.getUsername()).getFollower().add(user);
-        String answer=Server.users.get(user.getUsername()).getFollowing().size()+"|"+Server.users.get(followed.getUsername()).getFollower().size();
         Database.getInstance().updateDataBase();
+        String answer=Server.users.get(user.getUsername()).getFollowing().size()+"|"+Server.users.get(followed.getUsername()).getFollower().size();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.follow);
         ans.put("answer", answer);
@@ -144,6 +144,20 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getFollowers);
         ans.put("answer", usernames);
+        return ans;
+    }
+
+    public static Map<String, Object> unfollow(Map<String,Object> income){
+        User user= (User) income.get("user");
+        User unfollowed= (User) income.get("unfollowed");
+        Server.users.get(user.getUsername()).getFollowing().removeIf(u -> u.getUsername().equals(unfollowed.getUsername()));
+        Server.users.get(unfollowed.getUsername()).getFollower().removeIf(u -> u.getUsername().equals(user.getUsername()));
+        Database.getInstance().updateDataBase();
+        String answer=Server.users.get(user.getUsername()).getFollowing().size()
+                +"|"+Server.users.get(unfollowed.getUsername()).getFollower().size();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.unfollow);
+        ans.put("answer", answer);
         return ans;
     }
 }

@@ -1,5 +1,6 @@
 package Controller;
 
+import Common.User;
 import Model.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -10,10 +11,8 @@ import javafx.stage.Popup;
 
 import java.io.*;
 
-import static Controller.SignUpController.users;
 import static Controller.TimeLineController.*;
-import static Model.Main.currentUser;
-import static Model.Main.posts;
+import static Model.Main.*;
 
 public class AddInformationController {
     public ImageView image;
@@ -30,7 +29,9 @@ public class AddInformationController {
     public void signup(ActionEvent actionEvent) throws IOException {
         Main.update();
         ClientAPI.getAllPosts();
-        ClientAPI.getMyPosts();
+        for(User u: users.values()){
+            ClientAPI.getMyPosts(u);
+        }
         ClientAPI.getAllUsers();
         new PageLoader().load("TimeLine");
     }
@@ -38,7 +39,9 @@ public class AddInformationController {
     public void skip(ActionEvent actionEvent) throws IOException {
         Main.update();
         ClientAPI.getAllPosts();
-        ClientAPI.getMyPosts();
+        for(User u: users.values()){
+            ClientAPI.getMyPosts(u);
+        }
         ClientAPI.getAllUsers();
         new PageLoader().load("TimeLine");
         //TimeLineController.username.setText(currentUser.getUsername());

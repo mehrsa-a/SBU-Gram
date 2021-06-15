@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -52,7 +53,9 @@ public class TimeLineController {
     public void refresh(ActionEvent actionEvent) throws IOException {
         Main.update();
         ClientAPI.getAllPosts();
-        ClientAPI.getMyPosts();
+        for(User u: users.values()){
+            ClientAPI.getMyPosts(u);
+        }
         ClientAPI.getAllUsers();
         new PageLoader().load("Timeline");
         username.setText(currentUser.getUsername());
@@ -92,7 +95,9 @@ public class TimeLineController {
         ClientAPI.addPost(currentPost);
         Main.update();
         ClientAPI.getAllPosts();
-        ClientAPI.getMyPosts();
+        for(User u: users.values()){
+            ClientAPI.getMyPosts(u);
+        }
         PostList.setItems(FXCollections.observableArrayList(posts));
         PostList.setCellFactory(PostList -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
@@ -105,5 +110,31 @@ public class TimeLineController {
 
     public void logOut(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("Login");
+    }
+
+    public void openProfile(Event event) {
+        Main.update();
+        ClientAPI.getMyPosts(currentUser);
+        username.setText(currentUser.getUsername());
+        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
+        myPosts.setCellFactory(myPosts -> new PostItem());
+        String temp=ClientAPI.getNumbers(currentUser);
+        following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
+        follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
+        post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
+    }
+
+    public void openAccounts(Event event) {
+        Main.update();
+        ClientAPI.getAllUsers();
+        accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
+        accounts.setCellFactory(accounts -> new UserItem());
+    }
+
+    public void openTimeline(Event event) {
+        Main.update();
+        ClientAPI.getAllPosts();
+        PostList.setItems(FXCollections.observableArrayList(posts));
+        PostList.setCellFactory(PostList -> new PostItem());
     }
 }

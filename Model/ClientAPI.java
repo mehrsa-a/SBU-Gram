@@ -56,16 +56,16 @@ public class ClientAPI {
         return (List<Post>) all.get("posts");
     }
 
-    public static Map<String,Object> getMyPosts(){
+    public static Map<String,Object> getMyPosts(User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.getMyPosts);
-        toSend.put("user", Main.currentUser);
+        toSend.put("user", user);
         Map<String,Object> received = ConnectClient.serve(toSend);
         return received;
     }
 
-    public static List<Post> getAllOfMyPosts(){
-        Map<String,Object> all=getMyPosts();
+    public static List<Post> getAllOfMyPosts(User user){
+        Map<String,Object> all=getMyPosts(user);
         return (List<Post>) all.get("myPosts");
     }
 
@@ -122,5 +122,17 @@ public class ClientAPI {
             return null;
         }
         return (List<String>) received.get("answer");
+    }
+
+    public static String unfollow(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.unfollow);
+        toSend.put("user", Main.currentUser);
+        toSend.put("unfollowed", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (String) received.get("answer");
     }
 }

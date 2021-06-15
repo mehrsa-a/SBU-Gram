@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -26,7 +27,8 @@ public class UserController {
     public AnchorPane userPane;
     public JFXButton followingButton;
     public JFXButton unfollowing;
-    public static User target;
+    public User target;
+    public static User help;
 
     public UserController(User user) throws IOException {
         target=user;
@@ -38,7 +40,7 @@ public class UserController {
         username.setText(target.getUsername());
         String temp=ClientAPI.getNumbers(target);
         followingNum=Integer.parseInt(temp.substring(0, temp.indexOf("|")));
-        following.setText(String.valueOf(followerNum));
+        following.setText(String.valueOf(followingNum));
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")));
         follower.setText(String.valueOf(followerNum));
         postNum=Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1));
@@ -60,11 +62,13 @@ public class UserController {
     }
 
     public void viewProfile(ActionEvent actionEvent) throws IOException {
+        help=target;
         new PageLoader().load("Users");
     }
 
     public void unfollow(ActionEvent actionEvent) {
-        followerNum--;
+        String temp= ClientAPI.unfollow(target);
+        followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
         follower.setText(String.valueOf(followerNum));
         followingButton.setVisible(true);
         unfollowing.setVisible(false);
