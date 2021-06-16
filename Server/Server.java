@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Server implements Runnable{
-    public static final int port=2081;
+    public static final int port=2102;
     private static boolean isServerUp=true;
     public static Map<String, User> users=new HashMap<>();
     public static Set<Post> posts=null;

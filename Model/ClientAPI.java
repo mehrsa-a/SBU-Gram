@@ -135,4 +135,62 @@ public class ClientAPI {
         }
         return (String) received.get("answer");
     }
+
+    public static Integer like(Post post){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.like);
+        toSend.put("user", Main.currentUser);
+        toSend.put("liked", post);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (Integer) received.get("answer");
+    }
+
+    public static Integer dislike(Post post){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.dislike);
+        toSend.put("user", Main.currentUser);
+        toSend.put("disliked", post);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (Integer) received.get("answer");
+    }
+
+    public static String getPostFeatures(Post post){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getPostFeatures);
+        toSend.put("post", post);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (String) received.get("answer");
+    }
+
+    public static List<String> getLikes(Post post){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getLikes);
+        toSend.put("post", post);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<String>) received.get("answer");
+    }
+
+    public static Integer repost(Post post){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.repost);
+        toSend.put("user", Main.currentUser);
+        toSend.put("repost", post);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (Integer) received.get("answer");
+    }
 }

@@ -160,4 +160,103 @@ public class ServerAPI {
         ans.put("answer", answer);
         return ans;
     }
+
+    public static Map<String, Object> like(Map<String, Object> income){
+        User user= (User) income.get("user");
+        Post liked= (Post) income.get("liked");
+        int answer=0;
+        for(Post p: Server.posts){
+            if(p.equals(liked)){
+                p.getLiked().add(user);
+                answer=p.getLiked().size();
+            }
+        }
+        for(Post p: Server.users.get(liked.getUser().getUsername()).getPosts()){
+            if(p.equals(liked)){
+                p.getLiked().add(user);
+            }
+        }
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.like);
+        ans.put("answer", answer);
+        return ans;
+    }
+
+    public static Map<String, Object> dislike(Map<String, Object> income){
+        User user= (User) income.get("user");
+        Post disliked= (Post) income.get("disliked");
+        int answer=0;
+        for(Post p: Server.posts){
+            if(p.equals(disliked)){
+                p.getLiked().remove(user);
+                answer=p.getLiked().size();
+            }
+        }
+        for(Post p: Server.users.get(disliked.getUser().getUsername()).getPosts()){
+            if(p.equals(disliked)){
+                p.getLiked().remove(user);
+            }
+        }
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.dislike);
+        ans.put("answer", answer);
+        return ans;
+    }
+
+    public static Map<String, Object> getPostFeatures(Map<String, Object> income){
+        Post post= (Post) income.get("post");
+        for(Post p: Server.posts){
+            if(p.equals(post)){
+                post=p;
+            }
+        }
+        String answer=post.getLiked().size()+"|"+post.getReposted().size()+"|"+post.getCommented().size();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getPostFeatures);
+        ans.put("answer", answer);
+        return ans;
+    }
+
+    public static Map<String, Object> getLikes(Map<String, Object> income){
+        Post post= (Post) income.get("post");
+        for(Post p: Server.posts){
+            if(p.equals(post)){
+                post=p;
+            }
+        }
+        List<User> list=post.getLiked();
+        List<String> usernames=new ArrayList<>();
+        for(User u: list){
+            usernames.add(u.getUsername());
+        }
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getLikes);
+        ans.put("answer", usernames);
+        return ans;
+    }
+
+    public static Map<String, Object> repost(Map<String, Object> income){
+        User user= (User) income.get("user");
+        Post post= (Post) income.get("repost");
+        int answer=0;
+        for(Post p: Server.posts){
+            if(p.equals(post)){
+                p.getReposted().add(user);
+                answer=p.getReposted().size();
+            }
+        }
+        for(Post p: Server.users.get(post.getUser().getUsername()).getPosts()){
+            if(p.equals(post)){
+                p.getReposted().add(user);
+            }
+        }
+        Server.users.get(user.getUsername()).getPosts().add(post);
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.repost);
+        ans.put("answer", answer);
+        return ans;
+    }
 }

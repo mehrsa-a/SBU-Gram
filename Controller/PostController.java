@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ClientAPI;
 import Model.PageLoader;
 import Common.Post;
 import Model.PostItem;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.List;
 
 import static Controller.TimeLineController.*;
 import static Model.Main.currentPost;
@@ -40,28 +42,36 @@ public class PostController {
         username.setText(currentPost.getUser().getUsername());
         title.setText(currentPost.getTitle());
         post.setText(currentPost.getText());
+        String temp=ClientAPI.getPostFeatures(currentPost);
+        numberOfLikes.setText(temp.substring(0, temp.indexOf("|")));
+        numberOfReposts.setText(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")));
+        numberOfComments.setText(temp.substring(temp.lastIndexOf("|")+1));
+        List<String> list=ClientAPI.getLikes(currentPost);
+        if(list.contains(currentUser.getUsername())){
+            liked.setVisible(true);
+            notLiked.setVisible(false);
+        }
         return postPane;
     }
 
     public void like(ActionEvent actionEvent) {
         if(!liked.isVisible()){
+            likeNum= ClientAPI.like(currentPost);
+            numberOfLikes.setText(String.valueOf(likeNum));
             liked.setVisible(true);
             notLiked.setVisible(false);
-            likeNum++;
-            numberOfLikes.setText(String.valueOf(likeNum));
         }
         else{
+            likeNum= ClientAPI.dislike(currentPost);
+            numberOfLikes.setText(String.valueOf(likeNum));
             notLiked.setVisible(true);
             liked.setVisible(false);
-            likeNum--;
-            numberOfLikes.setText(String.valueOf(likeNum));
         }
     }
 
     public void repost(ActionEvent actionEvent) {
-        repostNum++;
+        repostNum=ClientAPI.repost(currentPost);
         numberOfReposts.setText(String.valueOf(repostNum));
-        currentUser.getPosts().add(currentPost);
     }
 
     public void viewComments(ActionEvent actionEvent) throws IOException {

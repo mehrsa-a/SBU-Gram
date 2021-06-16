@@ -1,9 +1,12 @@
 package Common;
 
+import Server.Server;
 import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Post implements Serializable, Comparable {
     public static long serialVersionUID=123456L;
@@ -117,6 +120,22 @@ public class Post implements Serializable, Comparable {
         else if(this.createdTime>other.createdTime){
             return -1;
         }
+        return 1;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        Post other= (Post) o;
+        if(other.getUser().getUsername().equals(this.getUser().getUsername())){
+            if(other.getTitle().equals(this.getTitle())&&other.getText().equals(this.getText())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
         return 1;
     }
 }
