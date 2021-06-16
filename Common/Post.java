@@ -11,6 +11,7 @@ import java.util.Objects;
 public class Post implements Serializable, Comparable {
     public static long serialVersionUID=123456L;
     private User user;
+    private User publisher;
     private String title;
     private String text;
     private byte[] image;
@@ -22,6 +23,14 @@ public class Post implements Serializable, Comparable {
     private ArrayList<User> commented=new ArrayList<>();
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
+
+    public User getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(User publisher) {
+        this.publisher = publisher;
+    }
 
     public String getTimeString() {
         return timeString;

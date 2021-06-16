@@ -88,6 +88,7 @@ public class TimeLineController {
     public void publish(ActionEvent actionEvent) {
         Post currentPost = new Post();
         currentPost.setUser(currentUser);
+        currentPost.setPublisher(currentUser);
         currentPost.setTitle(title.getText());
         currentPost.setText(post.getText());
         posts.add(currentPost);
