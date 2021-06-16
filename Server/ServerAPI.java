@@ -63,12 +63,7 @@ public class ServerAPI {
         String username = user.getUsername();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getMyPosts);
-        List<Post> sent = Server
-                .posts
-                .stream()
-                .sorted(timeCompare)
-                .filter(a-> a.getUser().getUsername().equals(username))
-                .collect (Collectors.toList());
+        List<Post> sent= Server.users.get(username).getPosts();
         ans.put("myPosts", sent);
         return ans;
     }

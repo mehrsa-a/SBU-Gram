@@ -1,6 +1,8 @@
 package Controller;
 
+import Common.User;
 import Model.ClientAPI;
+import Model.Main;
 import Model.PageLoader;
 import Common.Post;
 import Model.PostItem;
@@ -14,8 +16,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static Controller.TimeLineController.*;
-import static Model.Main.currentPost;
-import static Model.Main.currentUser;
+import static Model.Main.*;
+import static Model.Main.posts;
 
 public class PostController {
     public ImageView profile;
@@ -72,8 +74,15 @@ public class PostController {
     }
 
     public void repost(ActionEvent actionEvent) {
-        repostNum=ClientAPI.repost(currentPost);
+        repostNum=ClientAPI.repost(target);
         numberOfReposts.setText(String.valueOf(repostNum));
+        currentUser.getPosts().add(target);
+        ClientAPI.addPost(currentPost);
+        Main.update();
+        ClientAPI.getAllPosts();
+        for(User u: users.values()){
+            ClientAPI.getMyPosts(u);
+        }
     }
 
     public void viewComments(ActionEvent actionEvent) throws IOException {

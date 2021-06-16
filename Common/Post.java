@@ -10,10 +10,10 @@ import java.util.Objects;
 
 public class Post implements Serializable, Comparable {
     public static long serialVersionUID=123456L;
-    private User user;
+    private User user=new User();
     private User publisher;
-    private String title;
-    private String text;
+    private String title="";
+    private String text="";
     private byte[] image;
     private int like;
     private int repost;

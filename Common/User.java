@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class User implements Serializable, Comparable {
     public static long serialVersionUID=123457L;
-    private String username;
+    private String username="";
     private String password;
     private byte[] image;
     private String firstName;
