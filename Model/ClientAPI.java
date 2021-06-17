@@ -1,5 +1,6 @@
 package Model;
 
+import Common.Comment;
 import Common.Post;
 import Common.Requests;
 import Common.User;
@@ -194,7 +195,7 @@ public class ClientAPI {
         return (Integer) received.get("answer");
     }
 
-    public static List<Post> addComment(Post post, Post comment){
+    public static List<Comment> addComment(Post post, Comment comment){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.addComment);
         toSend.put("user", Main.currentUser);
@@ -204,10 +205,10 @@ public class ClientAPI {
         if (received.get("comments")==null){
             return null;
         }
-        return (List<Post>) received.get("comments");
+        return (List<Comment>) received.get("comments");
     }
 
-    public static List<Post> getComments(Post post){
+    public static List<Comment> getComments(Post post){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.getComments);
         toSend.put("post", post);
@@ -215,6 +216,6 @@ public class ClientAPI {
         if (received.get("answer")==null){
             return null;
         }
-        return (List<Post>) received.get("answer");
+        return (List<Comment>) received.get("answer");
     }
 }

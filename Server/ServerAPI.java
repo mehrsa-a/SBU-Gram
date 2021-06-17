@@ -1,5 +1,6 @@
 package Server;
 
+import Common.Comment;
 import Common.Post;
 import Common.Requests;
 import Common.User;
@@ -258,8 +259,8 @@ public class ServerAPI {
     public static Map<String, Object> addComment(Map<String, Object> income){
         User user= (User) income.get("user");
         Post commented= (Post) income.get("commented");
-        Post cm= (Post) income.get("comment");
-        List<Post> send=new ArrayList<>();
+        Comment cm= (Comment) income.get("comment");
+        List<Comment> send=new ArrayList<>();
         for(Post p: Server.posts){
             if(p.equals(commented)){
                 p.getCommented().add(cm);
@@ -285,7 +286,7 @@ public class ServerAPI {
                 post=p;
             }
         }
-        List<Post> list=post.getCommented();
+        List<Comment> list=post.getCommented();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getComments);
         ans.put("answer", list);

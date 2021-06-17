@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="postPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXButton layoutX="16.0" layoutY="28.0" onAction="#viewProfile" prefHeight="67.0" prefWidth="78.0" text="." />
+      <ImageView fx:id="profile" fitHeight="67.0" fitWidth="94.0" layoutX="22.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/user.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="username" layoutX="109.0" layoutY="28.0" text="username">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="name" layoutX="110.0" layoutY="63.0" text="name" />
+      <Label fx:id="date" layoutX="112.0" layoutY="86.0" text="Date" />
+      <Label fx:id="title" layoutX="233.0" layoutY="39.0" prefHeight="35.0" prefWidth="289.0" text="                    Title" textFill="#1c1194">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="post" layoutX="26.0" layoutY="118.0" prefHeight="67.0" prefWidth="539.0" text="Post" />
+   </children>
+</AnchorPane>

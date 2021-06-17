@@ -1,10 +1,8 @@
 package Controller;
 
-import Model.ClientAPI;
-import Model.Main;
-import Model.PageLoader;
+import Common.Comment;
+import Model.*;
 import Common.Post;
-import Model.PostItem;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -16,15 +14,15 @@ import java.util.List;
 
 
 public class CommentsController {
-    public List<Post> comment=new ArrayList<>();
-    public JFXListView<Post> comments=new JFXListView<>();
-    public Post currentComment=new Post();
+    public List<Comment> comment=new ArrayList<>();
+    public JFXListView<Comment> comments=new JFXListView<>();
+    public Comment currentComment=new Comment();
     public JFXTextField cm;
 
     public void initialize(){
         comment=ClientAPI.getComments(PostController.help);
         comments.setItems(FXCollections.observableArrayList(comment));
-        comments.setCellFactory(PostList -> new PostItem());
+        comments.setCellFactory(comments -> new CommentItem());
     }
 
     public void addComment(ActionEvent actionEvent) {
@@ -33,7 +31,7 @@ public class CommentsController {
         comment= ClientAPI.addComment(PostController.help, currentComment);
         comment.add(currentComment);
         comments.setItems(FXCollections.observableArrayList(comment));
-        comments.setCellFactory(PostList -> new PostItem());
+        comments.setCellFactory(comments -> new CommentItem());
         cm.setText("");
 
     }
