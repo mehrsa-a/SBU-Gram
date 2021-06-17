@@ -82,6 +82,12 @@ public class ClientHandler implements Runnable {
                     case repost:
                         answer = ServerAPI.repost(income);
                         break;
+                    case addComment:
+                        answer= ServerAPI.addComment(income);
+                        break;
+                    case getComments:
+                        answer= ServerAPI.getComments(income);
+                        break;
                 }
                 objectOutputStream.writeObject(answer);
                 objectOutputStream.flush();

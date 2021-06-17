@@ -16,9 +16,10 @@ public enum Requests {
     dislike,
     getPostFeatures,
     getLikes,
+    repost,
+    addComment,
+    getComments,
     setProfile,
     setInformation,
-    addComment,
-    repost,
     editProfile,
 }

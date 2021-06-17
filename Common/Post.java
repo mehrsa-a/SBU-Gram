@@ -20,7 +20,7 @@ public class Post implements Serializable, Comparable {
     private int comment;
     private ArrayList<User> liked=new ArrayList<>();
     private ArrayList<User> reposted=new ArrayList<>();
-    private ArrayList<User> commented=new ArrayList<>();
+    private ArrayList<Post> commented=new ArrayList<>();
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
 
@@ -40,7 +40,7 @@ public class Post implements Serializable, Comparable {
         return createdTime;
     }
 
-    public void setCommented(ArrayList<User> commented) {
+    public void setCommented(ArrayList<Post> commented) {
         this.commented = commented;
     }
 
@@ -80,7 +80,7 @@ public class Post implements Serializable, Comparable {
         this.user = user;
     }
 
-    public ArrayList<User> getCommented() {
+    public ArrayList<Post> getCommented() {
         return commented;
     }
 

@@ -35,6 +35,7 @@ public class PostController {
     public int likeNum=0, repostNum=0, commentNum=0;
     public AnchorPane postPane;
     public Post target;
+    public static Post help;
 
     public PostController(Post post) throws IOException {
         target=post;
@@ -86,10 +87,12 @@ public class PostController {
     }
 
     public void viewComments(ActionEvent actionEvent) throws IOException {
+        help=target;
         new PageLoader().load("Comments");
     }
 
     public void viewProfile(ActionEvent actionEvent) throws IOException {
+        UserController.help=target.getUser();
         new PageLoader().load("Users");
     }
 }

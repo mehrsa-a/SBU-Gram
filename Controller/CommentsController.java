@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ClientAPI;
 import Model.Main;
 import Model.PageLoader;
 import Common.Post;
@@ -11,21 +12,30 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class CommentsController {
-    public ArrayList<Post> comment=new ArrayList<>();
+    public List<Post> comment=new ArrayList<>();
     public JFXListView<Post> comments=new JFXListView<>();
     public Post currentComment=new Post();
     public JFXTextField cm;
 
+    public void initialize(){
+        comment=ClientAPI.getComments(PostController.help);
+        comments.setItems(FXCollections.observableArrayList(comment));
+        comments.setCellFactory(PostList -> new PostItem());
+    }
+
     public void addComment(ActionEvent actionEvent) {
-        currentComment.setTitle("in reply to "+ Main.currentPost.getUser().getUsername());
+        currentComment.setTitle("in reply to "+ PostController.help.getUser().getUsername());
         currentComment.setText(cm.getText());
+        comment= ClientAPI.addComment(PostController.help, currentComment);
         comment.add(currentComment);
         comments.setItems(FXCollections.observableArrayList(comment));
         comments.setCellFactory(PostList -> new PostItem());
         cm.setText("");
+
     }
 
     public void back(ActionEvent actionEvent) throws IOException {

@@ -193,4 +193,28 @@ public class ClientAPI {
         }
         return (Integer) received.get("answer");
     }
+
+    public static List<Post> addComment(Post post, Post comment){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.addComment);
+        toSend.put("user", Main.currentUser);
+        toSend.put("commented", post);
+        toSend.put("comment", comment);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("comments")==null){
+            return null;
+        }
+        return (List<Post>) received.get("comments");
+    }
+
+    public static List<Post> getComments(Post post){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getComments);
+        toSend.put("post", post);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<Post>) received.get("answer");
+    }
 }

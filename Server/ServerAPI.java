@@ -254,4 +254,41 @@ public class ServerAPI {
         ans.put("answer", answer);
         return ans;
     }
+
+    public static Map<String, Object> addComment(Map<String, Object> income){
+        User user= (User) income.get("user");
+        Post commented= (Post) income.get("commented");
+        Post cm= (Post) income.get("comment");
+        List<Post> send=new ArrayList<>();
+        for(Post p: Server.posts){
+            if(p.equals(commented)){
+                p.getCommented().add(cm);
+                send=p.getCommented();
+            }
+        }
+        for(Post p: Server.users.get(commented.getUser().getUsername()).getPosts()){
+            if(p.equals(commented)){
+                p.getCommented().add(cm);
+            }
+        }
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.addComment);
+        ans.put("comments", send);
+        return ans;
+    }
+
+    public static Map<String, Object> getComments(Map<String, Object> income){
+        Post post= (Post) income.get("post");
+        for(Post p: Server.posts){
+            if(p.equals(post)){
+                post=p;
+            }
+        }
+        List<Post> list=post.getCommented();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getComments);
+        ans.put("answer", list);
+        return ans;
+    }
 }
