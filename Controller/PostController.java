@@ -9,9 +9,11 @@ import Model.PostItem;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -45,8 +47,18 @@ public class PostController {
 
     public AnchorPane init(){
         username.setText(target.getUser().getUsername());
+        byte[] x=ClientAPI.getProfile(currentUser);
+        if(x!=null){
+            Image newImage=new Image(new ByteArrayInputStream(x));
+            profile.setImage(newImage);
+        }
         title.setText(target.getTitle());
         post.setText(target.getText());
+        byte[] y=target.getImage();
+        if(y!=null){
+            Image newImage=new Image(new ByteArrayInputStream(y));
+            image.setImage(newImage);
+        }
         String temp=ClientAPI.getPostFeatures(target);
         numberOfLikes.setText(temp.substring(0, temp.indexOf("|")));
         numberOfReposts.setText(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")));
@@ -78,7 +90,7 @@ public class PostController {
         repostNum=ClientAPI.repost(target);
         numberOfReposts.setText(String.valueOf(repostNum));
         currentUser.getPosts().add(target);
-        ClientAPI.addPost(currentPost);
+        ClientAPI.addPost(target);
         Main.update();
         ClientAPI.getAllPosts();
         for(User u: users.values()){

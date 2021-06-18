@@ -71,7 +71,15 @@ public class ServerAPI {
 
     public static Map<String,Object> addPost(Map<String,Object> income){
         Post post = (Post) income.get("post");
+        byte[] image= (byte[]) income.get("image");
         Server.posts.add(post);
+        if(image!=null){
+            for(Post p: Server.posts){
+                if(p.equals(post)){
+                    p.setImage(image);
+                }
+            }
+        }
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         List<Post> sent = new ArrayList<>(Server.posts);
@@ -290,6 +298,26 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getComments);
         ans.put("answer", list);
+        return ans;
+    }
+
+    public static Map<String, Object> setProfile(Map<String, Object> income){
+        User user= (User) income.get("user");
+        byte[] image= (byte[]) income.get("image");
+        Server.users.get(user.getUsername()).setImage(image);
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.setProfile);
+        ans.put("answer", image);
+        return ans;
+    }
+
+    public static Map<String, Object> getProfile(Map<String, Object> income){
+        User user= (User) income.get("user");
+        byte[] image=Server.users.get(user.getUsername()).getImage();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getProfile);
+        ans.put("answer", image);
         return ans;
     }
 }

@@ -14,42 +14,35 @@
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="590.0">
          <children>
-            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="261.0" promptText="first name" unFocusColor="#1c1194" />
-            <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="261.0" promptText="last name" unFocusColor="#1c1194" />
-            <JFXTextField focusColor="#1c1194" layoutX="106.0" layoutY="309.0" promptText="phone number" unFocusColor="#1c1194" />
-            <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="309.0" promptText="e-mail" unFocusColor="#1c1194" />
-            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="360.0" promptText="location" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="208.0" promptText="first name" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="312.0" layoutY="208.0" promptText="last name" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="259.0" promptText="phone number" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="312.0" layoutY="259.0" promptText="e-mail" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="315.0" promptText="location" unFocusColor="#1c1194" />
             <JFXButton layoutX="118.0" layoutY="169.0" onAction="#setProfile" text="change profile photo" textFill="#1c1194">
                <font>
                   <Font size="9.0" />
                </font>
             </JFXButton>
             <JFXTextArea focusColor="#1c1194" layoutX="276.0" layoutY="53.0" prefHeight="126.0" prefWidth="310.0" promptText="Bio" unFocusColor="#1c1194" />
-            <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="360.0" promptText="birthday" unFocusColor="#1c1194" />
+            <JFXTextField focusColor="#1c1194" layoutX="312.0" layoutY="315.0" promptText="birthday" unFocusColor="#1c1194" />
             <ImageView fx:id="image" fitHeight="126.0" fitWidth="128.0" layoutX="103.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/user.png" />
                </image>
             </ImageView>
-            <JFXTextField focusColor="#1c1194" layoutX="210.0" layoutY="402.0" promptText="gender" unFocusColor="#1c1194" />
-            <JFXTextField focusColor="#1c1194" layoutX="104.0" layoutY="207.0" promptText="new password" unFocusColor="#1c1194" />
-            <JFXTextField focusColor="#1c1194" layoutX="322.0" layoutY="207.0" promptText="confirm pass word" unFocusColor="#1c1194" />
-            <Text fill="#1c1194" layoutX="14.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="change password:">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Text>
+            <JFXTextField focusColor="#1c1194" layoutX="209.0" layoutY="362.0" promptText="gender" unFocusColor="#1c1194" />
             <Text fx:id="username" fill="#1c1194" layoutX="20.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <JFXButton layoutX="59.0" layoutY="443.0" onAction="#logOut" text="LOG OUT" textFill="RED">
+            <JFXButton layoutX="59.0" layoutY="372.0" onAction="#logOut" text="LOG OUT" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="457.0" layoutY="443.0" onAction="#confirm" text="CONFIRM" textFill="#1c1194">
+            <JFXButton layoutX="447.0" layoutY="372.0" onAction="#confirm" text="CONFIRM" textFill="#1c1194">
                <font>
                   <Font size="14.0" />
                </font>
@@ -65,6 +58,12 @@
                   <Font size="24.0" />
                </font>
             </Text>
+            <JFXButton layoutX="31.0" layoutY="426.0" onAction="#deleteAccount" text="DELETE ACCOUNT" textFill="RED">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="432.0" layoutY="426.0" onAction="#changePass" text="change password" textFill="#1c1194" />
          </children>
       </Pane>
    </children>

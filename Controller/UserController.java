@@ -7,10 +7,12 @@ import Common.User;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -38,6 +40,11 @@ public class UserController {
 
     public AnchorPane init(){
         username.setText(target.getUsername());
+        byte[] x=ClientAPI.getProfile(target);
+        if(x!=null){
+            Image newImage=new Image(new ByteArrayInputStream(x));
+            profile.setImage(newImage);
+        }
         String temp=ClientAPI.getNumbers(target);
         followingNum=Integer.parseInt(temp.substring(0, temp.indexOf("|")));
         following.setText(String.valueOf(followingNum));

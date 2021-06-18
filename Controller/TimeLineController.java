@@ -35,9 +35,16 @@ public class TimeLineController {
     public Label post1;
     public Label follower;
     public Label following;
+    public ImageView profile;
+    public static byte[] help;
 
     public void initialize(){
         username.setText(currentUser.getUsername());
+        byte[] x=ClientAPI.getProfile(currentUser);
+        if(x!=null){
+            Image newImage=new Image(new ByteArrayInputStream(x));
+            profile.setImage(newImage);
+        }
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
         PostList.setItems(FXCollections.observableArrayList(posts));
@@ -81,6 +88,7 @@ public class TimeLineController {
         File file=fileChooser.showOpenDialog(new Popup());
         FileInputStream fileInputStream=new FileInputStream(file);
         byte[] bytes=fileInputStream.readAllBytes();
+        help=bytes;
         Image newImage=new Image(new ByteArrayInputStream(bytes));
         image.setImage(newImage);
     }
@@ -91,9 +99,17 @@ public class TimeLineController {
         currentPost.setPublisher(currentUser);
         currentPost.setTitle(title.getText());
         currentPost.setText(post.getText());
+        if(help!=null){
+            currentPost.setImage(help);
+        }
         posts.add(currentPost);
         currentUser.getPosts().add(currentPost);
-        ClientAPI.addPost(currentPost);
+        if(help==null){
+            ClientAPI.addPost(currentPost);
+        }
+        else{
+            ClientAPI.addPost(currentPost, help);
+        }
         Main.update();
         ClientAPI.getAllPosts();
         for(User u: users.values()){
@@ -117,12 +133,17 @@ public class TimeLineController {
         Main.update();
         ClientAPI.getMyPosts(currentUser);
         username.setText(currentUser.getUsername());
+        byte[] x=ClientAPI.getProfile(currentUser);
+        if(x!=null){
+            Image newImage=new Image(new ByteArrayInputStream(x));
+            profile.setImage(newImage);
+        }
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
         String temp=ClientAPI.getNumbers(currentUser);
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
         follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
-        post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
+        post1.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
     }
 
     public void openAccounts(Event event) {

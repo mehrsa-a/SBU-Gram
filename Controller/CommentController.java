@@ -6,9 +6,11 @@ import Model.ClientAPI;
 import Model.PageLoader;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,6 +34,11 @@ public class CommentController {
 
     public AnchorPane init(){
         username.setText(target.getUser().getUsername());
+        byte[] x=ClientAPI.getProfile(currentUser);
+        if(x!=null){
+            Image newImage=new Image(new ByteArrayInputStream(x));
+            profile.setImage(newImage);
+        }
         title.setText(target.getTitle());
         post.setText(target.getText());
         return postPane;

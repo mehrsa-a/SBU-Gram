@@ -16,14 +16,17 @@ import static Model.Main.*;
 
 public class AddInformationController {
     public ImageView image;
+    public static byte[] help;
 
     public void setProfile(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(new Popup());
         FileInputStream fileInputStream=new FileInputStream(file);
         byte[] bytes=fileInputStream.readAllBytes();
+        help=bytes;
         Image newImage=new Image(new ByteArrayInputStream(bytes));
         image.setImage(newImage);
+        ClientAPI.setProfile(Main.currentUser, help);
     }
 
     public void signup(ActionEvent actionEvent) throws IOException {

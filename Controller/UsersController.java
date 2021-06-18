@@ -10,8 +10,11 @@ import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,6 +32,7 @@ public class UsersController {
     public JFXButton followingButton;
     public AnchorPane userPane;
     public User target;
+    public ImageView profile;
 
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("TimeLine");
@@ -37,6 +41,11 @@ public class UsersController {
     public AnchorPane initialize(){
         target=UserController.help;
         username.setText(target.getUsername());
+        byte[] x=ClientAPI.getProfile(target);
+        if(x!=null){
+            Image newImage=new Image(new ByteArrayInputStream(x));
+            profile.setImage(newImage);
+        }
         String temp=ClientAPI.getNumbers(target);
         followingNum=Integer.parseInt(temp.substring(0, temp.indexOf("|")));
         following.setText(String.valueOf(followingNum));
@@ -51,7 +60,7 @@ public class UsersController {
         }
         ClientAPI.getMyPosts(target);
         Posts.setItems(FXCollections.observableArrayList(target.getPosts()));
-        Posts.setCellFactory(myPosts -> new PostItem());
+        Posts.setCellFactory(Posts -> new PostItem());
         return userPane;
     }
 

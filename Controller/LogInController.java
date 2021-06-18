@@ -80,4 +80,7 @@ public class LogInController {
     public void signUp(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("Signup");
     }
+
+    public void forgotPass(ActionEvent actionEvent) {
+    }
 }

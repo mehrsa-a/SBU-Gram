@@ -45,6 +45,7 @@
          </font>
       </JFXButton>
       <JFXTextField fx:id="visiblePass" focusColor="#1c1194" layoutX="208.0" layoutY="278.0" promptText="password" unFocusColor="#1c1194" visible="false" />
+      <JFXButton layoutX="222.0" layoutY="440.0" onAction="#forgotPass" text="forgot password?" textFill="#1c1194" />
    </children>
    <effect>
       <DropShadow>
