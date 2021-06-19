@@ -77,6 +77,14 @@ public class ClientAPI {
         ConnectClient.serve(toSend);
     }
 
+    public static void addPost(Post post, byte[] bytes){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.addPost);
+        toSend.put("post", post);
+        toSend.put("image", bytes);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
+
     public static Map<String, Object> getUsers(){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.getUsers);
@@ -219,12 +227,6 @@ public class ClientAPI {
         return (List<Comment>) received.get("answer");
     }
 
-    public static Map<String, String> addInformation(String... strings){
-        Map<String,Object> toSend=new HashMap<>();
-        toSend.put("request", Requests.setInformation);
-        return null;
-    }
-
     public static byte[] setProfile(User user, byte[] bytes){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.setProfile);
@@ -248,15 +250,22 @@ public class ClientAPI {
         return (byte[]) received.get("answer");
     }
 
-    public static void addPost(Post post, byte[] bytes){
+    public static void addInformation(User user, Map<String, String> strings){
         Map<String,Object> toSend=new HashMap<>();
-        toSend.put("request", Requests.addPost);
-        toSend.put("post", post);
-        toSend.put("image", bytes);
+        toSend.put("request", Requests.setInformation);
+        toSend.put("user", user);
+        toSend.put("info", strings);
+        ConnectClient.serve(toSend);
+    }
+
+    public static Map<String, String> getInformation(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getInformation);
+        toSend.put("user", user);
         Map<String,Object> received=ConnectClient.serve(toSend);
-        /*if (received.get("answer")==null){
+        if (received.get("answer")==null){
             return null;
         }
-        return (byte[]) received.get("answer");*/
+        return (Map<String, String>) received.get("answer");
     }
 }

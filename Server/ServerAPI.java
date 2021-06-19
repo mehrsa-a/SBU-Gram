@@ -12,8 +12,7 @@ import java.util.stream.Collectors;
 public class ServerAPI {
 
     private static Comparator<Post> timeCompare = (a, b) -> -1 * Long.compare(a.getCreatedTime(), b.getCreatedTime());
-
-
+    
     public static Map<String, Object> login(Map<String, Object> received){
         String username=(String) received.get("username");
         String password=(String) received.get("password");
@@ -318,6 +317,57 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getProfile);
         ans.put("answer", image);
+        return ans;
+    }
+
+    public static Map<String, Object> addInformation(Map<String, Object> income){
+        User user= (User) income.get("user");
+        Map<String, String> info= (Map<String, String>) income.get("info");
+        if(info.get("firstName")!=null)
+            Server.users.get(user.getUsername()).setFirstName(info.get("firstName"));
+        if(info.get("lastName")!=null)
+            Server.users.get(user.getUsername()).setLastName(info.get("lastName"));
+        if(info.get("phoneNumber")!=null)
+            Server.users.get(user.getUsername()).setPhoneNumber(info.get("phoneNumber"));
+        if(info.get("email")!=null)
+            Server.users.get(user.getUsername()).setEmail(info.get("email"));
+        if(info.get("location")!=null)
+            Server.users.get(user.getUsername()).setLocation(info.get("location"));
+        if(info.get("birthday")!=null)
+            Server.users.get(user.getUsername()).setBirthday(info.get("birthday"));
+        if(info.get("gender")!=null)
+            Server.users.get(user.getUsername()).setGender(info.get("gender"));
+        if(info.get("bio")!=null)
+            Server.users.get(user.getUsername()).setBio(info.get("bio"));
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.setInformation);
+        ans.put("answer", new Boolean(true));
+        return ans;
+    }
+
+    public static Map<String, Object> getInformation(Map<String, Object> income){
+        User user= (User) income.get("user");
+        Map<String, String> info=new HashMap<>();
+        if(Server.users.get(user.getUsername()).getFirstName()!=null)
+            info.put("firstName", Server.users.get(user.getUsername()).getFirstName());
+        if(Server.users.get(user.getUsername()).getLastName()!=null)
+            info.put("lastName", Server.users.get(user.getUsername()).getLastName());
+        if(Server.users.get(user.getUsername()).getPhoneNumber()!=null)
+            info.put("phoneNumber", Server.users.get(user.getUsername()).getPhoneNumber());
+        if(Server.users.get(user.getUsername()).getEmail()!=null)
+            info.put("email", Server.users.get(user.getUsername()).getEmail());
+        if(Server.users.get(user.getUsername()).getLocation()!=null)
+            info.put("location", Server.users.get(user.getUsername()).getLocation());
+        if(Server.users.get(user.getUsername()).getBirthday()!=null)
+            info.put("birthday", Server.users.get(user.getUsername()).getBirthday());
+        if(Server.users.get(user.getUsername()).getGender()!=null)
+            info.put("gender", Server.users.get(user.getUsername()).getGender());
+        if(Server.users.get(user.getUsername()).getBio()!=null)
+            info.put("bio", Server.users.get(user.getUsername()).getBio());
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getInformation);
+        ans.put("answer", info);
         return ans;
     }
 }

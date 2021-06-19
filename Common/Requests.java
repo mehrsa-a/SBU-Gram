@@ -19,8 +19,8 @@ public enum Requests {
     repost,
     addComment,
     getComments,
-    setInformation,
     setProfile,
     getProfile,
-    editProfile,
+    setInformation,
+    getInformation,
 }

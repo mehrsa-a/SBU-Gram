@@ -95,7 +95,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXButton>
-                  <Label fx:id="username" layoutX="39.0" layoutY="62.0" text="username" textFill="#1c1194">
+                  <Label fx:id="username" layoutX="33.0" layoutY="51.0" text="username" textFill="#1c1194">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -111,6 +111,7 @@
                         <Font size="24.0" />
                      </font>
                   </Text>
+                  <Label fx:id="name" layoutX="35.0" layoutY="88.0" text="name" />
                </children>
             </AnchorPane>
          </content></Tab>

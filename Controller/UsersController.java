@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static Model.Main.currentUser;
 
@@ -33,6 +34,8 @@ public class UsersController {
     public AnchorPane userPane;
     public User target;
     public ImageView profile;
+    public Label name;
+    public String fullName;
 
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("TimeLine");
@@ -61,6 +64,23 @@ public class UsersController {
         ClientAPI.getMyPosts(target);
         Posts.setItems(FXCollections.observableArrayList(target.getPosts()));
         Posts.setCellFactory(Posts -> new PostItem());
+        Map<String, String> info=ClientAPI.getInformation(target);
+        if(info!=null){
+            if(!info.get("bio").equals("")){
+                Bio.setText(info.get("bio"));
+            }
+            if(!info.get("firstName").equals("")){
+                fullName=info.get("firstName");
+            }
+            if(!info.get("lastName").equals("")){
+                fullName=" "+info.get("lastName");
+            }
+        }
+        if(!fullName.equals("")){
+            name.setText(fullName);
+        } else{
+            name.setVisible(false);
+        }
         return userPane;
     }
 

@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static Controller.TimeLineController.*;
 import static Model.Main.*;
@@ -38,6 +39,7 @@ public class PostController {
     public AnchorPane postPane;
     public Post target;
     public static Post help;
+    public String fullName;
 
     public PostController(Post post) throws IOException {
         target=post;
@@ -47,7 +49,7 @@ public class PostController {
 
     public AnchorPane init(){
         username.setText(target.getUser().getUsername());
-        byte[] x=ClientAPI.getProfile(currentUser);
+        byte[] x=ClientAPI.getProfile(target.getUser());
         if(x!=null){
             Image newImage=new Image(new ByteArrayInputStream(x));
             profile.setImage(newImage);
@@ -67,6 +69,20 @@ public class PostController {
         if(list.contains(currentUser.getUsername())){
             liked.setVisible(true);
             notLiked.setVisible(false);
+        }
+        Map<String, String> info=ClientAPI.getInformation(target.getUser());
+        if(info!=null){
+            if(!info.get("firstName").equals("")){
+                fullName=info.get("firstName");
+            }
+            if(!info.get("lastName").equals("")){
+                fullName=" "+info.get("lastName");
+            }
+        }
+        if(!fullName.equals("")){
+            name.setText(fullName);
+        } else{
+            name.setVisible(false);
         }
         return postPane;
     }

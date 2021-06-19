@@ -94,6 +94,12 @@ public class ClientHandler implements Runnable {
                     case getProfile:
                         answer = ServerAPI.getProfile(income);
                         break;
+                    case setInformation:
+                        answer = ServerAPI.addInformation(income);
+                        break;
+                    case getInformation:
+                        answer = ServerAPI.getInformation(income);
+                        break;
                 }
                 objectOutputStream.writeObject(answer);
                 objectOutputStream.flush();

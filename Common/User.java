@@ -15,14 +15,23 @@ public class User implements Serializable, Comparable {
     private String lastName;
     private String phoneNumber;
     private String Email;
-    private String location;
+    private String locationField;
     private String birthday;
     private String gender;
+    private String bio;
     private ArrayList<Post> posts=new ArrayList<>();
     private ArrayList<User> follower=new ArrayList<>();
     private ArrayList<User> following=new ArrayList<>();
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getBio() {
+        return bio;
+    }
 
     public String getTimeString() {
         return timeString;
@@ -85,7 +94,7 @@ public class User implements Serializable, Comparable {
     }
 
     public String getLocation() {
-        return location;
+        return locationField;
     }
 
     public String getEmail() {
@@ -125,7 +134,7 @@ public class User implements Serializable, Comparable {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.locationField = location;
     }
 
     public void setEmail(String email) {

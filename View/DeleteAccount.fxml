@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DeleteAccount">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="211.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/icon.png" />
+         </image>
+      </ImageView>
+      <Text fill="#1c1194" layoutX="188.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DELETE ACCOUNT">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <JFXPasswordField fx:id="newPassword" focusColor="#1c1194" layoutX="212.0" layoutY="250.0" promptText="password" unFocusColor="#1c1194" />
+      <JFXPasswordField fx:id="confirmPassword" focusColor="#1c1194" layoutX="211.0" layoutY="294.0" promptText="confirm password" unFocusColor="#1c1194" />
+      <JFXCheckBox fx:id="showPassword" checkedColor="#1c1194" layoutX="361.0" layoutY="260.0" onAction="#showPass" text="show password" unCheckedColor="#1c1194">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </JFXCheckBox>
+      <JFXTextField fx:id="showNewPassword" focusColor="#1c1194" layoutX="211.0" layoutY="250.0" promptText="password" unFocusColor="#1c1194" visible="false" />
+      <JFXTextField fx:id="showConfirm" focusColor="#1c1194" layoutX="211.0" layoutY="294.0" promptText="confirm password" unFocusColor="#1c1194" visible="false" />
+      <JFXButton layoutX="221.0" layoutY="374.0" onAction="#deleteAcc" text="DELETE ACCOUNT" textFill="RED" />
+      <JFXButton layoutX="24.0" layoutY="20.0" onAction="#back" prefHeight="12.0" prefWidth="29.0" text="." textFill="WHITE" />
+      <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="24.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/back.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static Model.Main.currentUser;
 
@@ -31,6 +32,7 @@ public class UserController {
     public JFXButton unfollowing;
     public User target;
     public static User help;
+    public String fullName;
 
     public UserController(User user) throws IOException {
         target=user;
@@ -56,6 +58,20 @@ public class UserController {
         if(targetFollowers.contains(currentUser.getUsername())){
             unfollowing.setVisible(true);
             followingButton.setVisible(false);
+        }
+        Map<String, String> info=ClientAPI.getInformation(target);
+        if(info!=null){
+            if(info.get("firstName") != null){
+                fullName=info.get("firstName");
+            }
+            if(info.get("lastName") != null){
+                fullName=" "+info.get("lastName");
+            }
+        }
+        if(fullName != null){
+            name.setText(fullName);
+        } else{
+            name.setVisible(false);
         }
         return userPane;
     }

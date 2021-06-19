@@ -20,11 +20,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import static Model.Main.*;
 
 public class TimeLineController {
     public Label Bio;
+    public String fullName="";
     public ImageView image;
     public JFXTextField title;
     public JFXTextArea post;
@@ -37,6 +39,7 @@ public class TimeLineController {
     public Label following;
     public ImageView profile;
     public static byte[] help;
+    public Label name;
 
     public void initialize(){
         username.setText(currentUser.getUsername());
@@ -55,6 +58,23 @@ public class TimeLineController {
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
         follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
         post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
+        Map<String, String> info=ClientAPI.getInformation(currentUser);
+        if(info!=null){
+            if(info.get("bio") != null){
+                Bio.setText(info.get("bio"));
+            }
+            if(info.get("firstName") != null){
+                fullName=info.get("firstName");
+            }
+            if(info.get("lastName") != null){
+                fullName=" "+info.get("lastName");
+            }
+        }
+        if(!fullName.equals("")){
+            name.setText(fullName);
+        } else{
+            name.setVisible(false);
+        }
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {
