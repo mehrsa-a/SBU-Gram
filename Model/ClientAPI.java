@@ -288,4 +288,12 @@ public class ClientAPI {
         }
         return (String) received.get("answer");
     }
+
+    public static void changePassword(User user, String password){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.changePassword);
+        toSend.put("user", user);
+        toSend.put("password", password);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
 }

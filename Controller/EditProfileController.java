@@ -57,7 +57,7 @@ public class EditProfileController {
             if(info.get("birthday")!=null){
                 birthday.setText(info.get("birthday"));
             }
-            if(info.get("gender").equals("")){
+            if(info.get("gender")!=null){
                 gender.setText(info.get("gender"));
             }
             if(info.get("bio")!=null){
@@ -119,9 +119,11 @@ public class EditProfileController {
         new PageLoader().load("TimeLine");
     }
 
-    public void deleteAccount(ActionEvent actionEvent) {
+    public void deleteAccount(ActionEvent actionEvent) throws IOException {
+        new PageLoader().load("DeleteAccount");
     }
 
-    public void changePass(ActionEvent actionEvent) {
+    public void changePass(ActionEvent actionEvent) throws IOException {
+        new PageLoader().load("ChangePassword");
     }
 }

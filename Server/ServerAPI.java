@@ -382,7 +382,7 @@ public class ServerAPI {
         return ans;
     }
 
-    public static Map<String,Object> qetForgetPassword(Map<String,Object> income){
+    public static Map<String,Object> getForgetPassword(Map<String,Object> income){
         String user=(String) income.get("user");
         String answer=Server.users.get(user).getQuestion()+"|"
                 +Server.users.get(user).getAnswer()
@@ -390,6 +390,17 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getForgetPassword);
         ans.put("answer", answer);
+        return ans;
+    }
+
+    public static Map<String,Object> changePassword(Map<String,Object> income){
+        User user= (User) income.get("user");
+        String pass= (String) income.get("password");
+        Server.users.get(user.getUsername()).setPassword(pass);
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.changePassword);
+        ans.put("answer", new Boolean(true));
         return ans;
     }
 }
