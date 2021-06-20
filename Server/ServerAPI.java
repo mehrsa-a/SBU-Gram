@@ -1,11 +1,7 @@
 package Server;
 
-import Common.Comment;
-import Common.Post;
-import Common.Requests;
-import Common.User;
+import Common.*;
 
-import java.sql.Time;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,6 +21,10 @@ public class ServerAPI {
         }
         User user=Server.users.get(username).checkTruePass(username, password);
         ans.put("answer", user);
+        if(user!=null){
+            System.out.println(username+" login");
+            System.out.println("time: "+ Time.getTime());
+        }
         return ans;
     }
 
@@ -45,6 +45,8 @@ public class ServerAPI {
         Server.users.put(username, newUser);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
+        System.out.println(username+" register ");
+        System.out.println("time: "+ Time.getTime());
         ans.put("request", Requests.signup);
         ans.put("answer", newUser);
         return ans;
@@ -125,6 +127,9 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.follow);
         ans.put("answer", answer);
+        System.out.println(user.getUsername()+" follow");
+        System.out.println("message: "+followed.getUsername());
+        System.out.println("time: "+Time.getTime());
         return ans;
     }
 
@@ -161,6 +166,9 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.unfollow);
         ans.put("answer", answer);
+        System.out.println(user.getUsername()+" unfollow");
+        System.out.println("message: "+unfollowed.getUsername());
+        System.out.println("time: "+Time.getTime());
         return ans;
     }
 
@@ -183,6 +191,9 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.like);
         ans.put("answer", answer);
+        System.out.println(user.getUsername()+" like");
+        System.out.println("message: "+liked.getUser().getUsername()+" "+liked.getTitle());
+        System.out.println("time: "+ Time.getTime());
         return ans;
     }
 
@@ -260,6 +271,9 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.repost);
         ans.put("answer", answer);
+        System.out.println(user.getUsername()+" repost");
+        System.out.println("message: "+post.getUser().getUsername()+" "+post.getTitle());
+        System.out.println("time: "+ Time.getTime());
         return ans;
     }
 
@@ -283,6 +297,9 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.addComment);
         ans.put("comments", send);
+        System.out.println(user.getUsername()+" comment");
+        System.out.println("message: "+commented.getTitle());
+        System.out.println("time: "+ Time.getTime());
         return ans;
     }
 
@@ -406,11 +423,24 @@ public class ServerAPI {
 
     public static Map<String,Object> deleteAccount(Map<String,Object> income){
         User user= (User) income.get("user");
+        String username=user.getUsername();
         Server.users.remove(user.getUsername());
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.deleteAccount);
         ans.put("answer", new Boolean(true));
+        System.out.println(username+"  delete account");
+        System.out.println("time: "+Time.getTime());
+        return ans;
+    }
+
+    public static Map<String,Object> logOut(Map<String,Object> income){
+        User user= (User) income.get("user");
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.deleteAccount);
+        ans.put("answer", new Boolean(true));
+        System.out.println(user.getUsername()+"  logout");
+        System.out.println("time: "+Time.getTime());
         return ans;
     }
 }

@@ -35,6 +35,19 @@
             </AnchorPane>
          </content>
     </Tab>
+    <Tab onSelectionChanged="#openExplore" text="Explore">
+         <content>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="600.0">
+               <children>
+                  <Text fill="#1c1194" layoutX="241.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Explore">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <JFXListView fx:id="explorePosts" layoutY="43.0" prefHeight="429.0" prefWidth="600.0" />
+               </children>
+            </AnchorPane>
+         </content></Tab>
     <Tab text="Add Post">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

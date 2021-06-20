@@ -26,5 +26,6 @@ public enum Requests {
     setForgetPassword,
     getForgetPassword,
     changePassword,
-    deleteAccount
+    deleteAccount,
+    logout
 }

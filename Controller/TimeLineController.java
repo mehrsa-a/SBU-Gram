@@ -19,9 +19,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static Model.Main.*;
@@ -43,6 +41,7 @@ public class TimeLineController {
     public static byte[] help;
     public Label name;
     public JFXTextField searchField;
+    public JFXListView<Post> explorePosts;
 
     public void initialize(){
         username.setText(currentUser.getUsername());
@@ -53,8 +52,18 @@ public class TimeLineController {
         }
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
-        PostList.setItems(FXCollections.observableArrayList(posts));
+        List<User> followed=users.values().stream()
+                .filter(a-> currentUser.getFollowing().contains(a))
+                .collect(Collectors.toList());
+        Set<Post> set=new HashSet<>();
+        set.addAll(currentUser.getPosts());
+        for(User u: followed){
+            set.addAll(u.getPosts());
+        }
+        PostList.setItems(FXCollections.observableArrayList(set));
         PostList.setCellFactory(PostList -> new PostItem());
+        explorePosts.setItems(FXCollections.observableArrayList(posts));
+        explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
         String temp=ClientAPI.getNumbers(currentUser);
@@ -91,8 +100,18 @@ public class TimeLineController {
         username.setText(currentUser.getUsername());
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
-        PostList.setItems(FXCollections.observableArrayList(posts));
+        List<User> followed=users.values().stream()
+                .filter(a-> currentUser.getFollowing().contains(a))
+                .collect(Collectors.toList());
+        Set<Post> set=new HashSet<>();
+        set.addAll(currentUser.getPosts());
+        for(User u: followed){
+            set.addAll(u.getPosts());
+        }
+        PostList.setItems(FXCollections.observableArrayList(set));
         PostList.setCellFactory(PostList -> new PostItem());
+        explorePosts.setItems(FXCollections.observableArrayList(posts));
+        explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
         String temp=ClientAPI.getNumbers(currentUser);
@@ -138,8 +157,18 @@ public class TimeLineController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        PostList.setItems(FXCollections.observableArrayList(posts));
+        List<User> followed=users.values().stream()
+                .filter(a-> currentUser.getFollowing().contains(a))
+                .collect(Collectors.toList());
+        Set<Post> set=new HashSet<>();
+        set.addAll(currentUser.getPosts());
+        for(User u: followed){
+            set.addAll(u.getPosts());
+        }
+        PostList.setItems(FXCollections.observableArrayList(set));
         PostList.setCellFactory(PostList -> new PostItem());
+        explorePosts.setItems(FXCollections.observableArrayList(posts));
+        explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
         currentPost=new Post();
@@ -149,6 +178,7 @@ public class TimeLineController {
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException {
+        ClientAPI.logOut(currentUser);
         new PageLoader().load("Login");
     }
 
@@ -179,7 +209,15 @@ public class TimeLineController {
     public void openTimeline(Event event) {
         Main.update();
         ClientAPI.getAllPosts();
-        PostList.setItems(FXCollections.observableArrayList(posts));
+        List<User> followed=users.values().stream()
+                .filter(a-> currentUser.getFollowing().contains(a))
+                .collect(Collectors.toList());
+        Set<Post> set=new HashSet<>();
+        set.addAll(currentUser.getPosts());
+        for(User u: followed){
+            set.addAll(u.getPosts());
+        }
+        PostList.setItems(FXCollections.observableArrayList(set));
         PostList.setCellFactory(PostList -> new PostItem());
     }
 
@@ -199,5 +237,10 @@ public class TimeLineController {
         ClientAPI.getAllUsers(currentUser);
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
+    }
+
+    public void openExplore(Event event) {
+        explorePosts.setItems(FXCollections.observableArrayList(posts));
+        explorePosts.setCellFactory(explorePosts -> new PostItem());
     }
 }

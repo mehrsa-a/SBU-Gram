@@ -303,4 +303,11 @@ public class ClientAPI {
         toSend.put("user", user);
         Map<String,Object> received=ConnectClient.serve(toSend);
     }
+
+    public static void logOut(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.logout);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
 }

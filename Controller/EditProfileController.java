@@ -77,6 +77,7 @@ public class EditProfileController {
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException {
+        ClientAPI.logOut(currentUser);
         new PageLoader().load("Login");
     }
 
