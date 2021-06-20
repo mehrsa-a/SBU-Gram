@@ -100,6 +100,12 @@ public class ClientHandler implements Runnable {
                     case getInformation:
                         answer = ServerAPI.getInformation(income);
                         break;
+                    case setForgetPassword:
+                        answer = ServerAPI.setForgetPassword(income);
+                        break;
+                    case getForgetPassword:
+                        answer = ServerAPI.qetForgetPassword(income);
+                        break;
                 }
                 objectOutputStream.writeObject(answer);
                 objectOutputStream.flush();

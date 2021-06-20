@@ -370,4 +370,26 @@ public class ServerAPI {
         ans.put("answer", info);
         return ans;
     }
+
+    public static Map<String,Object> setForgetPassword(Map<String,Object> income){
+        User user=(User) income.get("user");
+        Server.users.get(user.getUsername()).setQuestion((String) income.get("question"));
+        Server.users.get(user.getUsername()).setAnswer((String) income.get("ans"));
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.setForgetPassword);
+        ans.put("answer", new Boolean(true));
+        return ans;
+    }
+
+    public static Map<String,Object> qetForgetPassword(Map<String,Object> income){
+        String user=(String) income.get("user");
+        String answer=Server.users.get(user).getQuestion()+"|"
+                +Server.users.get(user).getAnswer()
+                +"|"+Server.users.get(user).getPassword();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getForgetPassword);
+        ans.put("answer", answer);
+        return ans;
+    }
 }

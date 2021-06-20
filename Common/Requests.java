@@ -23,4 +23,6 @@ public enum Requests {
     getProfile,
     setInformation,
     getInformation,
+    setForgetPassword,
+    getForgetPassword
 }

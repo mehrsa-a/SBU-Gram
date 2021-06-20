@@ -268,4 +268,24 @@ public class ClientAPI {
         }
         return (Map<String, String>) received.get("answer");
     }
+
+    public static void setForgetPassword(User user, String question, String answer){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.setForgetPassword);
+        toSend.put("user", user);
+        toSend.put("question", question);
+        toSend.put("ans", answer);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
+
+    public static String getForgetPassword(String user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getForgetPassword);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (String) received.get("answer");
+    }
 }

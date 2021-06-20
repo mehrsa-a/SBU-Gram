@@ -81,6 +81,7 @@ public class LogInController {
         new PageLoader().load("Signup");
     }
 
-    public void forgotPass(ActionEvent actionEvent) {
+    public void forgotPass(ActionEvent actionEvent) throws IOException {
+        new PageLoader().load("ForgetPassword");
     }
 }

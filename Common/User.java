@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class User implements Serializable, Comparable {
-    public static long serialVersionUID=123457L;
+    public static long serialVersionUID=123457890L;
     private String username="";
     private String password;
     private byte[] image;
@@ -24,6 +24,24 @@ public class User implements Serializable, Comparable {
     private ArrayList<User> following=new ArrayList<>();
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
+    private String question;
+    private String answer;
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
 
     public void setBio(String bio) {
         this.bio = bio;

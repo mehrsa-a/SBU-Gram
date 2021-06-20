@@ -68,7 +68,7 @@ public class AddInformationController {
             ClientAPI.getMyPosts(u);
         }
         ClientAPI.getAllUsers();
-        new PageLoader().load("TimeLine");
+        new PageLoader().load("SetForgetPassword");
     }
 
     public void skip(ActionEvent actionEvent) throws IOException {
@@ -78,7 +78,7 @@ public class AddInformationController {
             ClientAPI.getMyPosts(u);
         }
         ClientAPI.getAllUsers();
-        new PageLoader().load("TimeLine");
+        new PageLoader().load("SetForgetPassword");
         //TimeLineController.username.setText(currentUser.getUsername());
     }
 
