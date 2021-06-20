@@ -45,8 +45,6 @@ public class ServerAPI {
         Server.users.put(username, newUser);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
-        System.out.println(username+" register ");
-        System.out.println("time: "+ Time.getTime());
         ans.put("request", Requests.signup);
         ans.put("answer", newUser);
         return ans;
@@ -57,6 +55,9 @@ public class ServerAPI {
         ans.put("request", Requests.getPosts);
         List<Post> sent = new ArrayList<>(Server.posts);
         ans.put("posts", sent);
+        User user= (User) income.get("user");
+        System.out.println(user.getUsername()+"  get posts list");
+        System.out.println("time: "+Time.getTime());
         return ans;
     }
 
@@ -73,6 +74,7 @@ public class ServerAPI {
     public static Map<String,Object> addPost(Map<String,Object> income){
         Post post = (Post) income.get("post");
         byte[] image= (byte[]) income.get("image");
+        String path= (String) income.get("path");
         Server.posts.add(post);
         if(image!=null){
             for(Post p: Server.posts){
@@ -87,6 +89,14 @@ public class ServerAPI {
         ans.put("request", Requests.addPost);
         //ans.put("post", sent);
         ans.put("answer", new Boolean(true));
+        System.out.println(post.getUser().getUsername()+" publish");
+        if(image!=null){
+            System.out.println("message: "+post.getTitle()+" "+path+" "+post.getUser().getUsername());
+        }
+        else{
+            System.out.println("message: "+post.getTitle()+" "+post.getUser().getUsername());
+        }
+        System.out.println("time: "+ Time.getTime());
         return ans;
     }
 
@@ -133,12 +143,25 @@ public class ServerAPI {
         return ans;
     }
 
-    public static Map<String, Object> getNumbers(Map<String, Object> income){
+    public static Map<String, Object> getNum(Map<String, Object> income){
         User user= (User) income.get("user");
         String answer=Server.users.get(user.getUsername()).getFollowing().size()+"|"+Server.users.get(user.getUsername()).getFollower().size()+"|"+Server.users.get(user.getUsername()).getPosts().size();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getNumbers);
         ans.put("answer", answer);
+        return ans;
+    }
+
+    public static Map<String, Object> getNumbers(Map<String, Object> income){
+        User user= (User) income.get("user");
+        User cUser= (User) income.get("cUser");
+        String answer=Server.users.get(user.getUsername()).getFollowing().size()+"|"+Server.users.get(user.getUsername()).getFollower().size()+"|"+Server.users.get(user.getUsername()).getPosts().size();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getNumbers);
+        ans.put("answer", answer);
+        System.out.println(cUser.getUsername()+" get info "+user.getUsername());
+        System.out.println("message: "+user.getUsername()+" "+user.getProfilePath());
+        System.out.println("time: "+Time.getTime());
         return ans;
     }
 
@@ -320,11 +343,31 @@ public class ServerAPI {
     public static Map<String, Object> setProfile(Map<String, Object> income){
         User user= (User) income.get("user");
         byte[] image= (byte[]) income.get("image");
+        String path= (String) income.get("path");
         Server.users.get(user.getUsername()).setImage(image);
+        Server.users.get(user.getUsername()).setProfilePath(path);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.setProfile);
         ans.put("answer", image);
+        System.out.println(user.getUsername()+" register "+path);
+        System.out.println("time: "+ Time.getTime());
+        return ans;
+    }
+
+    public static Map<String, Object> changeProfile(Map<String, Object> income){
+        User user= (User) income.get("user");
+        byte[] image= (byte[]) income.get("image");
+        String path= (String) income.get("path");
+        Server.users.get(user.getUsername()).setImage(image);
+        Server.users.get(user.getUsername()).setProfilePath(path);
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.changeProfile);
+        ans.put("answer", image);
+        System.out.println(user.getUsername()+" update info");
+        System.out.println("message: "+path);
+        System.out.println("time: "+Time.getTime());
         return ans;
     }
 
@@ -425,6 +468,21 @@ public class ServerAPI {
         User user= (User) income.get("user");
         String username=user.getUsername();
         Server.users.remove(user.getUsername());
+        Server.posts.removeIf(p -> p.getUser().getUsername().equals(username));
+        for(Post p: Server.posts){
+            p.getLiked().removeIf(a-> (a.getUsername().equals(username)));
+            p.getReposted().removeIf(a-> (a.getUsername().equals(username)));
+            p.getCommented().removeIf(a-> (a.getUser().getUsername().equals(username)));
+        }
+        for(User u: Server.users.values()){
+            u.getFollowing().removeIf(a-> (a.getUsername().equals(username)));
+            u.getFollower().removeIf(a-> (a.getUsername().equals(username)));
+            for(Post p: u.getPosts()){
+                p.getLiked().removeIf(a-> (a.getUsername().equals(username)));
+                p.getReposted().removeIf(a-> (a.getUsername().equals(username)));
+                p.getCommented().removeIf(a-> (a.getUser().getUsername().equals(username)));
+            }
+        }
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.deleteAccount);

@@ -1,6 +1,7 @@
 package Server;
 
 import Common.Post;
+import Common.Time;
 import Common.User;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Server implements Runnable{
-    public static final int port=2144;
+    public static final int port=2149;
     private static boolean isServerUp=true;
     public static Map<String, User> users=new HashMap<>();
     public static Set<Post> posts=null;
@@ -39,6 +40,8 @@ public class Server implements Runnable{
             Socket currentUserSocket=null;
             try {
                 currentUserSocket=serverSocket.accept();
+                System.out.println("connect");
+                System.out.println("time: "+ Time.getTime());
                 ClientHandler clientHandler=new ClientHandler(currentUserSocket);
                 new Thread(clientHandler).start();
             } catch (IOException e) {

@@ -65,7 +65,7 @@ public class LogInController {
             currentUser=check;
             //TimeLineController.username.setText(currentUser.getUsername());
             Main.update();
-            ClientAPI.getAllPosts();
+            ClientAPI.getAllPosts(currentUser);
             for(User u: users.values()){
                 ClientAPI.getMyPosts(u);
             }

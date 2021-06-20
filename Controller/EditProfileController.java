@@ -27,6 +27,7 @@ public class EditProfileController {
     public ImageView image;
     public static Text username;
     public byte[] help;
+    public static String path;
     public JFXTextField gender;
     public JFXTextField birthday;
     public JFXTextArea bio;
@@ -72,6 +73,7 @@ public class EditProfileController {
         FileInputStream fileInputStream=new FileInputStream(file);
         byte[] bytes=fileInputStream.readAllBytes();
         help=bytes;
+        path=file.getAbsolutePath();
         Image newImage=new Image(new ByteArrayInputStream(bytes));
         image.setImage(newImage);
     }
@@ -82,7 +84,7 @@ public class EditProfileController {
     }
 
     public void confirm(ActionEvent actionEvent) throws IOException {
-        ClientAPI.setProfile(Main.currentUser, help);
+        ClientAPI.changeProfile(currentUser, help, path);
         Map<String, String> info=new HashMap<>();
         if(firstName.getText()!=null)
             info.put("firstName", firstName.getText());
@@ -102,7 +104,7 @@ public class EditProfileController {
             info.put("bio", bio.getText());
         ClientAPI.addInformation(currentUser, info);
         Main.update();
-        ClientAPI.getAllPosts();
+        ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
@@ -112,7 +114,7 @@ public class EditProfileController {
 
     public void back(ActionEvent actionEvent) throws IOException {
         Main.update();
-        ClientAPI.getAllPosts();
+        ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }

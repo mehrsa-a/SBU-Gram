@@ -91,6 +91,9 @@ public class ClientHandler implements Runnable {
                     case setProfile:
                         answer = ServerAPI.setProfile(income);
                         break;
+                    case changeProfile:
+                        answer = ServerAPI.changeProfile(income);
+                        break;
                     case getProfile:
                         answer = ServerAPI.getProfile(income);
                         break;

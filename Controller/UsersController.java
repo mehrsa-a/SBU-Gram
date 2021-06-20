@@ -50,7 +50,7 @@ public class UsersController {
             Image newImage=new Image(new ByteArrayInputStream(x));
             profile.setImage(newImage);
         }
-        String temp=ClientAPI.getNumbers(target);
+        String temp=ClientAPI.getNumbers(Main.currentUser, target);
         followingNum=Integer.parseInt(temp.substring(0, temp.indexOf("|")));
         following.setText(String.valueOf(followingNum));
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")));

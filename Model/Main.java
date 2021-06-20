@@ -26,8 +26,8 @@ public class Main extends Application {
     public static Map<String, User> users=new ConcurrentHashMap<>();
 
     public static void update(){
-        if(ClientAPI.getAllPosts()!=null){
-            posts=new CopyOnWriteArrayList<>(ClientAPI.getAllPosts());
+        if(ClientAPI.getAllPosts(Main.currentUser)!=null){
+            posts=new CopyOnWriteArrayList<>(ClientAPI.getAllPosts(Main.currentUser));
         }
         Map<String, User> map = ClientAPI.getAllUsers(Main.currentUser);
         if(map!=null){

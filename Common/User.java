@@ -27,6 +27,15 @@ public class User implements Serializable, Comparable {
     private final String timeString = Time.getTime();
     private String question;
     private String answer;
+    private String profilePath;
+
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
+    }
+
+    public String getProfilePath() {
+        return profilePath;
+    }
 
     public void setAnswer(String answer) {
         this.answer = answer;
@@ -190,5 +199,11 @@ public class User implements Serializable, Comparable {
             return -1;
         }
         return 1;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        User other= (User) o;
+        return other.getUsername().equals(this.getUsername());
     }
 }

@@ -44,16 +44,17 @@ public class ClientAPI {
         return (User) received.get("answer");
     }
 
-    public static Map<String, Object> getPosts(){
+    public static Map<String, Object> getPosts(User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.getPosts);
         toSend.put("posts", Main.posts);
+        toSend.put("user", user);
         Map<String,Object> received = ConnectClient.serve(toSend);
         return received;
     }
 
-    public static List<Post> getAllPosts(){
-        Map<String,Object> all=getPosts();
+    public static List<Post> getAllPosts(User user){
+        Map<String,Object> all=getPosts(user);
         return (List<Post>) all.get("posts");
     }
 
@@ -77,11 +78,12 @@ public class ClientAPI {
         ConnectClient.serve(toSend);
     }
 
-    public static void addPost(Post post, byte[] bytes){
+    public static void addPost(Post post, byte[] bytes, String path){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.addPost);
         toSend.put("post", post);
         toSend.put("image", bytes);
+        toSend.put("path", path);
         Map<String,Object> received=ConnectClient.serve(toSend);
     }
 
@@ -111,10 +113,22 @@ public class ClientAPI {
         return (String) received.get("answer");
     }
 
-    public static String getNumbers(User user){
+    public static String getNum(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getNum);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (String) received.get("answer");
+    }
+
+    public static String getNumbers(User cUser, User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.getNumbers);
         toSend.put("user", user);
+        toSend.put("cUser", cUser);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
             return null;
@@ -227,11 +241,25 @@ public class ClientAPI {
         return (List<Comment>) received.get("answer");
     }
 
-    public static byte[] setProfile(User user, byte[] bytes){
+    public static byte[] setProfile(User user, byte[] bytes, String path){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.setProfile);
         toSend.put("user", user);
         toSend.put("image", bytes);
+        toSend.put("path", path);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (byte[]) received.get("answer");
+    }
+
+    public static byte[] changeProfile(User user, byte[] bytes, String path){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.setProfile);
+        toSend.put("user", user);
+        toSend.put("image", bytes);
+        toSend.put("path", path);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
             return null;

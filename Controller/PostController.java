@@ -109,7 +109,7 @@ public class PostController {
         currentUser.getPosts().add(target);
         ClientAPI.addPost(target);
         Main.update();
-        ClientAPI.getAllPosts();
+        ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }

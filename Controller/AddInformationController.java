@@ -22,6 +22,7 @@ import static Model.Main.*;
 public class AddInformationController {
     public ImageView image;
     public static byte[] help;
+    public static String path;
     public JFXTextField gender;
     public JFXTextField birthday;
     public JFXTextArea bio;
@@ -37,13 +38,13 @@ public class AddInformationController {
         FileInputStream fileInputStream=new FileInputStream(file);
         byte[] bytes=fileInputStream.readAllBytes();
         help=bytes;
+        path= file.getAbsolutePath();
         Image newImage=new Image(new ByteArrayInputStream(bytes));
         image.setImage(newImage);
-        ClientAPI.setProfile(Main.currentUser, help);
     }
 
     public void signup(ActionEvent actionEvent) throws IOException {
-        ClientAPI.setProfile(Main.currentUser, help);
+        ClientAPI.setProfile(Main.currentUser, help, path);
         Map<String, String> info=new HashMap<>();
         if(firstName.getText()!=null)
             info.put("firstName", firstName.getText());
@@ -63,7 +64,7 @@ public class AddInformationController {
             info.put("bio", bio.getText());
         ClientAPI.addInformation(currentUser, info);
         Main.update();
-        ClientAPI.getAllPosts();
+        ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
@@ -73,7 +74,7 @@ public class AddInformationController {
 
     public void skip(ActionEvent actionEvent) throws IOException {
         Main.update();
-        ClientAPI.getAllPosts();
+        ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }

@@ -39,6 +39,7 @@ public class TimeLineController {
     public Label following;
     public ImageView profile;
     public static byte[] help;
+    public static String path;
     public Label name;
     public JFXTextField searchField;
     public JFXListView<Post> explorePosts;
@@ -66,7 +67,7 @@ public class TimeLineController {
         explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
-        String temp=ClientAPI.getNumbers(currentUser);
+        String temp=ClientAPI.getNumbers(currentUser, currentUser);
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
         follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
         post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
@@ -91,7 +92,7 @@ public class TimeLineController {
 
     public void refresh(ActionEvent actionEvent) throws IOException {
         Main.update();
-        ClientAPI.getAllPosts();
+        ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
@@ -114,7 +115,7 @@ public class TimeLineController {
         explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
-        String temp=ClientAPI.getNumbers(currentUser);
+        String temp=ClientAPI.getNumbers(currentUser, currentUser);
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
         follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
         post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
@@ -131,6 +132,7 @@ public class TimeLineController {
         FileInputStream fileInputStream=new FileInputStream(file);
         byte[] bytes=fileInputStream.readAllBytes();
         help=bytes;
+        path=file.getAbsolutePath();
         Image newImage=new Image(new ByteArrayInputStream(bytes));
         image.setImage(newImage);
     }
@@ -150,10 +152,10 @@ public class TimeLineController {
             ClientAPI.addPost(currentPost);
         }
         else{
-            ClientAPI.addPost(currentPost, help);
+            ClientAPI.addPost(currentPost, help, path);
         }
         Main.update();
-        ClientAPI.getAllPosts();
+        ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
@@ -193,7 +195,7 @@ public class TimeLineController {
         }
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
-        String temp=ClientAPI.getNumbers(currentUser);
+        String temp=ClientAPI.getNumbers(currentUser, currentUser);
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
         follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
         post1.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
@@ -208,7 +210,7 @@ public class TimeLineController {
 
     public void openTimeline(Event event) {
         Main.update();
-        ClientAPI.getAllPosts();
+        ClientAPI.getAllPosts(currentUser);
         List<User> followed=users.values().stream()
                 .filter(a-> currentUser.getFollowing().contains(a))
                 .collect(Collectors.toList());
