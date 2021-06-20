@@ -85,24 +85,24 @@ public class ClientAPI {
         Map<String,Object> received=ConnectClient.serve(toSend);
     }
 
-    public static Map<String, Object> getUsers(){
+    public static Map<String, Object> getUsers(User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.getUsers);
-        toSend.put("user", Main.currentUser);
+        toSend.put("user", user);
         toSend.put("users", Main.users);
         Map<String,Object> received = ConnectClient.serve(toSend);
         return received;
     }
 
-    public static Map<String, User> getAllUsers(){
-        Map<String,Object> all=getUsers();
+    public static Map<String, User> getAllUsers(User user){
+        Map<String,Object> all=getUsers(user);
         return (Map<String, User>) all.get("users");
     }
 
-    public static String follow(User user){
+    public static String follow(User cUser, User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.follow);
-        toSend.put("user", Main.currentUser);
+        toSend.put("user", cUser);
         toSend.put("followed", user);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
@@ -133,10 +133,10 @@ public class ClientAPI {
         return (List<String>) received.get("answer");
     }
 
-    public static String unfollow(User user){
+    public static String unfollow(User cUser, User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.unfollow);
-        toSend.put("user", Main.currentUser);
+        toSend.put("user", cUser);
         toSend.put("unfollowed", user);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
@@ -145,10 +145,10 @@ public class ClientAPI {
         return (String) received.get("answer");
     }
 
-    public static Integer like(Post post){
+    public static Integer like(User user, Post post){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.like);
-        toSend.put("user", Main.currentUser);
+        toSend.put("user", user);
         toSend.put("liked", post);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
@@ -157,10 +157,10 @@ public class ClientAPI {
         return (Integer) received.get("answer");
     }
 
-    public static Integer dislike(Post post){
+    public static Integer dislike(User user, Post post){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.dislike);
-        toSend.put("user", Main.currentUser);
+        toSend.put("user", user);
         toSend.put("disliked", post);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
@@ -191,10 +191,10 @@ public class ClientAPI {
         return (List<String>) received.get("answer");
     }
 
-    public static Integer repost(Post post){
+    public static Integer repost(User user, Post post){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.repost);
-        toSend.put("user", Main.currentUser);
+        toSend.put("user", user);
         toSend.put("repost", post);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
@@ -203,10 +203,10 @@ public class ClientAPI {
         return (Integer) received.get("answer");
     }
 
-    public static List<Comment> addComment(Post post, Comment comment){
+    public static List<Comment> addComment(User user, Post post, Comment comment){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.addComment);
-        toSend.put("user", Main.currentUser);
+        toSend.put("user", user);
         toSend.put("commented", post);
         toSend.put("comment", comment);
         Map<String,Object> received=ConnectClient.serve(toSend);

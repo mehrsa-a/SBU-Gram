@@ -6,7 +6,9 @@ import javafx.scene.image.ImageView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Post implements Serializable, Comparable {
     public static long serialVersionUID=123456L;
@@ -18,9 +20,9 @@ public class Post implements Serializable, Comparable {
     private int like;
     private int repost;
     private int comment;
-    private ArrayList<User> liked=new ArrayList<>();
-    private ArrayList<User> reposted=new ArrayList<>();
-    private ArrayList<Comment> commented=new ArrayList<>();
+    private List<User> liked=new CopyOnWriteArrayList<>();
+    private List<User> reposted=new CopyOnWriteArrayList<>();
+    private List<Comment> commented=new CopyOnWriteArrayList<>();
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
 
@@ -80,15 +82,15 @@ public class Post implements Serializable, Comparable {
         this.user = user;
     }
 
-    public ArrayList<Comment> getCommented() {
+    public List<Comment> getCommented() {
         return commented;
     }
 
-    public ArrayList<User> getReposted() {
+    public List<User> getReposted() {
         return reposted;
     }
 
-    public ArrayList<User> getLiked() {
+    public List<User> getLiked() {
         return liked;
     }
 

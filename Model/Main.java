@@ -29,7 +29,7 @@ public class Main extends Application {
         if(ClientAPI.getAllPosts()!=null){
             posts=new CopyOnWriteArrayList<>(ClientAPI.getAllPosts());
         }
-        Map<String, User> map = ClientAPI.getAllUsers();
+        Map<String, User> map = ClientAPI.getAllUsers(Main.currentUser);
         if(map!=null){
             users = map;
         }

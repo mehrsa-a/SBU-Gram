@@ -69,7 +69,7 @@ public class LogInController {
             for(User u: users.values()){
                 ClientAPI.getMyPosts(u);
             }
-            ClientAPI.getAllUsers();
+            ClientAPI.getAllUsers(currentUser);
             new PageLoader().load("TimeLine");
         } else{
             wrong.setVisible(true);

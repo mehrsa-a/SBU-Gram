@@ -105,7 +105,7 @@ public class EditProfileController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        ClientAPI.getAllUsers();
+        ClientAPI.getAllUsers(currentUser);
         new PageLoader().load("TimeLine");
     }
 
@@ -115,7 +115,7 @@ public class EditProfileController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        ClientAPI.getAllUsers();
+        ClientAPI.getAllUsers(currentUser);
         new PageLoader().load("TimeLine");
     }
 

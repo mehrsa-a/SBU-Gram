@@ -77,7 +77,7 @@ public class UserController {
     }
 
     public void follow(ActionEvent actionEvent) {
-        String temp= ClientAPI.follow(target);
+        String temp= ClientAPI.follow(Main.currentUser, target);
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
         follower.setText(String.valueOf(followerNum));
         unfollowing.setVisible(true);
@@ -90,7 +90,7 @@ public class UserController {
     }
 
     public void unfollow(ActionEvent actionEvent) {
-        String temp= ClientAPI.unfollow(target);
+        String temp= ClientAPI.unfollow(Main.currentUser, target);
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
         follower.setText(String.valueOf(followerNum));
         followingButton.setVisible(true);

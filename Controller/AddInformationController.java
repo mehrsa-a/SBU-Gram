@@ -67,7 +67,7 @@ public class AddInformationController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        ClientAPI.getAllUsers();
+        ClientAPI.getAllUsers(currentUser);
         new PageLoader().load("SetForgetPassword");
     }
 
@@ -77,7 +77,7 @@ public class AddInformationController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        ClientAPI.getAllUsers();
+        ClientAPI.getAllUsers(currentUser);
         new PageLoader().load("SetForgetPassword");
         //TimeLineController.username.setText(currentUser.getUsername());
     }

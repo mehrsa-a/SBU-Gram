@@ -86,7 +86,7 @@ public class TimeLineController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        ClientAPI.getAllUsers();
+        ClientAPI.getAllUsers(currentUser);
         new PageLoader().load("Timeline");
         username.setText(currentUser.getUsername());
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
@@ -171,7 +171,7 @@ public class TimeLineController {
 
     public void openAccounts(Event event) {
         Main.update();
-        ClientAPI.getAllUsers();
+        ClientAPI.getAllUsers(currentUser);
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
     }
@@ -185,7 +185,7 @@ public class TimeLineController {
 
     public void search(ActionEvent actionEvent) {
         Main.update();
-        ClientAPI.getAllUsers();
+        ClientAPI.getAllUsers(currentUser);
         List<User> searched= users.values()
                 .stream()
                 .filter(a->a.getUsername().contains(searchField.getText()))
@@ -196,7 +196,7 @@ public class TimeLineController {
 
     public void backToAll(ActionEvent actionEvent) {
         Main.update();
-        ClientAPI.getAllUsers();
+        ClientAPI.getAllUsers(currentUser);
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
     }

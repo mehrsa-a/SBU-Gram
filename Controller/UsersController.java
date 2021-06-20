@@ -3,6 +3,7 @@ package Controller;
 import Common.Post;
 import Common.User;
 import Model.ClientAPI;
+import Model.Main;
 import Model.PageLoader;
 import Model.PostItem;
 import com.jfoenix.controls.JFXButton;
@@ -85,7 +86,7 @@ public class UsersController {
     }
 
     public void follow(ActionEvent actionEvent) {
-        String temp= ClientAPI.follow(target);
+        String temp= ClientAPI.follow(Main.currentUser, target);
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
         follower.setText(String.valueOf(followerNum));
         unfollowing.setVisible(true);
@@ -93,7 +94,7 @@ public class UsersController {
     }
 
     public void unfollow(ActionEvent actionEvent) {
-        String temp= ClientAPI.unfollow(target);
+        String temp= ClientAPI.unfollow(Main.currentUser, target);
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
         follower.setText(String.valueOf(followerNum));
         followingButton.setVisible(true);

@@ -4,6 +4,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class User implements Serializable, Comparable {
@@ -19,9 +20,9 @@ public class User implements Serializable, Comparable {
     private String birthday;
     private String gender;
     private String bio;
-    private ArrayList<Post> posts=new ArrayList<>();
-    private ArrayList<User> follower=new ArrayList<>();
-    private ArrayList<User> following=new ArrayList<>();
+    private List<Post> posts=new CopyOnWriteArrayList<>();
+    private List<User> follower=new CopyOnWriteArrayList<>();
+    private List<User> following=new CopyOnWriteArrayList<>();
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
     private String question;
@@ -75,11 +76,11 @@ public class User implements Serializable, Comparable {
         return null;
     }
 
-    public ArrayList<User> getFollowing() {
+    public List<User> getFollowing() {
         return following;
     }
 
-    public ArrayList<User> getFollower() {
+    public List<User> getFollower() {
         return follower;
     }
 
@@ -99,7 +100,7 @@ public class User implements Serializable, Comparable {
         this.image = image;
     }
 
-    public ArrayList<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 

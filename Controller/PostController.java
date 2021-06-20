@@ -49,6 +49,7 @@ public class PostController {
 
     public AnchorPane init(){
         username.setText(target.getUser().getUsername());
+        date.setText(target.getTimeString());
         byte[] x=ClientAPI.getProfile(target.getUser());
         if(x!=null){
             Image newImage=new Image(new ByteArrayInputStream(x));
@@ -72,14 +73,14 @@ public class PostController {
         }
         Map<String, String> info=ClientAPI.getInformation(target.getUser());
         if(info!=null){
-            if(!info.get("firstName").equals("")){
+            if(info.get("firstName")!=null){
                 fullName=info.get("firstName");
             }
-            if(!info.get("lastName").equals("")){
+            if(info.get("lastName")!=null){
                 fullName=" "+info.get("lastName");
             }
         }
-        if(!fullName.equals("")){
+        if(fullName!=null){
             name.setText(fullName);
         } else{
             name.setVisible(false);
@@ -89,13 +90,13 @@ public class PostController {
 
     public void like(ActionEvent actionEvent) {
         if(!liked.isVisible()){
-            likeNum= ClientAPI.like(target);
+            likeNum= ClientAPI.like(Main.currentUser, target);
             numberOfLikes.setText(String.valueOf(likeNum));
             liked.setVisible(true);
             notLiked.setVisible(false);
         }
         else{
-            likeNum= ClientAPI.dislike(target);
+            likeNum= ClientAPI.dislike(Main.currentUser, target);
             numberOfLikes.setText(String.valueOf(likeNum));
             notLiked.setVisible(true);
             liked.setVisible(false);
@@ -103,7 +104,7 @@ public class PostController {
     }
 
     public void repost(ActionEvent actionEvent) {
-        repostNum=ClientAPI.repost(target);
+        repostNum=ClientAPI.repost(Main.currentUser, target);
         numberOfReposts.setText(String.valueOf(repostNum));
         currentUser.getPosts().add(target);
         ClientAPI.addPost(target);
