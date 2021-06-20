@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -38,5 +39,15 @@
             <Image url="@../images/back.png" />
          </image>
       </ImageView>
+      <Label fx:id="matchPass" layoutX="221.0" layoutY="337.0" text="your passwords don't match" textFill="RED" visible="false">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+      <Label fx:id="falsePass" layoutX="231.0" layoutY="337.0" text="your password is wrong" textFill="RED" visible="false">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

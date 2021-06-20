@@ -403,4 +403,14 @@ public class ServerAPI {
         ans.put("answer", new Boolean(true));
         return ans;
     }
+
+    public static Map<String,Object> deleteAccount(Map<String,Object> income){
+        User user= (User) income.get("user");
+        Server.users.remove(user.getUsername());
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.deleteAccount);
+        ans.put("answer", new Boolean(true));
+        return ans;
+    }
 }

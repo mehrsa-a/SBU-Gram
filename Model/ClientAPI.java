@@ -296,4 +296,11 @@ public class ClientAPI {
         toSend.put("password", password);
         Map<String,Object> received=ConnectClient.serve(toSend);
     }
+
+    public static void deleteAccount(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.deleteAccount);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
 }

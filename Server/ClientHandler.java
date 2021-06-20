@@ -109,6 +109,9 @@ public class ClientHandler implements Runnable {
                     case changePassword:
                         answer = ServerAPI.changePassword(income);
                         break;
+                    case deleteAccount:
+                        answer = ServerAPI.deleteAccount(income);
+                        break;
                 }
                 objectOutputStream.writeObject(answer);
                 objectOutputStream.flush();
