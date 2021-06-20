@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static Model.Main.*;
 
@@ -40,6 +42,7 @@ public class TimeLineController {
     public ImageView profile;
     public static byte[] help;
     public Label name;
+    public JFXTextField searchField;
 
     public void initialize(){
         username.setText(currentUser.getUsername());
@@ -178,5 +181,23 @@ public class TimeLineController {
         ClientAPI.getAllPosts();
         PostList.setItems(FXCollections.observableArrayList(posts));
         PostList.setCellFactory(PostList -> new PostItem());
+    }
+
+    public void search(ActionEvent actionEvent) {
+        Main.update();
+        ClientAPI.getAllUsers();
+        List<User> searched= users.values()
+                .stream()
+                .filter(a->a.getUsername().contains(searchField.getText()))
+                .collect(Collectors.toList());
+        accounts.setItems(FXCollections.observableArrayList(searched));
+        accounts.setCellFactory(accounts -> new UserItem());
+    }
+
+    public void backToAll(ActionEvent actionEvent) {
+        Main.update();
+        ClientAPI.getAllUsers();
+        accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
+        accounts.setCellFactory(accounts -> new UserItem());
     }
 }
