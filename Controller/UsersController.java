@@ -66,6 +66,17 @@ public class UsersController {
         if(targetFollowers.contains(currentUser.getUsername())){
             unfollowing.setVisible(true);
             followingButton.setVisible(false);
+            List<String> muteNames= new ArrayList<>();
+            for(User u: currentUser.getMuted()){
+                muteNames.add(u.getUsername());
+            }
+            if(muteNames.contains(target.getUsername())){
+                muteButton.setVisible(false);
+                unMuteButton.setVisible(true);
+            } else{
+                unMuteButton.setVisible(false);
+                muteButton.setVisible(true);
+            }
         }
         ClientAPI.getMyPosts(target);
         Posts.setItems(FXCollections.observableArrayList(target.getPosts()));
@@ -87,23 +98,6 @@ public class UsersController {
         } else{
             name.setVisible(false);
         }
-        List<String> usernames=new ArrayList<>();
-        for(User u: currentUser.getFollowing()){
-            usernames.add(u.getUsername());
-        }
-        if(usernames.contains(target.getUsername())){
-            List<String> muteNames= new ArrayList<>();
-            for(User u: currentUser.getMuted()){
-                muteNames.add(u.getUsername());
-            }
-            if(muteNames.contains(target.getUsername())){
-                muteButton.setVisible(false);
-                unMuteButton.setVisible(true);
-            } else{
-                unMuteButton.setVisible(false);
-                muteButton.setVisible(true);
-            }
-        }
         List<String> blockName=new ArrayList<>();
         for(User u: currentUser.getBlocked()){
             blockName.add(u.getUsername());
@@ -124,6 +118,8 @@ public class UsersController {
         follower.setText(String.valueOf(followerNum));
         unfollowing.setVisible(true);
         followingButton.setVisible(false);
+        muteButton.setVisible(true);
+        unMuteButton.setVisible(false);
     }
 
     public void unfollow(ActionEvent actionEvent) {
@@ -132,6 +128,8 @@ public class UsersController {
         follower.setText(String.valueOf(followerNum));
         followingButton.setVisible(true);
         unfollowing.setVisible(false);
+        muteButton.setVisible(false);
+        unMuteButton.setVisible(false);
     }
 
     public void block(ActionEvent actionEvent) {
@@ -154,11 +152,13 @@ public class UsersController {
         ClientAPI.mute(currentUser, target);
         muteButton.setVisible(false);
         unMuteButton.setVisible(true);
+        currentUser.getMuted().add(target);
     }
 
     public void unMute(ActionEvent actionEvent) {
         ClientAPI.unMute(currentUser, target);
         unMuteButton.setVisible(false);
         muteButton.setVisible(true);
+        currentUser.getMuted().add(target);
     }
 }

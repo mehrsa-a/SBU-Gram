@@ -32,10 +32,10 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <JFXListView fx:id="otherMassages" layoutY="129.0" prefHeight="335.0" prefWidth="300.0" />
-      <JFXListView fx:id="myMassages" layoutX="300.0" layoutY="129.0" prefHeight="335.0" prefWidth="300.0" />
-      <JFXTextField fx:id="massageField" focusColor="#1c1194" layoutX="4.0" layoutY="468.0" prefHeight="25.0" prefWidth="475.0" promptText="write a massage..." unFocusColor="#1c1194" />
-      <JFXButton layoutX="489.0" layoutY="468.0" onAction="#attachFile" prefHeight="25.0" prefWidth="43.0" text="File" textFill="#1c1194" />
-      <JFXButton layoutX="543.0" layoutY="468.0" onAction="#send" text="Send" textFill="#1c1194" />
+      <JFXListView fx:id="otherMassages" layoutY="129.0" prefHeight="300.0" prefWidth="300.0" />
+      <JFXListView fx:id="myMassages" layoutX="300.0" layoutY="129.0" prefHeight="300.0" prefWidth="300.0" />
+      <JFXTextField fx:id="massageField" focusColor="#1c1194" layoutX="14.0" layoutY="429.0" prefHeight="25.0" prefWidth="475.0" promptText="write a massage..." unFocusColor="#1c1194" />
+      <JFXButton layoutX="489.0" layoutY="429.0" onAction="#attachFile" prefHeight="25.0" prefWidth="43.0" text="File" textFill="#1c1194" />
+      <JFXButton layoutX="543.0" layoutY="429.0" onAction="#send" text="Send" textFill="#1c1194" />
    </children>
 </AnchorPane>

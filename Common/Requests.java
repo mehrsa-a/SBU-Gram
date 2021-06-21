@@ -5,6 +5,7 @@ public enum Requests {
     login,
     signup,
     getPosts,
+    getTimeline,
     getMyPosts,
     addPost,
     getUsers,
@@ -12,6 +13,7 @@ public enum Requests {
     getNumbers,
     getNum,
     getFollowers,
+    getFollowing,
     unfollow,
     like,
     dislike,
@@ -33,5 +35,8 @@ public enum Requests {
     block,
     unblock,
     mute,
-    unMute
+    unMute,
+    sendMassage,
+    receiveMassage,
+    getMassages
 }

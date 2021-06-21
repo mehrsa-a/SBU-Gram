@@ -5,6 +5,8 @@ import javafx.scene.image.ImageView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class User implements Serializable, Comparable {
@@ -31,6 +33,16 @@ public class User implements Serializable, Comparable {
     private List<User> blocked=new CopyOnWriteArrayList<>();
     private List<User> blocker=new CopyOnWriteArrayList<>();
     private List<User> muted=new CopyOnWriteArrayList<>();
+
+    private Map<User, Map<String, List<Massage>>> massages=new ConcurrentHashMap<>();
+
+    public void setMassages(Map<User, Map<String, List<Massage>>> massages) {
+        this.massages = massages;
+    }
+
+    public Map<User, Map<String, List<Massage>>> getMassages() {
+        return massages;
+    }
 
     public void setMuted(List<User> muted) {
         this.muted = muted;

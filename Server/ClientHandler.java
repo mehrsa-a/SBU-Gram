@@ -49,6 +49,9 @@ public class ClientHandler implements Runnable {
                     case getPosts:
                         answer = ServerAPI.getPosts(income);
                         break;
+                    case getTimeline:
+                        answer = ServerAPI.getTimeLine(income);
+                        break;
                     case getMyPosts:
                         answer = ServerAPI.getMyPosts(income);
                         break;
@@ -66,6 +69,9 @@ public class ClientHandler implements Runnable {
                         break;
                     case getFollowers:
                         answer = ServerAPI.getFollowers(income);
+                        break;
+                    case getFollowing:
+                        answer = ServerAPI.getFollowings(income);
                         break;
                     case unfollow:
                         answer = ServerAPI.unfollow(income);
@@ -132,6 +138,15 @@ public class ClientHandler implements Runnable {
                         break;
                     case unMute:
                         answer = ServerAPI.unMute(income);
+                        break;
+                    case sendMassage:
+                        answer = ServerAPI.sendMassage(income);
+                        break;
+                    case receiveMassage:
+                        answer = ServerAPI.receiveMassage(income);
+                        break;
+                    case getMassages:
+                        answer = ServerAPI.getMassage(income);
                         break;
                 }
                 objectOutputStream.writeObject(answer);

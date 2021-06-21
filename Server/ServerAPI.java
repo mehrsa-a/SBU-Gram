@@ -1,14 +1,21 @@
 package Server;
 
 import Common.*;
+import Model.ClientAPI;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
+
+import static Model.Main.currentUser;
+import static Model.Main.users;
 
 public class ServerAPI {
 
     private static Comparator<Post> timeCompare = (a, b) -> -1 * Long.compare(a.getCreatedTime(), b.getCreatedTime());
-    
+    private static Comparator<Massage> massageCompare = (a, b) -> -1 * Long.compare(a.getCreatedTime(), b.getCreatedTime());
+
     public static Map<String, Object> login(Map<String, Object> received){
         String username=(String) received.get("username");
         String password=(String) received.get("password");
@@ -58,6 +65,24 @@ public class ServerAPI {
         User user= (User) income.get("user");
         System.out.println(user.getUsername()+"  get posts list");
         System.out.println("time: "+Time.getTime());
+        return ans;
+    }
+
+    public static Map<String,Object> getTimeLine(Map<String,Object> income){
+        User user= (User) income.get("user");
+        List<String> followed= new ArrayList<>();
+        for(User u: Server.users.get(user.getUsername()).getFollowing()){
+            followed.add(u.getUsername());
+        }
+        List<Post> set=new ArrayList<>();
+        set.addAll(Server.users.get(user.getUsername()).getPosts());
+        for(String s: followed){
+            set.addAll(Server.users.get(s).getPosts());
+        }
+        set.removeIf(a-> user.getMuted().contains(a.getUser()));
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getTimeline);
+        ans.put("answer", set);
         return ans;
     }
 
@@ -174,6 +199,19 @@ public class ServerAPI {
         }
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getFollowers);
+        ans.put("answer", usernames);
+        return ans;
+    }
+
+    public static Map<String, Object> getFollowings(Map<String, Object> income){
+        User user= (User) income.get("user");
+        List<User> list=Server.users.get(user.getUsername()).getFollowing();
+        List<String> usernames=new ArrayList<>();
+        for(User u: list){
+            usernames.add(u.getUsername());
+        }
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getFollowing);
         ans.put("answer", usernames);
         return ans;
     }
@@ -561,6 +599,85 @@ public class ServerAPI {
         System.out.println(cUser.getUsername()+"  unmute");
         System.out.println("message: "+user.getUsername());
         System.out.println("time: "+Time.getTime());
+        return ans;
+    }
+
+    public static Map<String,Object> sendMassage(Map<String,Object> income){
+        User sender= (User) income.get("sender");
+        User receiver= (User) income.get("receiver");
+        Massage massage= (Massage) income.get("massage");
+        Massage date= (Massage) income.get("date");
+        List<Massage> sent;
+        List<Massage> received;
+        Map<String, List<Massage>> massages;
+        if(Server.users.get(sender.getUsername()).getMassages().get(receiver)!=null){
+            massages=new HashMap<>(Server.users.get(sender.getUsername()).getMassages().get(receiver));
+            if(massages.get("sent")!=null){
+                sent=new ArrayList<>(massages.get("sent"));
+                received=new ArrayList<>(massages.get("received"));
+            }
+            else{
+                sent=new ArrayList<>();
+                received=new ArrayList<>();
+            }
+        } else{
+            massages=new HashMap<>();
+            sent=new ArrayList<>();
+            received=new ArrayList<>();
+        }
+        sent.add(massage);
+        received.add(date);
+        massages.put("sent", sent);
+        massages.put("received", received);
+        Server.users.get(sender.getUsername()).getMassages().put(receiver, massages);
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.sendMassage);
+        ans.put("answer", new Boolean(true));
+        return ans;
+    }
+
+    public static Map<String,Object> receiveMassage(Map<String,Object> income){
+        User sender= (User) income.get("sender");
+        User receiver= (User) income.get("receiver");
+        Massage massage= (Massage) income.get("massage");
+        Massage date= (Massage) income.get("date");
+        List<Massage> sent;
+        List<Massage> received;
+        Map<String, List<Massage>> massages;
+        if(Server.users.get(receiver.getUsername()).getMassages().get(sender)!=null){
+            massages=new HashMap<>(Server.users.get(receiver.getUsername()).getMassages().get(sender));
+            if(massages.get("sent")!=null){
+                sent=new ArrayList<>(massages.get("sent"));
+                received=new ArrayList<>(massages.get("received"));
+            }
+            else{
+                sent=new ArrayList<>();
+                received=new ArrayList<>();
+            }
+        } else{
+            massages=new HashMap<>();
+            sent=new ArrayList<>();
+            received=new ArrayList<>();
+        }
+        sent.add(date);
+        received.add(massage);
+        massages.put("sent", sent);
+        massages.put("received", received);
+        Server.users.get(receiver.getUsername()).getMassages().put(sender, massages);
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.receiveMassage);
+        ans.put("answer", new Boolean(true));
+        return ans;
+    }
+
+    public static Map<String,Object> getMassage(Map<String,Object> income){
+        User sender= (User) income.get("sender");
+        Map<User, Map<String, List<Massage>>> map=new HashMap<>(Server.users.get(sender.getUsername()).getMassages());
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getMassages);
+        ans.put("answer", map);
         return ans;
     }
 }

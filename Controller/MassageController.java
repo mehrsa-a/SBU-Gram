@@ -18,6 +18,7 @@ public class MassageController {
     }
 
     public AnchorPane init(){
+        massage.setText(target.getText());
         return massagePane;
     }
 }

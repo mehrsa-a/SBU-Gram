@@ -55,16 +55,7 @@ public class TimeLineController {
         }
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
-        List<User> followed=users.values().stream()
-                .filter(a-> currentUser.getFollowing().contains(a))
-                .collect(Collectors.toList());
-        Set<Post> set=new HashSet<>();
-        set.addAll(currentUser.getPosts());
-        for(User u: followed){
-            set.addAll(u.getPosts());
-        }
-        set.removeIf(a-> currentUser.getMuted().contains(a.getUser()));
-        PostList.setItems(FXCollections.observableArrayList(set));
+        PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
         PostList.setCellFactory(PostList -> new PostItem());
         explorePosts.setItems(FXCollections.observableArrayList(posts));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
@@ -104,16 +95,7 @@ public class TimeLineController {
         username.setText(currentUser.getUsername());
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
-        List<User> followed=users.values().stream()
-                .filter(a-> currentUser.getFollowing().contains(a))
-                .collect(Collectors.toList());
-        Set<Post> set=new HashSet<>();
-        set.addAll(currentUser.getPosts());
-        for(User u: followed){
-            set.addAll(u.getPosts());
-        }
-        set.removeIf(a-> currentUser.getMuted().contains(a.getUser()));
-        PostList.setItems(FXCollections.observableArrayList(set));
+        PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
         PostList.setCellFactory(PostList -> new PostItem());
         explorePosts.setItems(FXCollections.observableArrayList(posts));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
@@ -163,16 +145,7 @@ public class TimeLineController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        List<User> followed=users.values().stream()
-                .filter(a-> currentUser.getFollowing().contains(a))
-                .collect(Collectors.toList());
-        Set<Post> set=new HashSet<>();
-        set.addAll(currentUser.getPosts());
-        for(User u: followed){
-            set.addAll(u.getPosts());
-        }
-        set.removeIf(a-> currentUser.getMuted().contains(a.getUser()));
-        PostList.setItems(FXCollections.observableArrayList(set));
+        PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
         PostList.setCellFactory(PostList -> new PostItem());
         explorePosts.setItems(FXCollections.observableArrayList(posts));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
@@ -216,16 +189,7 @@ public class TimeLineController {
     public void openTimeline(Event event) {
         Main.update();
         ClientAPI.getAllPosts(currentUser);
-        List<User> followed=users.values().stream()
-                .filter(a-> currentUser.getFollowing().contains(a))
-                .collect(Collectors.toList());
-        Set<Post> set=new HashSet<>();
-        set.addAll(currentUser.getPosts());
-        for(User u: followed){
-            set.addAll(u.getPosts());
-        }
-        set.removeIf(a-> currentUser.getMuted().contains(a.getUser()));
-        PostList.setItems(FXCollections.observableArrayList(set));
+        PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
         PostList.setCellFactory(PostList -> new PostItem());
     }
 

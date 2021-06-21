@@ -1,13 +1,11 @@
 package Model;
 
-import Common.Comment;
-import Common.Post;
-import Common.Requests;
-import Common.User;
+import Common.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ClientAPI {
 
@@ -56,6 +54,18 @@ public class ClientAPI {
     public static List<Post> getAllPosts(User user){
         Map<String,Object> all=getPosts(user);
         return (List<Post>) all.get("posts");
+    }
+
+    public static List<Post> getTimeline(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getTimeline);
+        toSend.put("posts", Main.posts);
+        toSend.put("user", user);
+        Map<String,Object> received = ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<Post>) received.get("answer");
     }
 
     public static Map<String,Object> getMyPosts(User user){
@@ -139,6 +149,17 @@ public class ClientAPI {
     public static List<String> getFollowers(User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.getFollowers);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<String>) received.get("answer");
+    }
+
+    public static List<String> getFollowings(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getFollowing);
         toSend.put("user", user);
         Map<String,Object> received=ConnectClient.serve(toSend);
         if (received.get("answer")==null){
@@ -369,5 +390,36 @@ public class ClientAPI {
         toSend.put("user", user);
         toSend.put("cUser", cUser);
         Map<String,Object> received=ConnectClient.serve(toSend);
+    }
+
+    public static void sendMassage(User cUser, User user, Massage massage, Massage date){
+        Map<String,Object> toSend = new HashMap<>();
+        toSend.put("request", Requests.sendMassage);
+        toSend.put("sender", cUser);
+        toSend.put("receiver", user);
+        toSend.put("massage", massage);
+        toSend.put("date", date);
+        ConnectClient.serve(toSend);
+    }
+
+    public static void receiveMassage(User cUser, User user, Massage massage, Massage date){
+        Map<String,Object> toSend = new HashMap<>();
+        toSend.put("request", Requests.receiveMassage);
+        toSend.put("sender", cUser);
+        toSend.put("receiver", user);
+        toSend.put("massage", massage);
+        toSend.put("date", date);
+        ConnectClient.serve(toSend);
+    }
+
+    public static Map<User, Map<String, List<Massage>>> getMassages(User cUser){
+        Map<String,Object> toSend = new HashMap<>();
+        toSend.put("request", Requests.getMassages);
+        toSend.put("sender", cUser);
+        Map<String, Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (Map<User, Map<String, List<Massage>>>) received.get("answer");
     }
 }
