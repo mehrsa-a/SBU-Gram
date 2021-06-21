@@ -61,6 +61,9 @@ public class ClientHandler implements Runnable {
                     case getNumbers:
                         answer = ServerAPI.getNumbers(income);
                         break;
+                    case getNum:
+                        answer = ServerAPI.getNum(income);
+                        break;
                     case getFollowers:
                         answer = ServerAPI.getFollowers(income);
                         break;
@@ -117,6 +120,18 @@ public class ClientHandler implements Runnable {
                         break;
                     case logout:
                         answer = ServerAPI.logOut(income);
+                        break;
+                    case block:
+                        answer = ServerAPI.block(income);
+                        break;
+                    case unblock:
+                        answer = ServerAPI.unblock(income);
+                        break;
+                    case mute:
+                        answer = ServerAPI.mute(income);
+                        break;
+                    case unMute:
+                        answer = ServerAPI.unMute(income);
                         break;
                 }
                 objectOutputStream.writeObject(answer);

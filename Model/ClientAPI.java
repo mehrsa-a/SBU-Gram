@@ -338,4 +338,36 @@ public class ClientAPI {
         toSend.put("user", user);
         Map<String,Object> received=ConnectClient.serve(toSend);
     }
+
+    public static void block(User cUser, User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.block);
+        toSend.put("user", user);
+        toSend.put("cUser", cUser);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
+
+    public static void unblock(User cUser, User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.unblock);
+        toSend.put("user", user);
+        toSend.put("cUser", cUser);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
+
+    public static void mute(User cUser, User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.mute);
+        toSend.put("user", user);
+        toSend.put("cUser", cUser);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
+
+    public static void unMute(User cUser, User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.unMute);
+        toSend.put("user", user);
+        toSend.put("cUser", cUser);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+    }
 }

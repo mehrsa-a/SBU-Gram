@@ -24,7 +24,7 @@
                </font>
             </JFXButton>
             <JFXListView fx:id="Posts" layoutY="205.0" prefHeight="295.0" prefWidth="600.0" />
-            <Label fx:id="Bio" layoutX="384.0" layoutY="39.0" prefHeight="133.0" prefWidth="201.0" text="add your Biography from Edit Profile" />
+            <Label fx:id="Bio" layoutX="384.0" layoutY="61.0" prefHeight="93.0" prefWidth="201.0" text="add your Biography from Edit Profile" />
             <Label fx:id="username" layoutX="33.0" layoutY="40.0" text="username" textFill="#1c1194">
                <font>
                   <Font size="18.0" />
@@ -49,6 +49,10 @@
                </font>
             </Text>
             <Label fx:id="name" layoutX="35.0" layoutY="74.0" text="name" />
+            <JFXButton fx:id="blockButton" layoutX="519.0" layoutY="24.0" onAction="#block" prefHeight="25.0" prefWidth="69.0" text="BLOCK" textFill="RED" />
+            <JFXButton fx:id="unblockButton" layoutX="519.0" layoutY="24.0" onAction="#unblock" text="UNBLOCK" textFill="#1c1194" visible="false" />
+            <JFXButton fx:id="muteButton" layoutX="442.0" layoutY="24.0" onAction="#mute" prefHeight="25.0" prefWidth="69.0" text="MUTE" textFill="#1c1194" visible="false" />
+            <JFXButton fx:id="unMuteButton" layoutX="442.0" layoutY="24.0" onAction="#unMute" prefHeight="25.0" prefWidth="69.0" text="UNMUTE" textFill="#1c1194" visible="false" />
          </children>
       </AnchorPane>
    </children>

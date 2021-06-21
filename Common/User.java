@@ -28,6 +28,33 @@ public class User implements Serializable, Comparable {
     private String question;
     private String answer;
     private String profilePath;
+    private List<User> blocked=new CopyOnWriteArrayList<>();
+    private List<User> blocker=new CopyOnWriteArrayList<>();
+    private List<User> muted=new CopyOnWriteArrayList<>();
+
+    public void setMuted(List<User> muted) {
+        this.muted = muted;
+    }
+
+    public void setBlocker(List<User> blocker) {
+        this.blocker = blocker;
+    }
+
+    public void setBlocked(List<User> blocked) {
+        this.blocked = blocked;
+    }
+
+    public List<User> getMuted() {
+        return muted;
+    }
+
+    public List<User> getBlocker() {
+        return blocker;
+    }
+
+    public List<User> getBlocked() {
+        return blocked;
+    }
 
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;

@@ -501,4 +501,66 @@ public class ServerAPI {
         System.out.println("time: "+Time.getTime());
         return ans;
     }
+
+    public static Map<String,Object> block(Map<String,Object> income){
+        User user= (User) income.get("user");
+        User cUser= (User) income.get("cUser");
+        Server.users.get(cUser.getUsername()).getBlocked().add(user);
+        Server.users.get(user.getUsername()).getBlocker().add(cUser);
+        Server.users.get(cUser.getUsername()).getFollowing().remove(user);
+        Server.users.get(cUser.getUsername()).getFollower().remove(user);
+        Server.users.get(user.getUsername()).getFollower().remove(cUser);
+        Server.users.get(user.getUsername()).getFollowing().remove(cUser);
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.block);
+        ans.put("answer", new Boolean(true));
+        System.out.println(cUser.getUsername()+"  block");
+        System.out.println("message: "+user.getUsername());
+        System.out.println("time: "+Time.getTime());
+        return ans;
+    }
+
+    public static Map<String,Object> unblock(Map<String,Object> income){
+        User user= (User) income.get("user");
+        User cUser= (User) income.get("cUser");
+        Server.users.get(cUser.getUsername()).getBlocked().removeIf(a-> a.getUsername().equals(user.getUsername()));
+        Server.users.get(user.getUsername()).getBlocker().removeIf(a-> a.getUsername().equals(cUser.getUsername()));
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.unblock);
+        ans.put("answer", new Boolean(true));
+        System.out.println(cUser.getUsername()+"  unblock");
+        System.out.println("message: "+user.getUsername());
+        System.out.println("time: "+Time.getTime());
+        return ans;
+    }
+
+    public static Map<String,Object> mute(Map<String,Object> income){
+        User user= (User) income.get("user");
+        User cUser= (User) income.get("cUser");
+        Server.users.get(cUser.getUsername()).getMuted().add(user);
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.mute);
+        ans.put("answer", new Boolean(true));
+        System.out.println(cUser.getUsername()+"  mute");
+        System.out.println("message: "+user.getUsername());
+        System.out.println("time: "+Time.getTime());
+        return ans;
+    }
+
+    public static Map<String,Object> unMute(Map<String,Object> income){
+        User user= (User) income.get("user");
+        User cUser= (User) income.get("cUser");
+        Server.users.get(cUser.getUsername()).getMuted().removeIf(a-> a.getUsername().equals(user.getUsername()));
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.unMute);
+        ans.put("answer", new Boolean(true));
+        System.out.println(cUser.getUsername()+"  unmute");
+        System.out.println("message: "+user.getUsername());
+        System.out.println("time: "+Time.getTime());
+        return ans;
+    }
 }

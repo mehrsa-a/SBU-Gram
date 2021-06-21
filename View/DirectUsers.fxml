@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="userPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="username" layoutX="38.0" layoutY="36.0" text="username" textFill="#1c1194">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="173.0" layoutY="38.0" onAction="#massage" prefHeight="25.0" prefWidth="378.0" text="MASSAGE" textFill="#1c1194" />
+      <Label fx:id="date" layoutX="247.0" layoutY="69.0" prefHeight="17.0" prefWidth="226.0" text="Date" />
+   </children>
+</AnchorPane>

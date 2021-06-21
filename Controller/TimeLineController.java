@@ -43,6 +43,8 @@ public class TimeLineController {
     public Label name;
     public JFXTextField searchField;
     public JFXListView<Post> explorePosts;
+    public JFXListView<User> Massages;
+    public JFXTextField searchForMassage;
 
     public void initialize(){
         username.setText(currentUser.getUsername());
@@ -61,6 +63,7 @@ public class TimeLineController {
         for(User u: followed){
             set.addAll(u.getPosts());
         }
+        set.removeIf(a-> currentUser.getMuted().contains(a.getUser()));
         PostList.setItems(FXCollections.observableArrayList(set));
         PostList.setCellFactory(PostList -> new PostItem());
         explorePosts.setItems(FXCollections.observableArrayList(posts));
@@ -83,7 +86,7 @@ public class TimeLineController {
                 fullName=" "+info.get("lastName");
             }
         }
-        if(!fullName.equals("")){
+        if(fullName!=null){
             name.setText(fullName);
         } else{
             name.setVisible(false);
@@ -109,6 +112,7 @@ public class TimeLineController {
         for(User u: followed){
             set.addAll(u.getPosts());
         }
+        set.removeIf(a-> currentUser.getMuted().contains(a.getUser()));
         PostList.setItems(FXCollections.observableArrayList(set));
         PostList.setCellFactory(PostList -> new PostItem());
         explorePosts.setItems(FXCollections.observableArrayList(posts));
@@ -167,6 +171,7 @@ public class TimeLineController {
         for(User u: followed){
             set.addAll(u.getPosts());
         }
+        set.removeIf(a-> currentUser.getMuted().contains(a.getUser()));
         PostList.setItems(FXCollections.observableArrayList(set));
         PostList.setCellFactory(PostList -> new PostItem());
         explorePosts.setItems(FXCollections.observableArrayList(posts));
@@ -219,6 +224,7 @@ public class TimeLineController {
         for(User u: followed){
             set.addAll(u.getPosts());
         }
+        set.removeIf(a-> currentUser.getMuted().contains(a.getUser()));
         PostList.setItems(FXCollections.observableArrayList(set));
         PostList.setCellFactory(PostList -> new PostItem());
     }
@@ -239,10 +245,32 @@ public class TimeLineController {
         ClientAPI.getAllUsers(currentUser);
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
+        searchField.setText("");
     }
 
     public void openExplore(Event event) {
         explorePosts.setItems(FXCollections.observableArrayList(posts));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
+    }
+
+    public void backToMassages(ActionEvent actionEvent) {
+    }
+
+    public void searchOnMassages(ActionEvent actionEvent) {
+        Main.update();
+        ClientAPI.getAllUsers(currentUser);
+        List<User> searched= users.values()
+                .stream()
+                .filter(a->a.getUsername().contains(searchForMassage.getText()))
+                .collect(Collectors.toList());
+        Massages.setItems(FXCollections.observableArrayList(Main.users.values()));
+        Massages.setCellFactory(Massages -> new DirectUserItem());
+    }
+
+    public void openDM(Event event) {
+        Main.update();
+        ClientAPI.getAllUsers(currentUser);
+        Massages.setItems(FXCollections.observableArrayList(Main.users.values()));
+        Massages.setCellFactory(Massages -> new DirectUserItem());
     }
 }

@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,10 @@ public class UsersController {
     public ImageView profile;
     public Label name;
     public String fullName;
+    public JFXButton blockButton;
+    public JFXButton unblockButton;
+    public JFXButton muteButton;
+    public JFXButton unMuteButton;
 
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("TimeLine");
@@ -67,20 +72,48 @@ public class UsersController {
         Posts.setCellFactory(Posts -> new PostItem());
         Map<String, String> info=ClientAPI.getInformation(target);
         if(info!=null){
-            if(!info.get("bio").equals("")){
+            if(info.get("bio")!=null){
                 Bio.setText(info.get("bio"));
             }
-            if(!info.get("firstName").equals("")){
+            if(info.get("firstName")!=null){
                 fullName=info.get("firstName");
             }
-            if(!info.get("lastName").equals("")){
+            if(info.get("lastName")!=null){
                 fullName=" "+info.get("lastName");
             }
         }
-        if(!fullName.equals("")){
+        if(fullName!=null){
             name.setText(fullName);
         } else{
             name.setVisible(false);
+        }
+        List<String> usernames=new ArrayList<>();
+        for(User u: currentUser.getFollowing()){
+            usernames.add(u.getUsername());
+        }
+        if(usernames.contains(target.getUsername())){
+            List<String> muteNames= new ArrayList<>();
+            for(User u: currentUser.getMuted()){
+                muteNames.add(u.getUsername());
+            }
+            if(muteNames.contains(target.getUsername())){
+                muteButton.setVisible(false);
+                unMuteButton.setVisible(true);
+            } else{
+                unMuteButton.setVisible(false);
+                muteButton.setVisible(true);
+            }
+        }
+        List<String> blockName=new ArrayList<>();
+        for(User u: currentUser.getBlocked()){
+            blockName.add(u.getUsername());
+        }
+        if(blockName.contains(target.getUsername())){
+            blockButton.setVisible(false);
+            unblockButton.setVisible(true);
+        } else{
+            unblockButton.setVisible(false);
+            blockButton.setVisible(true);
         }
         return userPane;
     }
@@ -99,5 +132,33 @@ public class UsersController {
         follower.setText(String.valueOf(followerNum));
         followingButton.setVisible(true);
         unfollowing.setVisible(false);
+    }
+
+    public void block(ActionEvent actionEvent) {
+        ClientAPI.block(currentUser, target);
+        blockButton.setVisible(false);
+        unblockButton.setVisible(true);
+        unfollowing.setVisible(false);
+        followingButton.setVisible(false);
+    }
+
+    public void unblock(ActionEvent actionEvent) {
+        ClientAPI.unblock(currentUser, target);
+        unblockButton.setVisible(false);
+        blockButton.setVisible(true);
+        followingButton.setVisible(true);
+        unfollowing.setVisible(false);
+    }
+
+    public void mute(ActionEvent actionEvent) {
+        ClientAPI.mute(currentUser, target);
+        muteButton.setVisible(false);
+        unMuteButton.setVisible(true);
+    }
+
+    public void unMute(ActionEvent actionEvent) {
+        ClientAPI.unMute(currentUser, target);
+        unMuteButton.setVisible(false);
+        muteButton.setVisible(true);
     }
 }

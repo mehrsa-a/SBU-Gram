@@ -53,11 +53,13 @@ public class Database {
         try {
             FileOutputStream fout = new FileOutputStream(UsersFile);
             ObjectOutputStream objToFile = new ObjectOutputStream(fout);
+            objToFile.reset();
             objToFile.writeObject(Server.users);
             objToFile.close();
             fout.close();
             fout = new FileOutputStream(PostsFile);
             objToFile = new ObjectOutputStream(fout);
+            objToFile.reset();
             objToFile.writeObject(Server.posts);
             objToFile.close();
             fout.close();
