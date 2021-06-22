@@ -33,6 +33,15 @@ public class User implements Serializable, Comparable {
     private List<User> blocked=new CopyOnWriteArrayList<>();
     private List<User> blocker=new CopyOnWriteArrayList<>();
     private List<User> muted=new CopyOnWriteArrayList<>();
+    private List<User> massaged=new CopyOnWriteArrayList<>();
+
+    public void setMassaged(List<User> massaged) {
+        this.massaged = massaged;
+    }
+
+    public List<User> getMassaged() {
+        return massaged;
+    }
 
     public void setMuted(List<User> muted) {
         this.muted = muted;

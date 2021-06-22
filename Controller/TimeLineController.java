@@ -12,6 +12,8 @@ import javafx.event.Event;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 
@@ -45,12 +47,13 @@ public class TimeLineController {
     public JFXListView<Post> explorePosts;
     public JFXListView<User> Massages;
     public JFXTextField searchForMassage;
+    public AnchorPane personalProfile;
 
     public void initialize(){
         List<Post> posts=ClientAPI.getAllPosts(currentUser);
         List<String> f=ClientAPI.getFollowings(currentUser);
         List<String> m=ClientAPI.getMuted(currentUser);
-        List<Post> t=new ArrayList<>();
+        Set<Post> t=new HashSet<>();
         for(Post p: posts){
             assert f != null;
             if(f.contains(p.getUser().getUsername())) {
@@ -96,7 +99,7 @@ public class TimeLineController {
         List<Post> posts=ClientAPI.getAllPosts(currentUser);
         List<String> f=ClientAPI.getFollowings(currentUser);
         List<String> m=ClientAPI.getMuted(currentUser);
-        List<Post> t=new ArrayList<>();
+        Set<Post> t=new HashSet<>();
         for(Post p: posts){
             assert f != null;
             if(f.contains(p.getUser().getUsername())) {
@@ -177,7 +180,7 @@ public class TimeLineController {
         List<Post> posts=ClientAPI.getAllPosts(currentUser);
         List<String> f=ClientAPI.getFollowings(currentUser);
         List<String> m=ClientAPI.getMuted(currentUser);
-        List<Post> t=new ArrayList<>();
+        Set<Post> t=new HashSet<>();
         for(Post p: posts){
             assert f != null;
             if(f.contains(p.getUser().getUsername())) {
@@ -251,7 +254,7 @@ public class TimeLineController {
         List<Post> posts=ClientAPI.getAllPosts(currentUser);
         List<String> f=ClientAPI.getFollowings(currentUser);
         List<String> m=ClientAPI.getMuted(currentUser);
-        List<Post> t=new ArrayList<>();
+        Set<Post> t=new HashSet<>();
         for(Post p: posts){
             assert f != null;
             if(f.contains(p.getUser().getUsername())) {
@@ -307,25 +310,35 @@ public class TimeLineController {
         explorePosts.setCellFactory(explorePosts -> new PostItem());
     }
 
-    public void backToMassages(ActionEvent actionEvent) {
+    public void backToMassages(MouseEvent mouseEvent) {
+        Main.update();
+        ClientAPI.getAllUsers(currentUser);
+        List<User> shown= users.values().stream()
+                .filter(a-> ClientAPI.getMassaged(currentUser).contains(a.getUsername()))
+                .collect(Collectors.toList());
+        Massages.setItems(FXCollections.observableArrayList(shown));
+        Massages.setCellFactory(Massages -> new DirectUserItem());
         searchForMassage.setText("");
     }
 
-    public void searchOnMassages(ActionEvent actionEvent) {
+    public void openDM(Event event) {
+        Main.update();
+        ClientAPI.getAllUsers(currentUser);
+        List<User> shown= users.values().stream()
+                .filter(a-> ClientAPI.getMassaged(currentUser).contains(a.getUsername()))
+                .collect(Collectors.toList());
+        Massages.setItems(FXCollections.observableArrayList(shown));
+        Massages.setCellFactory(Massages -> new DirectUserItem());
+    }
+
+    public void searchOnMassages(MouseEvent mouseEvent) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
         List<User> searched= users.values()
                 .stream()
                 .filter(a->a.getUsername().contains(searchForMassage.getText()))
                 .collect(Collectors.toList());
-        Massages.setItems(FXCollections.observableArrayList(Main.users.values()));
-        Massages.setCellFactory(Massages -> new DirectUserItem());
-    }
-
-    public void openDM(Event event) {
-        Main.update();
-        ClientAPI.getAllUsers(currentUser);
-        Massages.setItems(FXCollections.observableArrayList(Main.users.values()));
+        Massages.setItems(FXCollections.observableArrayList(searched));
         Massages.setCellFactory(Massages -> new DirectUserItem());
     }
 }

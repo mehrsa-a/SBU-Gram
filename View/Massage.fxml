@@ -3,9 +3,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="massagePane" prefHeight="50.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="massagePane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="massage" layoutX="3.0" layoutY="3.0" prefHeight="44.0" prefWidth="293.0" text="massage" />
+      <Label fx:id="massage" layoutX="3.0" layoutY="3.0" text="massage" wrapText="true" />
    </children>
 </AnchorPane>

@@ -123,6 +123,10 @@ public class PostController {
 
     public void viewProfile(ActionEvent actionEvent) throws IOException {
         UserController.help=target.getUser();
-        new PageLoader().load("Users");
+        if(!(target.getUser().getUsername().equals(currentUser.getUsername()))){
+            new PageLoader().load("Users");
+        } else{
+            //open personal profile.. don't know how
+        }
     }
 }

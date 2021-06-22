@@ -37,7 +37,7 @@ public class DirectUsersController {
         readMassages=massages.stream()
                 .map(a-> a.isRead())
                 .collect(Collectors.toList());
-        newMassage.setVisible(readMassages.contains(true));
+        newMassage.setVisible(readMassages.contains(false));
         username.setText(target.getUsername());
         return userPane;
     }
@@ -48,6 +48,7 @@ public class DirectUsersController {
                 .filter(a-> ((a.getSender().getUsername().equals(target.getUsername()))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
                 .collect(Collectors.toList());
         for(Massage m: massages){
+            m.setRead(true);
             ClientAPI.readMassage(Main.currentUser, m);
         }
         new PageLoader().load("MassagePage");

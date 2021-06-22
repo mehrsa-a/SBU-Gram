@@ -441,4 +441,15 @@ public class ClientAPI {
         toSend.put("massage", massage);
         Map<String, Object> received=ConnectClient.serve(toSend);
     }
+
+    public static List<String> getMassaged(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getMassaged);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<String>) received.get("answer");
+    }
 }

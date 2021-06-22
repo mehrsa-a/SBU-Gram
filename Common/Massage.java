@@ -11,7 +11,7 @@ public class Massage implements Serializable, Comparable {
     private byte[] file;
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
-    private boolean read=false;
+    private boolean read;
 
     public void setRead(boolean read) {
         this.read = read;

@@ -97,6 +97,7 @@ public class ServerAPI {
         byte[] image= (byte[]) income.get("image");
         String path= (String) income.get("path");
         Server.posts.add(post);
+        Server.users.get(post.getUser().getUsername()).getPosts().add(post);
         if(image!=null){
             for(Post p: Server.posts){
                 if(p.equals(post)){
@@ -106,9 +107,7 @@ public class ServerAPI {
         }
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
-        List<Post> sent = new ArrayList<>(Server.posts);
         ans.put("request", Requests.addPost);
-        //ans.put("post", sent);
         ans.put("answer", new Boolean(true));
         System.out.println(post.getUser().getUsername()+" publish");
         if(image!=null){
@@ -618,6 +617,8 @@ public class ServerAPI {
         Massage date= (Massage) income.get("date");
         Server.massages.add(massage);
         Server.massages.add(date);
+        Server.users.get(sender.getUsername()).getMassaged().add(receiver);
+        Server.users.get(receiver.getUsername()).getMassaged().add(sender);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.sendMassage);
@@ -665,6 +666,19 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.readMassage);
         ans.put("answer", new Boolean(true));
+        return ans;
+    }
+
+    public static Map<String, Object> getMassaged(Map<String, Object> income){
+        User user= (User) income.get("user");
+        List<User> list=Server.users.get(user.getUsername()).getMassaged();
+        List<String> usernames=new ArrayList<>();
+        for(User u: list){
+            usernames.add(u.getUsername());
+        }
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getMassaged);
+        ans.put("answer", usernames);
         return ans;
     }
 }

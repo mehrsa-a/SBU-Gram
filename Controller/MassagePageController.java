@@ -11,9 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Popup;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,8 @@ public class MassagePageController {
     public JFXListView<Massage> myMassages;
     public JFXTextField massageField;
     public User target;
+    public static byte[] help;
+    public static String path;
     public Massage currentMassage=new Massage();
     List<Massage> massages=new ArrayList<>();
     List<Massage> sent=new ArrayList<>();
@@ -58,7 +61,15 @@ public class MassagePageController {
         new PageLoader().load("TimeLine");
     }
 
-    public void attachFile(ActionEvent actionEvent) {
+    public void attachFile(ActionEvent actionEvent) throws IOException {
+        FileChooser fileChooser=new FileChooser();
+        File file=fileChooser.showOpenDialog(new Popup());
+        FileInputStream fileInputStream=new FileInputStream(file);
+        byte[] bytes=fileInputStream.readAllBytes();
+        help=bytes;
+        path=file.getAbsolutePath();
+        Image newImage=new Image(new ByteArrayInputStream(bytes));
+        //image.setImage(newImage);
     }
 
     public void send(ActionEvent actionEvent) {
@@ -66,10 +77,12 @@ public class MassagePageController {
         currentMassage.setSender(Main.currentUser);
         currentMassage.setReceiver(target);
         currentMassage.setText(massageField.getText());
+        currentMassage.setRead(false);
         Massage date=new Massage();
         date.setText(Time.getTime());
         date.setSender(target);
         date.setReceiver(Main.currentUser);
+        date.setRead(true);
         ClientAPI.sendMassage(Main.currentUser, target, currentMassage, date);
         ClientAPI.receiveMassage(Main.currentUser, target, currentMassage, date);
         massages=ClientAPI.getMassages(Main.currentUser);
