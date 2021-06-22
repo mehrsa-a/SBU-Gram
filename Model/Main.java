@@ -1,5 +1,6 @@
 package Model;
 
+import Common.Massage;
 import Common.Post;
 import Common.User;
 import Controller.LogInController;
@@ -24,6 +25,7 @@ public class Main extends Application {
     public static User currentUser=new User();
     public static List<Post> posts=new CopyOnWriteArrayList<>();
     public static Map<String, User> users=new ConcurrentHashMap<>();
+    public static List<Massage> massages=new CopyOnWriteArrayList<>();
 
     public static void update(){
         if(ClientAPI.getAllPosts(Main.currentUser)!=null){

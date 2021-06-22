@@ -28,7 +28,6 @@ public class SignUpController {
     public Label shortPass;
     public Label matchPass;
     public Label truePassword;
-    //public static ArrayList<User> users=new ArrayList<>();
 
     public void showPass(ActionEvent actionEvent) {
         if (!showNewPassword.isVisible()) {

@@ -47,17 +47,17 @@ public class TimeLineController {
     public JFXTextField searchForMassage;
 
     public void initialize(){
-        username.setText(currentUser.getUsername());
+        /*username.setText(currentUser.getUsername());
         byte[] x=ClientAPI.getProfile(currentUser);
         if(x!=null){
             Image newImage=new Image(new ByteArrayInputStream(x));
             profile.setImage(newImage);
         }
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
-        accounts.setCellFactory(accounts -> new UserItem());
+        accounts.setCellFactory(accounts -> new UserItem());*/
         PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
         PostList.setCellFactory(PostList -> new PostItem());
-        explorePosts.setItems(FXCollections.observableArrayList(posts));
+        /*explorePosts.setItems(FXCollections.observableArrayList(posts));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
@@ -81,7 +81,7 @@ public class TimeLineController {
             name.setText(fullName);
         } else{
             name.setVisible(false);
-        }
+        }*/
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {
@@ -218,6 +218,7 @@ public class TimeLineController {
     }
 
     public void backToMassages(ActionEvent actionEvent) {
+        searchForMassage.setText("");
     }
 
     public void searchOnMassages(ActionEvent actionEvent) {

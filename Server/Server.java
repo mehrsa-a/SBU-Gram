@@ -1,5 +1,6 @@
 package Server;
 
+import Common.Massage;
 import Common.Post;
 import Common.Time;
 import Common.User;
@@ -7,16 +8,15 @@ import Common.User;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Server implements Runnable{
-    public static final int port=2179;
+    public static final int port=2187;
     private static boolean isServerUp=true;
     public static Map<String, User> users=new HashMap<>();
     public static Set<Post> posts=null;
+    public static List<Massage> massages=new ArrayList<>();
     public static ServerSocket serverSocket=null;
 
     public static boolean isServerUp(){

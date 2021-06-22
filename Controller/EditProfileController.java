@@ -103,22 +103,22 @@ public class EditProfileController {
         if(bio.getText()!=null)
             info.put("bio", bio.getText());
         ClientAPI.addInformation(currentUser, info);
-        Main.update();
+        /*Main.update();
         ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        ClientAPI.getAllUsers(currentUser);
+        ClientAPI.getAllUsers(currentUser);*/
         new PageLoader().load("TimeLine");
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
-        Main.update();
+        /*Main.update();
         ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        ClientAPI.getAllUsers(currentUser);
+        ClientAPI.getAllUsers(currentUser);*/
         new PageLoader().load("TimeLine");
     }
 

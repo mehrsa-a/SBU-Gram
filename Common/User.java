@@ -34,7 +34,7 @@ public class User implements Serializable, Comparable {
     private List<User> blocker=new CopyOnWriteArrayList<>();
     private List<User> muted=new CopyOnWriteArrayList<>();
 
-    private Map<User, Map<String, List<Massage>>> massages=new ConcurrentHashMap<>();
+    /*private Map<User, Map<String, List<Massage>>> massages=new ConcurrentHashMap<>();
 
     public void setMassages(Map<User, Map<String, List<Massage>>> massages) {
         this.massages = massages;
@@ -42,7 +42,7 @@ public class User implements Serializable, Comparable {
 
     public Map<User, Map<String, List<Massage>>> getMassages() {
         return massages;
-    }
+    }*/
 
     public void setMuted(List<User> muted) {
         this.muted = muted;

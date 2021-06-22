@@ -1,16 +1,19 @@
 package Server;
 
+import Common.Massage;
 import Common.Post;
 import Common.User;
 
 import java.io.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Database {
     public static final String FILE_PREFIX="C:\\Users\\98917\\IdeaProjects\\project\\src\\database\\";
     public static final String UsersFile=FILE_PREFIX+"UsersDatabase.txt";
     public static final String PostsFile=FILE_PREFIX+"PostsDatabase.txt";
+    public static final String MassagesFile=FILE_PREFIX+"MassagesDatabase.txt";
 
 
     private static Database ourInstance = new Database();
@@ -47,6 +50,19 @@ public class Database {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        try {
+            FileInputStream fin = new FileInputStream(Database.MassagesFile);
+            ObjectInputStream inFromFile = new ObjectInputStream(fin);
+            Server.massages = new CopyOnWriteArrayList<>( (CopyOnWriteArrayList<Massage>) inFromFile.readObject());
+            inFromFile.close();
+            fin.close();
+        }
+        catch(EOFException | StreamCorruptedException e){
+            Server.massages = new CopyOnWriteArrayList<>();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public synchronized void updateDataBase() {
@@ -61,6 +77,12 @@ public class Database {
             objToFile = new ObjectOutputStream(fout);
             objToFile.reset();
             objToFile.writeObject(Server.posts);
+            objToFile.close();
+            fout.close();
+            fout = new FileOutputStream(MassagesFile);
+            objToFile = new ObjectOutputStream(fout);
+            objToFile.reset();
+            objToFile.writeObject(Server.massages);
             objToFile.close();
             fout.close();
         } catch (IOException e) {

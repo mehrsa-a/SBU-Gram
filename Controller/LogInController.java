@@ -29,16 +29,6 @@ public class LogInController {
     public Label wrong;
     public JFXTextField visiblePass;
 
-    private static Map<String, String> members=new HashMap<>();
-
-    public static Map<String, String> getMembers(){
-        return members;
-    }
-
-    public static void add(String user, String pass){
-        members.put(user, pass);
-    }
-
     public void showPassword(ActionEvent actionEvent){
         if (!visiblePass.isVisible()) {
             visiblePass.setVisible(true);
@@ -75,7 +65,6 @@ public class LogInController {
             wrong.setVisible(true);
         }
     }
-
 
     public void signUp(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("Signup");

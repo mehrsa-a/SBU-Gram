@@ -412,7 +412,7 @@ public class ClientAPI {
         ConnectClient.serve(toSend);
     }
 
-    public static Map<User, Map<String, List<Massage>>> getMassages(User cUser){
+    public static List<Massage> getMassages(User cUser){
         Map<String,Object> toSend = new HashMap<>();
         toSend.put("request", Requests.getMassages);
         toSend.put("sender", cUser);
@@ -420,6 +420,6 @@ public class ClientAPI {
         if (received.get("answer")==null){
             return null;
         }
-        return (Map<User, Map<String, List<Massage>>>) received.get("answer");
+        return (List<Massage>) received.get("answer");
     }
 }
