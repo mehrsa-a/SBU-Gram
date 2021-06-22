@@ -433,4 +433,12 @@ public class ClientAPI {
         }
         return (List<Massage>) received.get("answer");
     }
+
+    public static void readMassage(User user, Massage massage){
+        Map<String,Object> toSend = new HashMap<>();
+        toSend.put("request", Requests.readMassage);
+        toSend.put("user", user);
+        toSend.put("massage", massage);
+        Map<String, Object> received=ConnectClient.serve(toSend);
+    }
 }

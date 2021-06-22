@@ -652,4 +652,19 @@ public class ServerAPI {
         ans.put("answer", sent);
         return ans;
     }
+
+    public static Map<String,Object> readMassage(Map<String,Object> income){
+        User user= (User) income.get("user");
+        Massage massage= (Massage) income.get("massage");
+        for(Massage m: Server.massages){
+            if(m.equals(massage)){
+                m.setRead(true);
+            }
+        }
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.readMassage);
+        ans.put("answer", new Boolean(true));
+        return ans;
+    }
 }

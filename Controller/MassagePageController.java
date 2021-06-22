@@ -72,14 +72,14 @@ public class MassagePageController {
         date.setReceiver(Main.currentUser);
         ClientAPI.sendMassage(Main.currentUser, target, currentMassage, date);
         ClientAPI.receiveMassage(Main.currentUser, target, currentMassage, date);
+        massages=ClientAPI.getMassages(Main.currentUser);
+        assert massages != null;
         sent=massages.stream()
                 .filter(a-> ((a.getSender().getUsername().equals(Main.currentUser.getUsername()))&&(a.getReceiver().getUsername().equals(target.getUsername()))))
                 .collect(Collectors.toList());
         received=massages.stream()
                 .filter(a-> ((a.getSender().getUsername().equals(target.getUsername()))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
                 .collect(Collectors.toList());
-        sent.add(currentMassage);
-        received.add(date);
         myMassages.setItems(FXCollections.observableArrayList(sent));
         myMassages.setCellFactory(myMassages -> new MassageItem());
         otherMassages.setItems(FXCollections.observableArrayList(received));

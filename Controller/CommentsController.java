@@ -26,9 +26,13 @@ public class CommentsController {
     }
 
     public void addComment(ActionEvent actionEvent) {
+        Comment currentComment=new Comment();
         currentComment.setTitle("in reply to "+ PostController.help.getUser().getUsername());
         currentComment.setText(cm.getText());
+        currentComment.setUser(Main.currentUser);
         comment= ClientAPI.addComment(Main.currentUser, PostController.help, currentComment);
+        comment=ClientAPI.getComments(PostController.help);
+        assert comment != null;
         comment.add(currentComment);
         comments.setItems(FXCollections.observableArrayList(comment));
         comments.setCellFactory(comments -> new CommentItem());

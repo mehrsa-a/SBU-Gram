@@ -67,7 +67,10 @@ public class TimeLineController {
                     .collect(Collectors.toList());
             for(String s: pu){
                 if(f.contains(s)){
-                    t.add(p);
+                    assert m != null;
+                    if (!(m.contains(p.getUser().getUsername()))) {
+                        t.add(p);
+                    }
                 }
                 if(currentUser.getUsername().equals(s)){
                     t.add(p);
@@ -110,7 +113,10 @@ public class TimeLineController {
                     .collect(Collectors.toList());
             for(String s: pu){
                 if(f.contains(s)){
-                    t.add(p);
+                    assert m != null;
+                    if (!(m.contains(p.getUser().getUsername()))) {
+                        t.add(p);
+                    }
                 }
                 if(currentUser.getUsername().equals(s)){
                     t.add(p);
@@ -188,7 +194,10 @@ public class TimeLineController {
                     .collect(Collectors.toList());
             for(String s: pu){
                 if(f.contains(s)){
-                    t.add(p);
+                    assert m != null;
+                    if (!(m.contains(p.getUser().getUsername()))) {
+                        t.add(p);
+                    }
                 }
                 if(currentUser.getUsername().equals(s)){
                     t.add(p);
@@ -259,7 +268,10 @@ public class TimeLineController {
                     .collect(Collectors.toList());
             for(String s: pu){
                 if(f.contains(s)){
-                    t.add(p);
+                    assert m != null;
+                    if (!(m.contains(p.getUser().getUsername()))) {
+                        t.add(p);
+                    }
                 }
                 if(currentUser.getUsername().equals(s)){
                     t.add(p);

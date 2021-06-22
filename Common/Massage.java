@@ -4,12 +4,22 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 public class Massage implements Serializable, Comparable {
+    public static long serialVersionUID=79676435L;
     private User sender;
     private User receiver;
     private String text;
     private byte[] file;
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
+    private boolean read=false;
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;

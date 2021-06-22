@@ -39,5 +39,6 @@ public enum Requests {
     getMuted,
     sendMassage,
     receiveMassage,
-    getMassages
+    getMassages,
+    readMassage
 }
