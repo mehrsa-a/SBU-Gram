@@ -139,6 +139,9 @@ public class ClientHandler implements Runnable {
                     case unMute:
                         answer = ServerAPI.unMute(income);
                         break;
+                    case getMuted:
+                        answer = ServerAPI.getMuted(income);
+                        break;
                     case sendMassage:
                         answer = ServerAPI.sendMassage(income);
                         break;

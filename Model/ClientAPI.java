@@ -392,6 +392,17 @@ public class ClientAPI {
         Map<String,Object> received=ConnectClient.serve(toSend);
     }
 
+    public static List<String> getMuted(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getMuted);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<String>) received.get("answer");
+    }
+
     public static void sendMassage(User cUser, User user, Massage massage, Massage date){
         Map<String,Object> toSend = new HashMap<>();
         toSend.put("request", Requests.sendMassage);

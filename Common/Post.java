@@ -13,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Post implements Serializable, Comparable {
     public static long serialVersionUID=123456L;
     private User user=new User();
-    private User publisher;
+    private List<User> publisher=new CopyOnWriteArrayList<>();
     private String title="";
     private String text="";
     private byte[] image;
@@ -26,11 +26,11 @@ public class Post implements Serializable, Comparable {
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
 
-    public User getPublisher() {
+    public List<User> getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(User publisher) {
+    public void setPublisher(List<User> publisher) {
         this.publisher = publisher;
     }
 

@@ -104,6 +104,7 @@ public class PostController {
     }
 
     public void repost(ActionEvent actionEvent) {
+        target.getPublisher().add(currentUser);
         repostNum=ClientAPI.repost(Main.currentUser, target);
         numberOfReposts.setText(String.valueOf(repostNum));
         currentUser.getPosts().add(target);

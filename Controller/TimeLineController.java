@@ -47,41 +47,36 @@ public class TimeLineController {
     public JFXTextField searchForMassage;
 
     public void initialize(){
-        /*username.setText(currentUser.getUsername());
-        byte[] x=ClientAPI.getProfile(currentUser);
-        if(x!=null){
-            Image newImage=new Image(new ByteArrayInputStream(x));
-            profile.setImage(newImage);
+        List<Post> posts=ClientAPI.getAllPosts(currentUser);
+        List<String> f=ClientAPI.getFollowings(currentUser);
+        List<String> m=ClientAPI.getMuted(currentUser);
+        List<Post> t=new ArrayList<>();
+        for(Post p: posts){
+            assert f != null;
+            if(f.contains(p.getUser().getUsername())) {
+                assert m != null;
+                if (!(m.contains(p.getUser().getUsername()))) {
+                    t.add(p);
+                }
+            }
+            if(currentUser.getUsername().equals(p.getUser().getUsername())){
+                t.add(p);
+            }
+            List<String> pu=p.getPublisher().stream()
+                    .map(a-> a.getUsername())
+                    .collect(Collectors.toList());
+            for(String s: pu){
+                if(f.contains(s)){
+                    t.add(p);
+                }
+                if(currentUser.getUsername().equals(s)){
+                    t.add(p);
+                }
+            }
         }
-        accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
-        accounts.setCellFactory(accounts -> new UserItem());*/
-        PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
+        ClientAPI.getTimeline(currentUser);
+        PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
-        /*explorePosts.setItems(FXCollections.observableArrayList(posts));
-        explorePosts.setCellFactory(explorePosts -> new PostItem());
-        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
-        myPosts.setCellFactory(myPosts -> new PostItem());
-        String temp=ClientAPI.getNumbers(currentUser, currentUser);
-        following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
-        follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
-        post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
-        Map<String, String> info=ClientAPI.getInformation(currentUser);
-        if(info!=null){
-            if(info.get("bio") != null){
-                Bio.setText(info.get("bio"));
-            }
-            if(info.get("firstName") != null){
-                fullName=info.get("firstName");
-            }
-            if(info.get("lastName") != null){
-                fullName=" "+info.get("lastName");
-            }
-        }
-        if(fullName!=null){
-            name.setText(fullName);
-        } else{
-            name.setVisible(false);
-        }*/
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {
@@ -95,7 +90,35 @@ public class TimeLineController {
         username.setText(currentUser.getUsername());
         accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
         accounts.setCellFactory(accounts -> new UserItem());
-        PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
+        List<Post> posts=ClientAPI.getAllPosts(currentUser);
+        List<String> f=ClientAPI.getFollowings(currentUser);
+        List<String> m=ClientAPI.getMuted(currentUser);
+        List<Post> t=new ArrayList<>();
+        for(Post p: posts){
+            assert f != null;
+            if(f.contains(p.getUser().getUsername())) {
+                assert m != null;
+                if (!(m.contains(p.getUser().getUsername()))) {
+                    t.add(p);
+                }
+            }
+            if(currentUser.getUsername().equals(p.getUser().getUsername())){
+                t.add(p);
+            }
+            List<String> pu=p.getPublisher().stream()
+                    .map(a-> a.getUsername())
+                    .collect(Collectors.toList());
+            for(String s: pu){
+                if(f.contains(s)){
+                    t.add(p);
+                }
+                if(currentUser.getUsername().equals(s)){
+                    t.add(p);
+                }
+            }
+        }
+        ClientAPI.getTimeline(currentUser);
+        PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
         explorePosts.setItems(FXCollections.observableArrayList(posts));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
@@ -126,7 +149,7 @@ public class TimeLineController {
     public void publish(ActionEvent actionEvent) {
         Post currentPost = new Post();
         currentPost.setUser(currentUser);
-        currentPost.setPublisher(currentUser);
+        currentPost.getPublisher().add(currentUser);
         currentPost.setTitle(title.getText());
         currentPost.setText(post.getText());
         if(help!=null){
@@ -145,7 +168,34 @@ public class TimeLineController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
+        List<Post> posts=ClientAPI.getAllPosts(currentUser);
+        List<String> f=ClientAPI.getFollowings(currentUser);
+        List<String> m=ClientAPI.getMuted(currentUser);
+        List<Post> t=new ArrayList<>();
+        for(Post p: posts){
+            assert f != null;
+            if(f.contains(p.getUser().getUsername())) {
+                assert m != null;
+                if (!(m.contains(p.getUser().getUsername()))) {
+                    t.add(p);
+                }
+            }
+            if(currentUser.getUsername().equals(p.getUser().getUsername())){
+                t.add(p);
+            }
+            List<String> pu=p.getPublisher().stream()
+                    .map(a-> a.getUsername())
+                    .collect(Collectors.toList());
+            for(String s: pu){
+                if(f.contains(s)){
+                    t.add(p);
+                }
+                if(currentUser.getUsername().equals(s)){
+                    t.add(p);
+                }
+            }
+        }
+        PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
         explorePosts.setItems(FXCollections.observableArrayList(posts));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
@@ -189,7 +239,35 @@ public class TimeLineController {
     public void openTimeline(Event event) {
         Main.update();
         ClientAPI.getAllPosts(currentUser);
-        PostList.setItems(FXCollections.observableArrayList(ClientAPI.getTimeline(currentUser)));
+        List<Post> posts=ClientAPI.getAllPosts(currentUser);
+        List<String> f=ClientAPI.getFollowings(currentUser);
+        List<String> m=ClientAPI.getMuted(currentUser);
+        List<Post> t=new ArrayList<>();
+        for(Post p: posts){
+            assert f != null;
+            if(f.contains(p.getUser().getUsername())) {
+                assert m != null;
+                if (!(m.contains(p.getUser().getUsername()))) {
+                    t.add(p);
+                }
+            }
+            if(currentUser.getUsername().equals(p.getUser().getUsername())){
+                t.add(p);
+            }
+            List<String> pu=p.getPublisher().stream()
+                    .map(a-> a.getUsername())
+                    .collect(Collectors.toList());
+            for(String s: pu){
+                if(f.contains(s)){
+                    t.add(p);
+                }
+                if(currentUser.getUsername().equals(s)){
+                    t.add(p);
+                }
+            }
+        }
+        ClientAPI.getTimeline(currentUser);
+        PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
     }
 

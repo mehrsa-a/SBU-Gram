@@ -598,6 +598,19 @@ public class ServerAPI {
         return ans;
     }
 
+    public static Map<String, Object> getMuted(Map<String, Object> income){
+        User user= (User) income.get("user");
+        List<User> list=Server.users.get(user.getUsername()).getMuted();
+        List<String> usernames=new ArrayList<>();
+        for(User u: list){
+            usernames.add(u.getUsername());
+        }
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getMuted);
+        ans.put("answer", usernames);
+        return ans;
+    }
+
     public static Map<String,Object> sendMassage(Map<String,Object> income){
         User sender= (User) income.get("sender");
         User receiver= (User) income.get("receiver");
@@ -605,29 +618,6 @@ public class ServerAPI {
         Massage date= (Massage) income.get("date");
         Server.massages.add(massage);
         Server.massages.add(date);
-        /*List<Massage> sent;
-        List<Massage> received;
-        Map<String, List<Massage>> massages;
-        if(Server.users.get(sender.getUsername()).getMassages().get(receiver)!=null){
-            massages=new HashMap<>(Server.users.get(sender.getUsername()).getMassages().get(receiver));
-            if(massages.get("sent")!=null){
-                sent=new ArrayList<>(massages.get("sent"));
-                received=new ArrayList<>(massages.get("received"));
-            }
-            else{
-                sent=new ArrayList<>();
-                received=new ArrayList<>();
-            }
-        } else{
-            massages=new HashMap<>();
-            sent=new ArrayList<>();
-            received=new ArrayList<>();
-        }
-        sent.add(massage);
-        received.add(date);
-        massages.put("sent", sent);
-        massages.put("received", received);
-        Server.users.get(sender.getUsername()).getMassages().put(receiver, massages);*/
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.sendMassage);
@@ -643,9 +633,6 @@ public class ServerAPI {
         User receiver= (User) income.get("receiver");
         Massage massage= (Massage) income.get("massage");
         Massage date= (Massage) income.get("date");
-        /*Server.massages.add(massage);
-        Server.massages.add(date);
-        Database.getInstance().updateDataBase();*/
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.receiveMassage);
         ans.put("answer", new Boolean(true));
@@ -657,7 +644,6 @@ public class ServerAPI {
 
     public static Map<String,Object> getMassage(Map<String,Object> income){
         User sender= (User) income.get("sender");
-        //Map<User, Map<String, List<Massage>>> map=new HashMap<>(Server.users.get(sender.getUsername()).getMassages());
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getMassages);
         List<Massage> sent=Server.massages.stream()

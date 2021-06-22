@@ -63,13 +63,12 @@ public class UsersController {
         postNum=Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1));
         post.setText(String.valueOf(postNum));
         List<String> targetFollowers=ClientAPI.getFollowers(target);
+        assert targetFollowers != null;
         if(targetFollowers.contains(currentUser.getUsername())){
             unfollowing.setVisible(true);
             followingButton.setVisible(false);
-            List<String> muteNames= new ArrayList<>();
-            for(User u: currentUser.getMuted()){
-                muteNames.add(u.getUsername());
-            }
+            List<String> muteNames=ClientAPI.getMuted(currentUser);
+            assert muteNames != null;
             if(muteNames.contains(target.getUsername())){
                 muteButton.setVisible(false);
                 unMuteButton.setVisible(true);

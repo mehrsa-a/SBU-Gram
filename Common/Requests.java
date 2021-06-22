@@ -36,6 +36,7 @@ public enum Requests {
     unblock,
     mute,
     unMute,
+    getMuted,
     sendMassage,
     receiveMassage,
     getMassages
