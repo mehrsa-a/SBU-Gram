@@ -376,6 +376,28 @@ public class ClientAPI {
         Map<String,Object> received=ConnectClient.serve(toSend);
     }
 
+    public static List<String> getBlocked(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getBlocked);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<String>) received.get("answer");
+    }
+
+    public static List<String> getBlockers(User user){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getBlocker);
+        toSend.put("user", user);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<String>) received.get("answer");
+    }
+
     public static void mute(User cUser, User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.mute);

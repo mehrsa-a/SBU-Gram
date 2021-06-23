@@ -34,6 +34,8 @@ public enum Requests {
     logout,
     block,
     unblock,
+    getBlocker,
+    getBlocked,
     mute,
     unMute,
     getMuted,

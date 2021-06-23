@@ -94,7 +94,14 @@ public class TimeLineController {
         ClientAPI.getAllUsers(currentUser);
         new PageLoader().load("Timeline");
         username.setText(currentUser.getUsername());
-        accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
+        List<User> acc=new ArrayList<>();
+        for(User u: Main.users.values()){
+            if(!blockers.contains(u.getUsername())){
+                acc.add(u);
+            }
+        }
+        accounts.setItems(FXCollections.observableArrayList(acc));
         accounts.setCellFactory(accounts -> new UserItem());
         List<Post> posts=ClientAPI.getAllPosts(currentUser);
         List<String> f=ClientAPI.getFollowings(currentUser);
@@ -129,7 +136,23 @@ public class TimeLineController {
         ClientAPI.getTimeline(currentUser);
         PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
-        explorePosts.setItems(FXCollections.observableArrayList(posts));
+        List<Post> ep=new ArrayList<>();
+        List<String> blocked=ClientAPI.getBlocked(currentUser);
+        for(Post p: posts){
+            List<String> pu=p.getPublisher().stream()
+                    .map(a-> a.getUsername())
+                    .collect(Collectors.toList());
+            for(String s: pu){
+                assert blocked != null;
+                if(!blocked.contains(s)) {
+                    assert blockers != null;
+                    if (!blockers.contains(s)) {
+                        ep.add(p);
+                    }
+                }
+            }
+        }
+        explorePosts.setItems(FXCollections.observableArrayList(ep));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
@@ -209,7 +232,24 @@ public class TimeLineController {
         }
         PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
-        explorePosts.setItems(FXCollections.observableArrayList(posts));
+        List<Post> ep=new ArrayList<>();
+        List<String> blocked=ClientAPI.getBlocked(currentUser);
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
+        for(Post p: posts){
+            List<String> pu=p.getPublisher().stream()
+                    .map(a-> a.getUsername())
+                    .collect(Collectors.toList());
+            for(String s: pu){
+                assert blocked != null;
+                if(!blocked.contains(s)) {
+                    assert blockers != null;
+                    if (!blockers.contains(s)) {
+                        ep.add(p);
+                    }
+                }
+            }
+        }
+        explorePosts.setItems(FXCollections.observableArrayList(ep));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
@@ -244,7 +284,14 @@ public class TimeLineController {
     public void openAccounts(Event event) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
-        accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
+        List<User> acc=new ArrayList<>();
+        for(User u: Main.users.values()){
+            if(!blockers.contains(u.getUsername())){
+                acc.add(u);
+            }
+        }
+        accounts.setItems(FXCollections.observableArrayList(acc));
         accounts.setCellFactory(accounts -> new UserItem());
     }
 
@@ -289,7 +336,14 @@ public class TimeLineController {
     public void search(ActionEvent actionEvent) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
-        List<User> searched= users.values()
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
+        List<User> acc=new ArrayList<>();
+        for(User u: Main.users.values()){
+            if(!blockers.contains(u.getUsername())){
+                acc.add(u);
+            }
+        }
+        List<User> searched= acc
                 .stream()
                 .filter(a->a.getUsername().contains(searchField.getText()))
                 .collect(Collectors.toList());
@@ -300,21 +354,47 @@ public class TimeLineController {
     public void backToAll(ActionEvent actionEvent) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
-        accounts.setItems(FXCollections.observableArrayList(Main.users.values()));
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
+        List<User> acc=new ArrayList<>();
+        for(User u: Main.users.values()){
+            if(!blockers.contains(u.getUsername())){
+                acc.add(u);
+            }
+        }
+        accounts.setItems(FXCollections.observableArrayList(acc));
         accounts.setCellFactory(accounts -> new UserItem());
         searchField.setText("");
     }
 
     public void openExplore(Event event) {
-        explorePosts.setItems(FXCollections.observableArrayList(posts));
+        List<Post> posts=ClientAPI.getAllPosts(currentUser);
+        List<Post> ep=new ArrayList<>();
+        List<String> blocked=ClientAPI.getBlocked(currentUser);
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
+        for(Post p: posts){
+            List<String> pu=p.getPublisher().stream()
+                    .map(a-> a.getUsername())
+                    .collect(Collectors.toList());
+            for(String s: pu){
+                assert blocked != null;
+                if(!blocked.contains(s)) {
+                    assert blockers != null;
+                    if (!blockers.contains(s)) {
+                        ep.add(p);
+                    }
+                }
+            }
+        }
+        explorePosts.setItems(FXCollections.observableArrayList(ep));
         explorePosts.setCellFactory(explorePosts -> new PostItem());
     }
 
     public void backToMassages(MouseEvent mouseEvent) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
         List<User> shown= users.values().stream()
-                .filter(a-> ClientAPI.getMassaged(currentUser).contains(a.getUsername()))
+                .filter(a-> ((ClientAPI.getMassaged(currentUser).contains(a.getUsername()))&&(!(blockers.contains(a.getUsername())))))
                 .collect(Collectors.toList());
         Massages.setItems(FXCollections.observableArrayList(shown));
         Massages.setCellFactory(Massages -> new DirectUserItem());
@@ -324,8 +404,9 @@ public class TimeLineController {
     public void openDM(Event event) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
         List<User> shown= users.values().stream()
-                .filter(a-> ClientAPI.getMassaged(currentUser).contains(a.getUsername()))
+                .filter(a-> ((ClientAPI.getMassaged(currentUser).contains(a.getUsername()))&&(!(blockers.contains(a.getUsername())))))
                 .collect(Collectors.toList());
         Massages.setItems(FXCollections.observableArrayList(shown));
         Massages.setCellFactory(Massages -> new DirectUserItem());
@@ -334,11 +415,14 @@ public class TimeLineController {
     public void searchOnMassages(MouseEvent mouseEvent) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
+        List<String> blockers=ClientAPI.getBlockers(currentUser);
         List<User> searched= users.values()
                 .stream()
-                .filter(a->a.getUsername().contains(searchForMassage.getText()))
+                .filter(a-> ((a.getUsername().contains(searchForMassage.getText()))&&(!(blockers.contains(a.getUsername())))))
                 .collect(Collectors.toList());
         Massages.setItems(FXCollections.observableArrayList(searched));
         Massages.setCellFactory(Massages -> new DirectUserItem());
+
+
     }
 }

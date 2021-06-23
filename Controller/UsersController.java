@@ -97,13 +97,13 @@ public class UsersController {
         } else{
             name.setVisible(false);
         }
-        List<String> blockName=new ArrayList<>();
-        for(User u: currentUser.getBlocked()){
-            blockName.add(u.getUsername());
-        }
+        List<String> blockName=ClientAPI.getBlocked(currentUser);
+        assert blockName != null;
         if(blockName.contains(target.getUsername())){
             blockButton.setVisible(false);
             unblockButton.setVisible(true);
+            followingButton.setVisible(false);
+            unfollowing.setVisible(false);
         } else{
             unblockButton.setVisible(false);
             blockButton.setVisible(true);

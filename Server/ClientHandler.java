@@ -133,6 +133,12 @@ public class ClientHandler implements Runnable {
                     case unblock:
                         answer = ServerAPI.unblock(income);
                         break;
+                    case getBlocked:
+                        answer = ServerAPI.getBlocked(income);
+                        break;
+                    case getBlocker:
+                        answer = ServerAPI.getBlockers(income);
+                        break;
                     case mute:
                         answer = ServerAPI.mute(income);
                         break;

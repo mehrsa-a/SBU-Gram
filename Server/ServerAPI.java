@@ -569,6 +569,32 @@ public class ServerAPI {
         return ans;
     }
 
+    public static Map<String, Object> getBlocked(Map<String, Object> income){
+        User user= (User) income.get("user");
+        List<User> list=Server.users.get(user.getUsername()).getBlocked();
+        List<String> usernames=new ArrayList<>();
+        for(User u: list){
+            usernames.add(u.getUsername());
+        }
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getBlocked);
+        ans.put("answer", usernames);
+        return ans;
+    }
+
+    public static Map<String, Object> getBlockers(Map<String, Object> income){
+        User user= (User) income.get("user");
+        List<User> list=Server.users.get(user.getUsername()).getBlocker();
+        List<String> usernames=new ArrayList<>();
+        for(User u: list){
+            usernames.add(u.getUsername());
+        }
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getBlocker);
+        ans.put("answer", usernames);
+        return ans;
+    }
+
     public static Map<String,Object> mute(Map<String,Object> income){
         User user= (User) income.get("user");
         User cUser= (User) income.get("cUser");
