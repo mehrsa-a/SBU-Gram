@@ -483,11 +483,12 @@ public class ClientAPI {
         ConnectClient.serve(toSend);
     }
 
-    public static void editMassage(User user, Massage massage){
+    public static void editMassage(User user, Massage oldMassage, Massage newMassage){
         Map<String,Object> toSend = new HashMap<>();
         toSend.put("request", Requests.editMassage);
         toSend.put("user", user);
-        toSend.put("massage", massage);
+        toSend.put("oldMassage", oldMassage);
+        toSend.put("newMassage", newMassage);
         ConnectClient.serve(toSend);
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,6 +18,12 @@
       <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="158.0" layoutY="12.0" onMouseClicked="#edit" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/edit.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="editField" focusColor="#1c1194" layoutY="147.0" prefHeight="25.0" prefWidth="189.0" promptText="new text" unFocusColor="#1c1194" visible="false" />
+      <ImageView fx:id="ce" fitHeight="17.0" fitWidth="17.0" layoutX="158.0" layoutY="151.0" onMouseClicked="#confirmEdit" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/confirm.png" />
          </image>
       </ImageView>
    </children>

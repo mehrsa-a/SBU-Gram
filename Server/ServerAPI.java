@@ -727,6 +727,19 @@ public class ServerAPI {
     }
 
     public static Map<String, Object> editMassage(Map<String, Object> income){
-        return null;
+        User user= (User) income.get("user");
+        Massage oldMassage= (Massage) income.get("oldMassage");
+        Massage newMassage= (Massage) income.get("newMassage");
+        for(Massage m: Server.massages){
+            if(m.equals(oldMassage)){
+                int i=Server.massages.indexOf(m);
+                Server.massages.set(i, newMassage);
+            }
+        }
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.editMassage);
+        ans.put("answer", new Boolean(true));
+        return ans;
     }
 }
