@@ -229,15 +229,16 @@ public class ServerAPI {
         User user= (User) income.get("user");
         Post liked= (Post) income.get("liked");
         int answer=0;
-        for(Post p: Server.posts){
+        /*for(Post p: Server.posts){
             if(p.equals(liked)){
                 p.getLiked().add(user);
                 answer=p.getLiked().size();
             }
-        }
+        }*/
         for(Post p: Server.users.get(liked.getUser().getUsername()).getPosts()){
             if(p.equals(liked)){
                 p.getLiked().add(user);
+                answer=p.getLiked().size();
             }
         }
         Database.getInstance().updateDataBase();
@@ -308,18 +309,19 @@ public class ServerAPI {
         User user= (User) income.get("user");
         Post post= (Post) income.get("repost");
         int answer=0;
-        for(Post p: Server.posts){
+        /*for(Post p: Server.posts){
             if(p.equals(post)){
                 p.getReposted().add(user);
                 answer=p.getReposted().size();
             }
-        }
+        }*/
         for(Post p: Server.users.get(post.getUser().getUsername()).getPosts()){
             if(p.equals(post)){
                 p.getReposted().add(user);
+                Server.users.get(user.getUsername()).getPosts().add(p);
+                answer=p.getReposted().size();
             }
         }
-        Server.users.get(user.getUsername()).getPosts().add(post);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.repost);
@@ -335,15 +337,15 @@ public class ServerAPI {
         Post commented= (Post) income.get("commented");
         Comment cm= (Comment) income.get("comment");
         List<Comment> send=new ArrayList<>();
-        for(Post p: Server.posts){
+        /*for(Post p: Server.posts){
             if(p.equals(commented)){
                 p.getCommented().add(cm);
-                send=p.getCommented();
             }
-        }
+        }*/
         for(Post p: Server.users.get(commented.getUser().getUsername()).getPosts()){
             if(p.equals(commented)){
                 p.getCommented().add(cm);
+                send=p.getCommented();
             }
         }
         Database.getInstance().updateDataBase();
@@ -708,7 +710,20 @@ public class ServerAPI {
     }
 
     public static Map<String, Object> deleteMassage(Map<String, Object> income){
-        return null;
+        User user= (User) income.get("user");
+        Massage massage= (Massage) income.get("massage");
+        for(Massage m: Server.massages){
+            if(m.equals(massage)){
+                int i=Server.massages.indexOf(m);
+                Server.massages.remove(i+1);
+                Server.massages.remove(m);
+            }
+        }
+        Database.getInstance().updateDataBase();
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.deleteMassage);
+        ans.put("answer", new Boolean(true));
+        return ans;
     }
 
     public static Map<String, Object> editMassage(Map<String, Object> income){

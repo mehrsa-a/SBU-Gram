@@ -1,6 +1,8 @@
 package Controller;
 
 import Common.Massage;
+import Model.ClientAPI;
+import Model.Main;
 import Model.PageLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MassageController {
     public AnchorPane massagePane;
@@ -33,7 +37,17 @@ public class MassageController {
         return massagePane;
     }
 
-    public void deleteMassage(MouseEvent mouseEvent) {
+    public void deleteMassage(MouseEvent mouseEvent) throws IOException {
+        ClientAPI.deleteMassage(Main.currentUser, target);
+        List<Massage> massages=ClientAPI.getMassages(Main.currentUser).stream()
+                .filter(a-> ((a.getSender().getUsername().equals(Main.currentUser.getUsername()))&&(a.getReceiver().getUsername().equals(target.getReceiver().getUsername())))||((a.getSender().getUsername().equals(target.getReceiver().getUsername()))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
+                .collect(Collectors.toList());
+        if(massages==null||massages.size()==0){
+            new PageLoader().load("TimeLine");
+        }
+        else{
+            new PageLoader().load("MassagePage");
+        }
     }
 
     public void edit(MouseEvent mouseEvent) {

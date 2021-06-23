@@ -54,6 +54,11 @@ public class TimeLineController {
     private static Comparator<Massage> mailCompare = readCompare.thenComparing(massageCompare);
 
     public void initialize(){
+        Main.update();
+        ClientAPI.getAllUsers(currentUser);
+        for(User u: users.values()){
+            ClientAPI.getAllOfMyPosts(u);
+        }
         List<Post> posts=ClientAPI.getAllPosts(currentUser);
         List<String> f=ClientAPI.getFollowings(currentUser);
         List<String> m=ClientAPI.getMuted(currentUser);
@@ -188,6 +193,7 @@ public class TimeLineController {
         }
         Main.update();
         ClientAPI.getAllPosts(currentUser);
+        ClientAPI.getAllUsers(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
@@ -269,7 +275,11 @@ public class TimeLineController {
 
     public void openTimeline(Event event) {
         Main.update();
+        ClientAPI.getAllUsers(currentUser);
         ClientAPI.getAllPosts(currentUser);
+        for(User u: users.values()){
+            ClientAPI.getAllOfMyPosts(u);
+        }
         List<Post> posts=ClientAPI.getAllPosts(currentUser);
         List<String> f=ClientAPI.getFollowings(currentUser);
         List<String> m=ClientAPI.getMuted(currentUser);
@@ -363,7 +373,9 @@ public class TimeLineController {
                     .filter(a-> ((a.getSender().getUsername().equals(u))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
                     .sorted(mailCompare)
                     .collect(Collectors.toList());
-            temp.add(received.get(0));
+            if(received.size()!=0){
+                temp.add(received.get(0));
+            }
         }
         List<User> f=temp.
                 stream()

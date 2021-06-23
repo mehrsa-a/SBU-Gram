@@ -44,6 +44,7 @@ public class PostController {
     public String fullName;
     public ImageView reposted;
     public JFXButton notReposted;
+    public Label alreadyRepost;
 
     public PostController(Post post) throws IOException {
         target=post;
@@ -52,6 +53,7 @@ public class PostController {
     }
 
     public AnchorPane init(){
+        alreadyRepost.setVisible(false);
         username.setText(target.getUser().getUsername());
         date.setText(target.getTimeString());
         byte[] x=ClientAPI.getProfile(target.getUser());
@@ -116,21 +118,22 @@ public class PostController {
     }
 
     public void repost(ActionEvent actionEvent) {
-        target.getPublisher().add(currentUser);
-        repostNum=ClientAPI.repost(Main.currentUser, target);
-        numberOfReposts.setText(String.valueOf(repostNum));
-        currentUser.getPosts().add(target);
-        ClientAPI.addPost(target);
-        Main.update();
-        ClientAPI.getAllPosts(currentUser);
-        for(User u: users.values()){
-            ClientAPI.getMyPosts(u);
-        }
-        /*if(notReposted.isVisible()){
-
+        if(!reposted.isVisible()){
+            target.getPublisher().add(currentUser);
+            repostNum=ClientAPI.repost(Main.currentUser, target);
+            numberOfReposts.setText(String.valueOf(repostNum));
+            currentUser.getPosts().add(target);
+            ClientAPI.addPost(target);
+            Main.update();
+            ClientAPI.getAllPosts(currentUser);
+            for(User u: users.values()){
+                ClientAPI.getMyPosts(u);
+            }
             reposted.setVisible(true);
-            notReposted.setVisible(false);
-        }*/
+        }
+        if(reposted.isVisible()){
+            alreadyRepost.setVisible(true);
+        }
 
     }
 

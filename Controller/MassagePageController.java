@@ -99,6 +99,7 @@ public class MassagePageController {
         otherMassages.setItems(FXCollections.observableArrayList(received));
         otherMassages.setCellFactory(otherMassages -> new MassageItem());
         massageField.setText("");
+        image.setImage(null);
         Main.update();
     }
 }
