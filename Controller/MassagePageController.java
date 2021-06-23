@@ -68,8 +68,6 @@ public class MassagePageController {
         byte[] bytes=fileInputStream.readAllBytes();
         help=bytes;
         path=file.getAbsolutePath();
-        Image newImage=new Image(new ByteArrayInputStream(bytes));
-        //image.setImage(newImage);
     }
 
     public void send(ActionEvent actionEvent) {
@@ -77,6 +75,9 @@ public class MassagePageController {
         currentMassage.setSender(Main.currentUser);
         currentMassage.setReceiver(target);
         currentMassage.setText(massageField.getText());
+        if(help!=null){
+            currentMassage.setFile(help);
+        }
         currentMassage.setRead(false);
         Massage date=new Massage();
         date.setText(Time.getTime());

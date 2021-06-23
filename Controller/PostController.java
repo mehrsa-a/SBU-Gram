@@ -6,6 +6,7 @@ import Model.Main;
 import Model.PageLoader;
 import Common.Post;
 import Model.PostItem;
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
@@ -15,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +42,8 @@ public class PostController {
     public Post target;
     public static Post help;
     public String fullName;
+    public ImageView reposted;
+    public JFXButton notReposted;
 
     public PostController(Post post) throws IOException {
         target=post;
@@ -71,6 +75,14 @@ public class PostController {
             liked.setVisible(true);
             notLiked.setVisible(false);
         }
+        /*List<String> reposting=new ArrayList<>();
+        for(User u: target.getPublisher()){
+            reposting.add(u.getUsername());
+        }
+        if(reposting.contains(currentUser.getUsername())){
+            reposted.setVisible(true);
+            notReposted.setVisible(false);
+        }*/
         Map<String, String> info=ClientAPI.getInformation(target.getUser());
         if(info!=null){
             if(info.get("firstName")!=null){
@@ -114,6 +126,12 @@ public class PostController {
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
+        /*if(notReposted.isVisible()){
+
+            reposted.setVisible(true);
+            notReposted.setVisible(false);
+        }*/
+
     }
 
     public void viewComments(ActionEvent actionEvent) throws IOException {

@@ -163,6 +163,12 @@ public class ClientHandler implements Runnable {
                     case getMassaged:
                         answer = ServerAPI.getMassaged(income);
                         break;
+                    case deleteMassage:
+                        answer= ServerAPI.deleteMassage(income);
+                        break;
+                    case editMassage:
+                        answer = ServerAPI.editMassage(income);
+                        break;
                 }
                 objectOutputStream.writeObject(answer);
                 objectOutputStream.flush();

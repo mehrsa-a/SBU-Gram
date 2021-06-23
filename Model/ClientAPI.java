@@ -76,9 +76,9 @@ public class ClientAPI {
         return received;
     }
 
-    public static List<Post> getAllOfMyPosts(User user){
+    public static Set<Post> getAllOfMyPosts(User user){
         Map<String,Object> all=getMyPosts(user);
-        return (List<Post>) all.get("myPosts");
+        return (Set<Post>) all.get("myPosts");
     }
 
     public static void addPost(Post post){
@@ -473,5 +473,21 @@ public class ClientAPI {
             return null;
         }
         return (List<String>) received.get("answer");
+    }
+
+    public static void deleteMassage(User user, Massage massage){
+        Map<String,Object> toSend = new HashMap<>();
+        toSend.put("request", Requests.deleteMassage);
+        toSend.put("user", user);
+        toSend.put("massage", massage);
+        ConnectClient.serve(toSend);
+    }
+
+    public static void editMassage(User user, Massage massage){
+        Map<String,Object> toSend = new HashMap<>();
+        toSend.put("request", Requests.editMassage);
+        toSend.put("user", user);
+        toSend.put("massage", massage);
+        ConnectClient.serve(toSend);
     }
 }

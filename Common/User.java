@@ -3,10 +3,9 @@ package Common;
 import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class User implements Serializable, Comparable {
@@ -22,7 +21,7 @@ public class User implements Serializable, Comparable {
     private String birthday;
     private String gender;
     private String bio;
-    private List<Post> posts=new CopyOnWriteArrayList<>();
+    private Set<Post> posts=new ConcurrentSkipListSet<>();
     private List<User> follower=new CopyOnWriteArrayList<>();
     private List<User> following=new CopyOnWriteArrayList<>();
     private final long createdTime = Time.getMilli();
@@ -33,13 +32,13 @@ public class User implements Serializable, Comparable {
     private List<User> blocked=new CopyOnWriteArrayList<>();
     private List<User> blocker=new CopyOnWriteArrayList<>();
     private List<User> muted=new CopyOnWriteArrayList<>();
-    private List<User> massaged=new CopyOnWriteArrayList<>();
+    private Set<User> massaged=new ConcurrentSkipListSet<>();
 
-    public void setMassaged(List<User> massaged) {
+    public void setMassaged(Set<User> massaged) {
         this.massaged = massaged;
     }
 
-    public List<User> getMassaged() {
+    public Set<User> getMassaged() {
         return massaged;
     }
 
@@ -147,7 +146,7 @@ public class User implements Serializable, Comparable {
         this.image = image;
     }
 
-    public List<Post> getPosts() {
+    public Set<Post> getPosts() {
         return posts;
     }
 
@@ -187,7 +186,7 @@ public class User implements Serializable, Comparable {
         return username;
     }
 
-    public void setPosts(ArrayList<Post> posts) {
+    public void setPosts(HashSet<Post> posts) {
         this.posts = posts;
     }
 

@@ -13,9 +13,6 @@ import static Model.Main.users;
 
 public class ServerAPI {
 
-    private static Comparator<Post> timeCompare = (a, b) -> -1 * Long.compare(a.getCreatedTime(), b.getCreatedTime());
-    private static Comparator<Massage> massageCompare = (a, b) -> -1 * Long.compare(a.getCreatedTime(), b.getCreatedTime());
-
     public static Map<String, Object> login(Map<String, Object> received){
         String username=(String) received.get("username");
         String password=(String) received.get("password");
@@ -87,7 +84,7 @@ public class ServerAPI {
         String username = user.getUsername();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getMyPosts);
-        List<Post> sent= Server.users.get(username).getPosts();
+        Set<Post> sent= Server.users.get(username).getPosts();
         ans.put("myPosts", sent);
         return ans;
     }
@@ -643,6 +640,8 @@ public class ServerAPI {
         Massage date= (Massage) income.get("date");
         Server.massages.add(massage);
         Server.massages.add(date);
+        Server.users.get(sender.getUsername()).getMassaged().removeIf(u -> u.getUsername().equals(receiver.getUsername()));
+        Server.users.get(receiver.getUsername()).getMassaged().removeIf(u -> u.getUsername().equals(sender.getUsername()));
         Server.users.get(sender.getUsername()).getMassaged().add(receiver);
         Server.users.get(receiver.getUsername()).getMassaged().add(sender);
         Database.getInstance().updateDataBase();
@@ -697,7 +696,7 @@ public class ServerAPI {
 
     public static Map<String, Object> getMassaged(Map<String, Object> income){
         User user= (User) income.get("user");
-        List<User> list=Server.users.get(user.getUsername()).getMassaged();
+        Set<User> list=Server.users.get(user.getUsername()).getMassaged();
         List<String> usernames=new ArrayList<>();
         for(User u: list){
             usernames.add(u.getUsername());
@@ -706,5 +705,13 @@ public class ServerAPI {
         ans.put("request", Requests.getMassaged);
         ans.put("answer", usernames);
         return ans;
+    }
+
+    public static Map<String, Object> deleteMassage(Map<String, Object> income){
+        return null;
+    }
+
+    public static Map<String, Object> editMassage(Map<String, Object> income){
+        return null;
     }
 }

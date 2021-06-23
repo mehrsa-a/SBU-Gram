@@ -1,5 +1,6 @@
 package Controller;
 
+import Common.Massage;
 import Common.Post;
 import Common.User;
 import Model.*;
@@ -44,10 +45,13 @@ public class TimeLineController {
     public static String path;
     public Label name;
     public JFXTextField searchField;
-    public JFXListView<Post> explorePosts;
     public JFXListView<User> Massages;
     public JFXTextField searchForMassage;
     public AnchorPane personalProfile;
+
+    private static Comparator<Massage> massageCompare = (a, b) -> -1 * Long.compare(a.getCreatedTime(), b.getCreatedTime());
+    private static Comparator<Massage> readCompare = (a,b) -> 1 * Boolean.compare(a.isRead(), b.isRead() );
+    private static Comparator<Massage> mailCompare = readCompare.thenComparing(massageCompare);
 
     public void initialize(){
         List<Post> posts=ClientAPI.getAllPosts(currentUser);
@@ -136,30 +140,17 @@ public class TimeLineController {
         ClientAPI.getTimeline(currentUser);
         PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
-        List<Post> ep=new ArrayList<>();
-        List<String> blocked=ClientAPI.getBlocked(currentUser);
-        for(Post p: posts){
-            List<String> pu=p.getPublisher().stream()
-                    .map(a-> a.getUsername())
-                    .collect(Collectors.toList());
-            for(String s: pu){
-                assert blocked != null;
-                if(!blocked.contains(s)) {
-                    assert blockers != null;
-                    if (!blockers.contains(s)) {
-                        ep.add(p);
-                    }
-                }
-            }
-        }
-        explorePosts.setItems(FXCollections.observableArrayList(ep));
-        explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
         String temp=ClientAPI.getNumbers(currentUser, currentUser);
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
         follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
         post.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
+        List<User> shown= users.values().stream()
+                .filter(a-> ((ClientAPI.getMassaged(currentUser).contains(a.getUsername()))&&(!(blockers.contains(a.getUsername())))))
+                .collect(Collectors.toList());
+        Massages.setItems(FXCollections.observableArrayList(shown));
+        Massages.setCellFactory(Massages -> new DirectUserItem());
     }
 
     public void editProfile(ActionEvent actionEvent) throws IOException {
@@ -232,25 +223,6 @@ public class TimeLineController {
         }
         PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
-        List<Post> ep=new ArrayList<>();
-        List<String> blocked=ClientAPI.getBlocked(currentUser);
-        List<String> blockers=ClientAPI.getBlockers(currentUser);
-        for(Post p: posts){
-            List<String> pu=p.getPublisher().stream()
-                    .map(a-> a.getUsername())
-                    .collect(Collectors.toList());
-            for(String s: pu){
-                assert blocked != null;
-                if(!blocked.contains(s)) {
-                    assert blockers != null;
-                    if (!blockers.contains(s)) {
-                        ep.add(p);
-                    }
-                }
-            }
-        }
-        explorePosts.setItems(FXCollections.observableArrayList(ep));
-        explorePosts.setCellFactory(explorePosts -> new PostItem());
         myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
         myPosts.setCellFactory(myPosts -> new PostItem());
         currentPost=new Post();
@@ -366,29 +338,6 @@ public class TimeLineController {
         searchField.setText("");
     }
 
-    public void openExplore(Event event) {
-        List<Post> posts=ClientAPI.getAllPosts(currentUser);
-        List<Post> ep=new ArrayList<>();
-        List<String> blocked=ClientAPI.getBlocked(currentUser);
-        List<String> blockers=ClientAPI.getBlockers(currentUser);
-        for(Post p: posts){
-            List<String> pu=p.getPublisher().stream()
-                    .map(a-> a.getUsername())
-                    .collect(Collectors.toList());
-            for(String s: pu){
-                assert blocked != null;
-                if(!blocked.contains(s)) {
-                    assert blockers != null;
-                    if (!blockers.contains(s)) {
-                        ep.add(p);
-                    }
-                }
-            }
-        }
-        explorePosts.setItems(FXCollections.observableArrayList(ep));
-        explorePosts.setCellFactory(explorePosts -> new PostItem());
-    }
-
     public void backToMassages(MouseEvent mouseEvent) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
@@ -408,7 +357,30 @@ public class TimeLineController {
         List<User> shown= users.values().stream()
                 .filter(a-> ((ClientAPI.getMassaged(currentUser).contains(a.getUsername()))&&(!(blockers.contains(a.getUsername())))))
                 .collect(Collectors.toList());
-        Massages.setItems(FXCollections.observableArrayList(shown));
+        List<Massage> temp=new ArrayList<>();
+        for(String u: Objects.requireNonNull(ClientAPI.getMassaged(currentUser))){
+            List<Massage> received=ClientAPI.getMassages(currentUser).stream()
+                    .filter(a-> ((a.getSender().getUsername().equals(u))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
+                    .sorted(mailCompare)
+                    .collect(Collectors.toList());
+            temp.add(received.get(0));
+        }
+        List<User> f=temp.
+                stream()
+                .sorted(mailCompare)
+                .map(a-> a.getSender())
+                .collect(Collectors.toList());
+        List<String> strings=new ArrayList<>();
+        List<User> finalList=new ArrayList<>();
+        for(User u: f){
+            for(User t: shown){
+                if(t.getUsername().equals(u.getUsername())&&!(strings.contains(t.getUsername()))){
+                    finalList.add(t);
+                    strings.add(t.getUsername());
+                }
+            }
+        }
+        Massages.setItems(FXCollections.observableArrayList(finalList));
         Massages.setCellFactory(Massages -> new DirectUserItem());
     }
 

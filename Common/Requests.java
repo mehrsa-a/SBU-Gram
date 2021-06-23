@@ -43,5 +43,7 @@ public enum Requests {
     receiveMassage,
     getMassages,
     readMassage,
-    getMassaged
+    getMassaged,
+    deleteMassage,
+    editMassage
 }

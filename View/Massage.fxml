@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="massagePane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="massagePane" prefHeight="158.0" prefWidth="152.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="massage" layoutX="3.0" layoutY="3.0" text="massage" wrapText="true" />
+      <Label fx:id="massage" layoutX="14.0" layoutY="12.0" text="massage" wrapText="true" />
+      <ImageView fx:id="image" fitHeight="150.0" fitWidth="189.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="133.0" layoutY="12.0" onMouseClicked="#deleteMassage" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/waste.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="158.0" layoutY="12.0" onMouseClicked="#edit" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/edit.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
