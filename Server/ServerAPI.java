@@ -520,8 +520,6 @@ public class ServerAPI {
     public static Map<String,Object> deleteAccount(Map<String,Object> income){
         User user= (User) income.get("user");
         String username=user.getUsername();
-        Server.users.remove(user.getUsername());
-        Server.posts.removeIf(p -> p.getUser().getUsername().equals(username));
         for(Post p: Server.posts){
             p.getLiked().removeIf(a-> (a.getUsername().equals(username)));
             p.getReposted().removeIf(a-> (a.getUsername().equals(username)));
@@ -538,7 +536,30 @@ public class ServerAPI {
                 p.getCommented().removeIf(a-> (a.getUser().getUsername().equals(username)));
             }
         }
+        Server.posts.removeIf(p -> p.getUser().getUsername().equals(username));
         Server.massages.removeIf(m -> m.getSender().getUsername().equals(username) || m.getReceiver().getUsername().equals(username));
+        user.getMassaged().clear();
+        user.getMuted().clear();
+        user.getBlocked().clear();
+        user.getBlocker().clear();
+        user.setProfilePath("");
+        user.setAnswer("");
+        user.setQuestion("");
+        user.setBio("");
+        user.getFollowing().clear();
+        user.getFollower().clear();
+        user.setImage(null);
+        user.getPosts().clear();
+        user.setGender("");
+        user.setBirthday("");
+        user.setLocation("");
+        user.setEmail("");
+        user.setPhoneNumber("");
+        user.setLastName("");
+        user.setFirstName("");
+        Server.users.remove(user.getUsername());
+        user.setPassword("");
+        user.setUsername("");
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.deleteAccount);

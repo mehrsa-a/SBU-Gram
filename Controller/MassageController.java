@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 public class MassageController {
     public AnchorPane massagePane;
+    public AnchorPane imagePane;
     public Label massage;
     public Massage target;
     public static byte[] help;
@@ -40,19 +41,20 @@ public class MassageController {
 
     public AnchorPane init(){
         help=target.getFile();
-        if(help!=null){
-            Image newImage=new Image(new ByteArrayInputStream(help));
-            image.setImage(newImage);
-        } else{
-            massage.setText(target.getText());
-            editField.setVisible(false);
-            ce.setVisible(false);
-        }
         if(target.isDateFlag()){
             pen.setVisible(false);
             trash.setVisible(false);
         }
-        return massagePane;
+        if(help!=null){
+            Image newImage=new Image(new ByteArrayInputStream(help));
+            image.setImage(newImage);
+            return imagePane;
+        } else{
+            massage.setText(target.getText());
+            editField.setVisible(false);
+            ce.setVisible(false);
+            return massagePane;
+        }
     }
 
     public void deleteMassage(MouseEvent mouseEvent) throws IOException {

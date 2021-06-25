@@ -19,7 +19,7 @@
             <Image url="@../images/edit.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="ce" fitHeight="17.0" fitWidth="17.0" layoutX="178.0" layoutY="62.0" onMouseClicked="#confirmEdit" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ce" fitHeight="17.0" fitWidth="17.0" layoutX="178.0" layoutY="62.0" onMouseClicked="#confirmEdit" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/confirm.png" />
          </image>
