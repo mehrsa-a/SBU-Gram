@@ -77,8 +77,8 @@ public class UsersController {
                 muteButton.setVisible(true);
             }
         }
-        ClientAPI.getMyPosts(target);
-        Posts.setItems(FXCollections.observableArrayList(target.getPosts()));
+        List<Post> p = (List<Post>) ClientAPI.getMyPosts(target);
+        Posts.setItems(FXCollections.observableArrayList(p));
         Posts.setCellFactory(Posts -> new PostItem());
         Map<String, String> info=ClientAPI.getInformation(target);
         if(info!=null){
@@ -94,7 +94,7 @@ public class UsersController {
         }
         if(fullName!=null){
             name.setText(fullName);
-        } else {
+        } else{
             name.setVisible(false);
         }
         List<String> blockName=ClientAPI.getBlocked(currentUser);

@@ -84,7 +84,7 @@ public class ServerAPI {
         String username = user.getUsername();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getMyPosts);
-        Set<Post> sent= Server.users.get(username).getPosts();
+        ArrayList<Post> sent= new ArrayList<>(Server.users.get(username).getPosts());
         ans.put("myPosts", sent);
         return ans;
     }

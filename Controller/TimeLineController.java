@@ -26,6 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static Model.Main.*;
+import static Model.Main.posts;
 
 public class TimeLineController {
     public Label Bio;
@@ -199,56 +200,10 @@ public class TimeLineController {
         currentPost.setText(post.getText());
         if(help!=null){
             currentPost.setImage(help);
-        }
-        posts.add(currentPost);
-        currentUser.getPosts().add(currentPost);
-        if(help==null){
+            ClientAPI.addPost(currentPost, help, path);
+        } else{
             ClientAPI.addPost(currentPost);
         }
-        else{
-            ClientAPI.addPost(currentPost, help, path);
-        }
-        Main.update();
-        ClientAPI.getAllPosts(currentUser);
-        ClientAPI.getAllUsers(currentUser);
-        for(User u: users.values()){
-            ClientAPI.getMyPosts(u);
-        }
-        List<Post> posts=ClientAPI.getAllPosts(currentUser);
-        List<String> f=ClientAPI.getFollowings(currentUser);
-        List<String> m=ClientAPI.getMuted(currentUser);
-        Set<Post> t=new HashSet<>();
-        for(Post p: posts){
-            assert f != null;
-            if(f.contains(p.getUser().getUsername())) {
-                assert m != null;
-                if (!(m.contains(p.getUser().getUsername()))) {
-                    t.add(p);
-                }
-            }
-            if(currentUser.getUsername().equals(p.getUser().getUsername())){
-                t.add(p);
-            }
-            List<String> pu=p.getPublisher().stream()
-                    .map(a-> a.getUsername())
-                    .collect(Collectors.toList());
-            for(String s: pu){
-                if(f.contains(s)){
-                    assert m != null;
-                    if (!(m.contains(p.getUser().getUsername()))) {
-                        t.add(p);
-                    }
-                }
-                if(currentUser.getUsername().equals(s)){
-                    t.add(p);
-                }
-            }
-        }
-        PostList.setItems(FXCollections.observableArrayList(t));
-        PostList.setCellFactory(PostList -> new PostItem());
-        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
-        myPosts.setCellFactory(myPosts -> new PostItem());
-        currentPost=new Post();
         title.setText("");
         post.setText("");
         image.setImage(null);

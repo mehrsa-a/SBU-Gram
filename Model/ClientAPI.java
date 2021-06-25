@@ -68,17 +68,17 @@ public class ClientAPI {
         return (List<Post>) received.get("answer");
     }
 
-    public static Map<String,Object> getMyPosts(User user){
+    public static List<Post> getMyPosts(User user){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.getMyPosts);
         toSend.put("user", user);
         Map<String,Object> received = ConnectClient.serve(toSend);
-        return received;
+        return (List<Post>) received.get("myPosts");
     }
 
-    public static Set<Post> getAllOfMyPosts(User user){
-        Map<String,Object> all=getMyPosts(user);
-        return (Set<Post>) all.get("myPosts");
+    public static List<Post> getAllOfMyPosts(User user){
+        List<Post> all=getMyPosts(user);
+        return (List<Post>) all;
     }
 
     public static void addPost(Post post){
