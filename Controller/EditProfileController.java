@@ -38,6 +38,11 @@ public class EditProfileController {
     public JFXTextField firstName;
 
     public void initialize(){
+        help=ClientAPI.getProfile(currentUser);
+        if(help!=null){
+            Image newImage=new Image(new ByteArrayInputStream(help));
+            image.setImage(newImage);
+        }
         Map<String, String> info=ClientAPI.getInformation(currentUser);
         if(info!=null){
             if(info.get("firstName")!=null){
@@ -64,18 +69,23 @@ public class EditProfileController {
             if(info.get("bio")!=null){
                 bio.setText(info.get("bio"));
             }
+            if(info.get("path")!=null){
+                path=info.get("path");
+            }
         }
     }
 
     public void setProfile(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(new Popup());
-        FileInputStream fileInputStream=new FileInputStream(file);
-        byte[] bytes=fileInputStream.readAllBytes();
-        help=bytes;
-        path=file.getAbsolutePath();
-        Image newImage=new Image(new ByteArrayInputStream(bytes));
-        image.setImage(newImage);
+        if(file!=null){
+            FileInputStream fileInputStream=new FileInputStream(file);
+            byte[] bytes=fileInputStream.readAllBytes();
+            help=bytes;
+            path=file.getAbsolutePath();
+            Image newImage=new Image(new ByteArrayInputStream(bytes));
+            image.setImage(newImage);
+        }
     }
 
     public void logOut(ActionEvent actionEvent) throws IOException {

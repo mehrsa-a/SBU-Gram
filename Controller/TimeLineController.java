@@ -89,20 +89,35 @@ public class TimeLineController {
                 }
             }
         }
-        ClientAPI.getTimeline(currentUser);
+        //ClientAPI.getTimeline(currentUser);
         PostList.setItems(FXCollections.observableArrayList(t));
         PostList.setCellFactory(PostList -> new PostItem());
+
+        Main.update();
+        ClientAPI.getMyPosts(currentUser);
+        username.setText(currentUser.getUsername());
+        byte[] x=ClientAPI.getProfile(currentUser);
+        if(x!=null){
+            Image newImage=new Image(new ByteArrayInputStream(x));
+            profile.setImage(newImage);
+        }
+        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
+        myPosts.setCellFactory(myPosts -> new PostItem());
+        String temp=ClientAPI.getNumbers(currentUser, currentUser);
+        following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
+        follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
+        post1.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {
-        Main.update();
+        /*Main.update();
         ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){
             ClientAPI.getMyPosts(u);
         }
-        ClientAPI.getAllUsers(currentUser);
+        ClientAPI.getAllUsers(currentUser);*/
         new PageLoader().load("Timeline");
-        username.setText(currentUser.getUsername());
+        /*username.setText(currentUser.getUsername());
         List<String> blockers=ClientAPI.getBlockers(currentUser);
         List<User> acc=new ArrayList<>();
         for(User u: Main.users.values()){
@@ -155,7 +170,7 @@ public class TimeLineController {
                 .filter(a-> ((ClientAPI.getMassaged(currentUser).contains(a.getUsername()))&&(!(blockers.contains(a.getUsername())))))
                 .collect(Collectors.toList());
         Massages.setItems(FXCollections.observableArrayList(shown));
-        Massages.setCellFactory(Massages -> new DirectUserItem());
+        Massages.setCellFactory(Massages -> new DirectUserItem());*/
     }
 
     public void editProfile(ActionEvent actionEvent) throws IOException {
@@ -166,12 +181,14 @@ public class TimeLineController {
     public void addPhoto(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(new Popup());
-        FileInputStream fileInputStream=new FileInputStream(file);
-        byte[] bytes=fileInputStream.readAllBytes();
-        help=bytes;
-        path=file.getAbsolutePath();
-        Image newImage=new Image(new ByteArrayInputStream(bytes));
-        image.setImage(newImage);
+        if(file!=null){
+            FileInputStream fileInputStream=new FileInputStream(file);
+            byte[] bytes=fileInputStream.readAllBytes();
+            help=bytes;
+            path=file.getAbsolutePath();
+            Image newImage=new Image(new ByteArrayInputStream(bytes));
+            image.setImage(newImage);
+        }
     }
 
     public void publish(ActionEvent actionEvent) {
@@ -257,6 +274,23 @@ public class TimeLineController {
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
         follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
         post1.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
+        Map<String, String> info=ClientAPI.getInformation(currentUser);
+        if(info!=null){
+            if(info.get("bio")!=null){
+                Bio.setText(info.get("bio"));
+            }
+            if(info.get("firstName")!=null){
+                fullName=info.get("firstName");
+            }
+            if(info.get("lastName")!=null){
+                fullName=" "+info.get("lastName");
+            }
+        }
+        if(fullName!=null){
+            name.setText(fullName);
+        } else{
+            name.setVisible(false);
+        }
     }
 
     public void openAccounts(Event event) {
@@ -408,5 +442,9 @@ public class TimeLineController {
         Massages.setCellFactory(Massages -> new DirectUserItem());
 
 
+    }
+
+    public void back(ActionEvent actionEvent) throws IOException {
+        new PageLoader().load("TimeLine");
     }
 }

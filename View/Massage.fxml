@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="massagePane" prefHeight="158.0" prefWidth="152.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="massagePane" prefHeight="140.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="massage" layoutX="14.0" layoutY="12.0" text="massage" wrapText="true" />
-      <ImageView fx:id="image" fitHeight="150.0" fitWidth="189.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="133.0" layoutY="12.0" onMouseClicked="#deleteMassage" pickOnBounds="true" preserveRatio="true">
+      <Label fx:id="massage" layoutX="14.0" layoutY="41.0" text="massage" wrapText="true" />
+      <ImageView fx:id="trash" fitHeight="17.0" fitWidth="22.0" layoutX="14.0" layoutY="12.0" onMouseClicked="#deleteMassage" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/waste.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="158.0" layoutY="12.0" onMouseClicked="#edit" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pen" fitHeight="17.0" fitWidth="17.0" layoutX="37.0" layoutY="12.0" onMouseClicked="#edit" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/edit.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="editField" focusColor="#1c1194" layoutY="147.0" prefHeight="25.0" prefWidth="189.0" promptText="new text" unFocusColor="#1c1194" visible="false" />
-      <ImageView fx:id="ce" fitHeight="17.0" fitWidth="17.0" layoutX="158.0" layoutY="151.0" onMouseClicked="#confirmEdit" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="ce" fitHeight="17.0" fitWidth="17.0" layoutX="178.0" layoutY="62.0" onMouseClicked="#confirmEdit" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/confirm.png" />
          </image>
       </ImageView>
+      <JFXTextArea fx:id="editField" focusColor="#1c1194" layoutY="77.0" prefHeight="50.0" prefWidth="200.0" promptText="new text" unFocusColor="#1c1194" visible="false" />
    </children>
 </AnchorPane>

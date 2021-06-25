@@ -9,7 +9,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
-
+/**
+ * <h1>Post</h1>
+ * <p>this class handles posts</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class Post implements Serializable, Comparable {
     public static long serialVersionUID=123456L;
     private User user=new User();

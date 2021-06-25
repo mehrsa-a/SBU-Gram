@@ -4,6 +4,7 @@ import Common.Massage;
 import Model.ClientAPI;
 import Model.Main;
 import Model.PageLoader;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,23 +23,34 @@ public class MassageController {
     public Massage target;
     public static byte[] help;
     public ImageView image;
-    public JFXTextField editField;
+    public JFXTextArea editField;
     public ImageView ce;
     public static Massage old;
+    public ImageView trash;
+    public ImageView pen;
 
     public MassageController(Massage massage) throws IOException {
         target=massage;
-        new PageLoader().load("Massage", this);
+        if(target.getFile()!=null){
+            new PageLoader().load("ImageMassage", this);
+        } else{
+            new PageLoader().load("Massage", this);
+        }
     }
 
     public AnchorPane init(){
-        editField.setVisible(false);
-        ce.setVisible(false);
         help=target.getFile();
-        massage.setText(target.getText());
         if(help!=null){
             Image newImage=new Image(new ByteArrayInputStream(help));
             image.setImage(newImage);
+        } else{
+            massage.setText(target.getText());
+            editField.setVisible(false);
+            ce.setVisible(false);
+        }
+        if(target.isDateFlag()){
+            pen.setVisible(false);
+            trash.setVisible(false);
         }
         return massagePane;
     }

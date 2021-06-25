@@ -164,7 +164,7 @@ public class ServerAPI {
         User user= (User) income.get("user");
         String answer=Server.users.get(user.getUsername()).getFollowing().size()+"|"+Server.users.get(user.getUsername()).getFollower().size()+"|"+Server.users.get(user.getUsername()).getPosts().size();
         Map<String,Object> ans = new HashMap<>();
-        ans.put("request", Requests.getNumbers);
+        ans.put("request", Requests.getNum);
         ans.put("answer", answer);
         return ans;
     }
@@ -255,15 +255,16 @@ public class ServerAPI {
         User user= (User) income.get("user");
         Post disliked= (Post) income.get("disliked");
         int answer=0;
-        for(Post p: Server.posts){
+        /*for(Post p: Server.posts){
             if(p.equals(disliked)){
                 p.getLiked().remove(user);
                 answer=p.getLiked().size();
             }
-        }
+        }*/
         for(Post p: Server.users.get(disliked.getUser().getUsername()).getPosts()){
             if(p.equals(disliked)){
                 p.getLiked().remove(user);
+                answer=p.getLiked().size();
             }
         }
         Database.getInstance().updateDataBase();
@@ -329,6 +330,24 @@ public class ServerAPI {
         System.out.println(user.getUsername()+" repost");
         System.out.println("message: "+post.getUser().getUsername()+" "+post.getTitle());
         System.out.println("time: "+ Time.getTime());
+        return ans;
+    }
+
+    public static Map<String, Object> getReposts(Map<String, Object> income){
+        Post post= (Post) income.get("post");
+        for(Post p: Server.posts){
+            if(p.equals(post)){
+                post=p;
+            }
+        }
+        List<User> list=post.getReposted();
+        List<String> usernames=new ArrayList<>();
+        for(User u: list){
+            usernames.add(u.getUsername());
+        }
+        Map<String,Object> ans = new HashMap<>();
+        ans.put("request", Requests.getReposts);
+        ans.put("answer", usernames);
         return ans;
     }
 
@@ -457,6 +476,8 @@ public class ServerAPI {
             info.put("gender", Server.users.get(user.getUsername()).getGender());
         if(Server.users.get(user.getUsername()).getBio()!=null)
             info.put("bio", Server.users.get(user.getUsername()).getBio());
+        if(Server.users.get(user.getUsername()).getProfilePath()!=null)
+            info.put("path", Server.users.get(user.getUsername()).getProfilePath());
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getInformation);
         ans.put("answer", info);
@@ -509,12 +530,15 @@ public class ServerAPI {
         for(User u: Server.users.values()){
             u.getFollowing().removeIf(a-> (a.getUsername().equals(username)));
             u.getFollower().removeIf(a-> (a.getUsername().equals(username)));
+            u.getMassaged().removeIf(a-> a.getUsername().equals(username));
+            u.getPosts().removeIf(a-> (a.getUser().getUsername().equals(username)));
             for(Post p: u.getPosts()){
                 p.getLiked().removeIf(a-> (a.getUsername().equals(username)));
                 p.getReposted().removeIf(a-> (a.getUsername().equals(username)));
                 p.getCommented().removeIf(a-> (a.getUser().getUsername().equals(username)));
             }
         }
+        Server.massages.removeIf(m -> m.getSender().getUsername().equals(username) || m.getReceiver().getUsername().equals(username));
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.deleteAccount);
@@ -527,7 +551,7 @@ public class ServerAPI {
     public static Map<String,Object> logOut(Map<String,Object> income){
         User user= (User) income.get("user");
         Map<String,Object> ans = new HashMap<>();
-        ans.put("request", Requests.deleteAccount);
+        ans.put("request", Requests.logout);
         ans.put("answer", new Boolean(true));
         System.out.println(user.getUsername()+"  logout");
         System.out.println("time: "+Time.getTime());
@@ -651,7 +675,7 @@ public class ServerAPI {
         ans.put("request", Requests.sendMassage);
         ans.put("answer", new Boolean(true));
         System.out.println(sender.getUsername()+" send");
-        System.out.println("message: from "+sender.getUsername()+" to "+receiver.getUsername());
+        System.out.println("message: from "+sender.getUsername()+" to "+receiver.getUsername()+" "+massage.getPath());
         System.out.println("time: "+Time.getTime());
         return ans;
     }
@@ -665,7 +689,7 @@ public class ServerAPI {
         ans.put("request", Requests.receiveMassage);
         ans.put("answer", new Boolean(true));
         System.out.println(receiver.getUsername()+" receive");
-        System.out.println("message: "+sender.getUsername());
+        System.out.println("message: "+sender.getUsername()+" "+massage.getPath());
         System.out.println("time: "+Time.getTime());
         return ans;
     }
@@ -712,13 +736,14 @@ public class ServerAPI {
     public static Map<String, Object> deleteMassage(Map<String, Object> income){
         User user= (User) income.get("user");
         Massage massage= (Massage) income.get("massage");
+        int i=0;
         for(Massage m: Server.massages){
             if(m.equals(massage)){
-                int i=Server.massages.indexOf(m);
-                Server.massages.remove(i+1);
-                Server.massages.remove(m);
+                i=Server.massages.indexOf(m);
             }
         }
+        Server.massages.remove(i+1);
+        Server.massages.remove(i);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.deleteMassage);
@@ -730,12 +755,13 @@ public class ServerAPI {
         User user= (User) income.get("user");
         Massage oldMassage= (Massage) income.get("oldMassage");
         Massage newMassage= (Massage) income.get("newMassage");
+        int i=0;
         for(Massage m: Server.massages){
             if(m.equals(oldMassage)){
-                int i=Server.massages.indexOf(m);
-                Server.massages.set(i, newMassage);
+                i=Server.massages.indexOf(m);
             }
         }
+        Server.massages.set(i, newMassage);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.editMassage);

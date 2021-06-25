@@ -35,12 +35,14 @@ public class AddInformationController {
     public void setProfile(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(new Popup());
-        FileInputStream fileInputStream=new FileInputStream(file);
-        byte[] bytes=fileInputStream.readAllBytes();
-        help=bytes;
-        path= file.getAbsolutePath();
-        Image newImage=new Image(new ByteArrayInputStream(bytes));
-        image.setImage(newImage);
+        if(file!=null){
+            FileInputStream fileInputStream=new FileInputStream(file);
+            byte[] bytes=fileInputStream.readAllBytes();
+            help=bytes;
+            path= file.getAbsolutePath();
+            Image newImage=new Image(new ByteArrayInputStream(bytes));
+            image.setImage(newImage);
+        }
     }
 
     public void signup(ActionEvent actionEvent) throws IOException {
@@ -73,6 +75,7 @@ public class AddInformationController {
     }
 
     public void skip(ActionEvent actionEvent) throws IOException {
+        ClientAPI.setProfile(Main.currentUser, null, null);
         Main.update();
         ClientAPI.getAllPosts(currentUser);
         for(User u: users.values()){

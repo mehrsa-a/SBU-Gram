@@ -70,8 +70,14 @@ public class UserController {
         }
         if(fullName != null){
             name.setText(fullName);
-        } else{
+        } else {
             name.setVisible(false);
+        }
+        List<String> blockName=ClientAPI.getBlocked(currentUser);
+        assert blockName != null;
+        if(blockName.contains(target.getUsername())) {
+            followingButton.setVisible(false);
+            unfollowing.setVisible(false);
         }
         return userPane;
     }

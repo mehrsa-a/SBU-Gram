@@ -5,6 +5,7 @@ import Common.Time;
 import Common.User;
 import Model.*;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -26,7 +27,7 @@ public class MassagePageController {
     public Text username;
     public JFXListView<Massage> otherMassages;
     public JFXListView<Massage> myMassages;
-    public JFXTextField massageField;
+    public JFXTextArea massageField;
     public User target;
     public static byte[] help;
     public static String path;
@@ -64,26 +65,32 @@ public class MassagePageController {
     public void attachFile(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(new Popup());
-        FileInputStream fileInputStream=new FileInputStream(file);
-        byte[] bytes=fileInputStream.readAllBytes();
-        help=bytes;
-        path=file.getAbsolutePath();
+        if(file!=null){
+            FileInputStream fileInputStream=new FileInputStream(file);
+            byte[] bytes=fileInputStream.readAllBytes();
+            help=bytes;
+            path=file.getAbsolutePath();
+        }
     }
 
     public void send(ActionEvent actionEvent) {
         Massage currentMassage=new Massage();
         currentMassage.setSender(Main.currentUser);
         currentMassage.setReceiver(target);
-        currentMassage.setText(massageField.getText());
         if(help!=null){
             currentMassage.setFile(help);
+            currentMassage.setPath(path);
+        } else{
+            currentMassage.setText(massageField.getText());
         }
+        currentMassage.setDateFlag(false);
         currentMassage.setRead(false);
         Massage date=new Massage();
         date.setText(Time.getTime());
         date.setSender(target);
         date.setReceiver(Main.currentUser);
         date.setRead(true);
+        date.setDateFlag(true);
         ClientAPI.sendMassage(Main.currentUser, target, currentMassage, date);
         ClientAPI.receiveMassage(Main.currentUser, target, currentMassage, date);
         massages=ClientAPI.getMassages(Main.currentUser);
@@ -101,5 +108,9 @@ public class MassagePageController {
         massageField.setText("");
         image.setImage(null);
         Main.update();
+    }
+
+    public void refresh(ActionEvent actionEvent) throws IOException {
+        new PageLoader().load("MassagePage");
     }
 }

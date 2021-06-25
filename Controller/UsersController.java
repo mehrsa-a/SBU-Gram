@@ -94,7 +94,7 @@ public class UsersController {
         }
         if(fullName!=null){
             name.setText(fullName);
-        } else{
+        } else {
             name.setVisible(false);
         }
         List<String> blockName=ClientAPI.getBlocked(currentUser);

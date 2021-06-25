@@ -8,6 +8,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * <h1>User</h1>
+ * <p>this class handles users</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class User implements Serializable, Comparable {
     public static long serialVersionUID=123457890L;
     private String username="";

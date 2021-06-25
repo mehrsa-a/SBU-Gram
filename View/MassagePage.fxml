@@ -2,7 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,25 +17,31 @@
          </image>
       </ImageView>
       <JFXButton layoutX="14.0" layoutY="14.0" onAction="#back" prefHeight="12.0" prefWidth="29.0" text="." textFill="WHITE" />
-      <ImageView fx:id="image" fitHeight="115.0" fitWidth="126.0" layoutX="74.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image" fitHeight="78.0" fitWidth="91.0" layoutX="91.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/user.png" />
          </image>
       </ImageView>
-      <Text fx:id="username" fill="#1c1194" layoutX="323.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username">
+      <Text fx:id="username" fill="#1c1194" layoutX="308.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="260.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direct Massages With">
+      <Text layoutX="245.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direct Massages With">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <JFXListView fx:id="otherMassages" layoutY="129.0" prefHeight="300.0" prefWidth="300.0" />
-      <JFXListView fx:id="myMassages" layoutX="300.0" layoutY="129.0" prefHeight="300.0" prefWidth="300.0" />
-      <JFXTextField fx:id="massageField" focusColor="#1c1194" layoutX="14.0" layoutY="429.0" prefHeight="25.0" prefWidth="475.0" promptText="write a massage..." unFocusColor="#1c1194" />
-      <JFXButton layoutX="489.0" layoutY="429.0" onAction="#attachFile" prefHeight="25.0" prefWidth="43.0" text="File" textFill="#1c1194" />
-      <JFXButton layoutX="543.0" layoutY="429.0" onAction="#send" text="Send" textFill="#1c1194" />
+      <JFXListView fx:id="otherMassages" layoutY="100.0" prefHeight="300.0" prefWidth="300.0" />
+      <JFXListView fx:id="myMassages" layoutX="300.0" layoutY="100.0" prefHeight="300.0" prefWidth="300.0" />
+      <JFXButton layoutX="489.0" layoutY="405.0" onAction="#attachFile" prefHeight="78.0" prefWidth="43.0" text="File" textFill="#1c1194" />
+      <JFXButton layoutX="543.0" layoutY="404.0" onAction="#send" prefHeight="78.0" prefWidth="43.0" text="Send" textFill="#1c1194" />
+      <JFXTextArea fx:id="massageField" focusColor="#1c1194" layoutX="12.0" layoutY="403.0" prefHeight="78.0" prefWidth="465.0" promptText="write a massage..." unFocusColor="#1c1194" />
+      <ImageView fitHeight="39.0" fitWidth="26.0" layoutX="565.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/refresh.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="569.0" layoutY="15.0" onAction="#refresh" text="." textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -45,6 +45,7 @@ public class PostController {
     public ImageView reposted;
     public JFXButton notReposted;
     public Label alreadyRepost;
+    public Label mineRepost;
 
     public PostController(Post post) throws IOException {
         target=post;
@@ -54,6 +55,7 @@ public class PostController {
 
     public AnchorPane init(){
         alreadyRepost.setVisible(false);
+        mineRepost.setVisible(false);
         username.setText(target.getUser().getUsername());
         date.setText(target.getTimeString());
         byte[] x=ClientAPI.getProfile(target.getUser());
@@ -77,14 +79,10 @@ public class PostController {
             liked.setVisible(true);
             notLiked.setVisible(false);
         }
-        /*List<String> reposting=new ArrayList<>();
-        for(User u: target.getPublisher()){
-            reposting.add(u.getUsername());
-        }
-        if(reposting.contains(currentUser.getUsername())){
+        List<String> r=ClientAPI.getReposts(target);
+        if(r.contains(currentUser.getUsername())){
             reposted.setVisible(true);
-            notReposted.setVisible(false);
-        }*/
+        }
         Map<String, String> info=ClientAPI.getInformation(target.getUser());
         if(info!=null){
             if(info.get("firstName")!=null){
@@ -96,7 +94,7 @@ public class PostController {
         }
         if(fullName!=null){
             name.setText(fullName);
-        } else{
+        } else {
             name.setVisible(false);
         }
         return postPane;
@@ -118,12 +116,18 @@ public class PostController {
     }
 
     public void repost(ActionEvent actionEvent) {
+        if(reposted.isVisible()){
+            alreadyRepost.setVisible(true);
+        }
+        if(target.getUser().getUsername().equals(currentUser.getUsername())){
+            mineRepost.setVisible(true);
+        }
         if(!reposted.isVisible()){
             target.getPublisher().add(currentUser);
             repostNum=ClientAPI.repost(Main.currentUser, target);
             numberOfReposts.setText(String.valueOf(repostNum));
             currentUser.getPosts().add(target);
-            ClientAPI.addPost(target);
+            //ClientAPI.addPost(currentPost);
             Main.update();
             ClientAPI.getAllPosts(currentUser);
             for(User u: users.values()){
@@ -131,10 +135,6 @@ public class PostController {
             }
             reposted.setVisible(true);
         }
-        if(reposted.isVisible()){
-            alreadyRepost.setVisible(true);
-        }
-
     }
 
     public void viewComments(ActionEvent actionEvent) throws IOException {
@@ -147,7 +147,7 @@ public class PostController {
         if(!(target.getUser().getUsername().equals(currentUser.getUsername()))){
             new PageLoader().load("Users");
         } else{
-            //open personal profile.. don't know how
+            new PageLoader().load("PersonalProfile");
         }
     }
 }

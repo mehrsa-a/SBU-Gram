@@ -1,5 +1,11 @@
 package Common;
-
+/**
+ * <h1>Requests</h1>
+ * <p>this class is enum for requests that we send to server and receive a answer for them. its relation between server and client side</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public enum Requests {
     newUsername,
     login,
@@ -20,6 +26,7 @@ public enum Requests {
     getPostFeatures,
     getLikes,
     repost,
+    getReposts,
     addComment,
     getComments,
     setProfile,

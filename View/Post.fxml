@@ -65,5 +65,10 @@
             <Font size="9.0" />
          </font>
       </Label>
+      <Label fx:id="mineRepost" layoutX="210.0" layoutY="331.0" text="its your post!" textFill="RED" visible="false">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

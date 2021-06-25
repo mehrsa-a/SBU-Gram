@@ -238,6 +238,17 @@ public class ClientAPI {
         return (Integer) received.get("answer");
     }
 
+    public static List<String> getReposts(Post post){
+        Map<String,Object> toSend=new HashMap<>();
+        toSend.put("request", Requests.getReposts);
+        toSend.put("post", post);
+        Map<String,Object> received=ConnectClient.serve(toSend);
+        if (received.get("answer")==null){
+            return null;
+        }
+        return (List<String>) received.get("answer");
+    }
+
     public static List<Comment> addComment(User user, Post post, Comment comment){
         Map<String,Object> toSend=new HashMap<>();
         toSend.put("request", Requests.addComment);
@@ -277,7 +288,7 @@ public class ClientAPI {
 
     public static byte[] changeProfile(User user, byte[] bytes, String path){
         Map<String,Object> toSend=new HashMap<>();
-        toSend.put("request", Requests.setProfile);
+        toSend.put("request", Requests.changeProfile);
         toSend.put("user", user);
         toSend.put("image", bytes);
         toSend.put("path", path);
