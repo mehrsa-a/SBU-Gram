@@ -95,19 +95,36 @@ public class TimeLineController {
         PostList.setCellFactory(PostList -> new PostItem());
 
         Main.update();
-        ClientAPI.getMyPosts(currentUser);
+        List<Post> p = ClientAPI.getMyPosts(currentUser);
         username.setText(currentUser.getUsername());
         byte[] x=ClientAPI.getProfile(currentUser);
         if(x!=null){
             Image newImage=new Image(new ByteArrayInputStream(x));
             profile.setImage(newImage);
         }
-        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
+        myPosts.setItems(FXCollections.observableArrayList(p));
         myPosts.setCellFactory(myPosts -> new PostItem());
         String temp=ClientAPI.getNumbers(currentUser, currentUser);
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));
         follower.setText(String.valueOf(Integer.parseInt(temp.substring(temp.indexOf("|")+1, temp.lastIndexOf("|")))));
         post1.setText(String.valueOf(Integer.parseInt(temp.substring(temp.lastIndexOf("|")+1))));
+        Map<String, String> info=ClientAPI.getInformation(currentUser);
+        if(info!=null){
+            if(info.get("bio")!=null){
+                Bio.setText(info.get("bio"));
+            }
+            if(info.get("firstName")!=null){
+                fullName=info.get("firstName");
+            }
+            if(info.get("lastName")!=null){
+                fullName=" "+info.get("lastName");
+            }
+        }
+        if(fullName!=null){
+            name.setText(fullName);
+        } else{
+            name.setVisible(false);
+        }
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {
@@ -216,14 +233,14 @@ public class TimeLineController {
 
     public void openProfile(Event event) {
         Main.update();
-        ClientAPI.getMyPosts(currentUser);
+        List<Post> p = ClientAPI.getMyPosts(currentUser);
         username.setText(currentUser.getUsername());
         byte[] x=ClientAPI.getProfile(currentUser);
         if(x!=null){
             Image newImage=new Image(new ByteArrayInputStream(x));
             profile.setImage(newImage);
         }
-        myPosts.setItems(FXCollections.observableArrayList(currentUser.getPosts()));
+        myPosts.setItems(FXCollections.observableArrayList(p));
         myPosts.setCellFactory(myPosts -> new PostItem());
         String temp=ClientAPI.getNumbers(currentUser, currentUser);
         following.setText(String.valueOf(Integer.parseInt(temp.substring(0, temp.indexOf("|")))));

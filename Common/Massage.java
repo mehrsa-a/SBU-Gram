@@ -101,6 +101,9 @@ public class Massage implements Serializable, Comparable {
     @Override
     public boolean equals(Object o){
         Massage m=(Massage) o;
+        if(m==null){
+            return false;
+        }
         if(file!=null){
             return this.getSender().equals(m.getSender()) && this.getReceiver().equals(m.getReceiver()) && Arrays.equals(this.getFile(), m.getFile());
         }
