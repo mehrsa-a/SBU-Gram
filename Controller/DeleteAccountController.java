@@ -11,6 +11,13 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
+/**
+ * <h1>DeleteAccountController</h1>
+ * <p>user can delete its account here</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class DeleteAccountController {
     public JFXPasswordField newPassword;
     public JFXPasswordField confirmPassword;
@@ -20,10 +27,20 @@ public class DeleteAccountController {
     public Label matchPass;
     public Label falsePass;
 
+    /**
+     * user can come back to last page that it been
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("EditProfile");
     }
 
+    /**
+     * this method confirm deleting account
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void deleteAcc(ActionEvent actionEvent) throws IOException {
         if (!showNewPassword.isVisible()){
             if(!(showNewPassword.getText().equals(showConfirm.getText()))){
@@ -50,6 +67,10 @@ public class DeleteAccountController {
         }
     }
 
+    /**
+     * user can see its password or not
+     * @param actionEvent by click on a button
+     */
     public void showPass(ActionEvent actionEvent) {
         if (!showNewPassword.isVisible()) {
             showNewPassword.setVisible(true);

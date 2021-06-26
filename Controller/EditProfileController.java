@@ -23,6 +23,13 @@ import java.util.Map;
 import static Model.Main.currentUser;
 import static Model.Main.users;
 
+/**
+ * <h1>EditProfileController</h1>
+ * <p>user can change all its information in this page except its username</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class EditProfileController {
     public ImageView image;
     public static Text username;
@@ -37,6 +44,9 @@ public class EditProfileController {
     public JFXTextField lastName;
     public JFXTextField firstName;
 
+    /**
+     * this method initialize all past information that user added
+     */
     public void initialize(){
         help=ClientAPI.getProfile(currentUser);
         if(help!=null){
@@ -75,6 +85,11 @@ public class EditProfileController {
         }
     }
 
+    /**
+     * this method choose a photo for profile and saves it in array of bytes
+     * @param actionEvent by click on a button
+     * @throws IOException because of using FileInputStream
+     */
     public void setProfile(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(new Popup());
@@ -88,11 +103,21 @@ public class EditProfileController {
         }
     }
 
+    /**
+     * user can log out of its account
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void logOut(ActionEvent actionEvent) throws IOException {
         ClientAPI.logOut(currentUser);
         new PageLoader().load("Login");
     }
 
+    /**
+     * this method set new information that user adds
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void confirm(ActionEvent actionEvent) throws IOException {
         ClientAPI.changeProfile(currentUser, help, path);
         Map<String, String> info=new HashMap<>();
@@ -122,6 +147,11 @@ public class EditProfileController {
         new PageLoader().load("TimeLine");
     }
 
+    /**
+     * user can come back to last page that it been
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         /*Main.update();
         ClientAPI.getAllPosts(currentUser);
@@ -132,10 +162,20 @@ public class EditProfileController {
         new PageLoader().load("TimeLine");
     }
 
+    /**
+     * its just load a page for deleting account
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void deleteAccount(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("DeleteAccount");
     }
 
+    /**
+     * its just load a page for change password
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void changePass(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("ChangePassword");
     }

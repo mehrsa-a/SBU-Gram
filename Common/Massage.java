@@ -22,44 +22,25 @@ public class Massage implements Serializable, Comparable {
     private boolean read;
     private boolean dateFlag;
 
+    //setters
     public void setDateFlag(boolean dateFlag) {
         this.dateFlag = dateFlag;
-    }
-
-    public boolean isDateFlag() {
-        return dateFlag;
     }
 
     public void setPath(String path) {
         this.path = path;
     }
 
-    public String getPath() {
-        return path;
-    }
-
     public void setRead(boolean read) {
         this.read = read;
-    }
-
-    public boolean isRead() {
-        return read;
     }
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
     }
 
-    public User getReceiver() {
-        return receiver;
-    }
-
     public void setSender(User sender) {
         this.sender = sender;
-    }
-
-    public User getSender() {
-        return sender;
     }
 
     public void setFile(byte[] file) {
@@ -68,6 +49,19 @@ public class Massage implements Serializable, Comparable {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    //getters
+    public String getPath() {
+        return path;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public User getSender() {
+        return sender;
     }
 
     public String getTimeString() {
@@ -86,6 +80,18 @@ public class Massage implements Serializable, Comparable {
         return text;
     }
 
+    public boolean isRead() {
+        return read;
+    }
+
+    public boolean isDateFlag() {
+        return dateFlag;
+    }
+
+    /**
+     * @param o the object that this compares with
+     * @return 1 or -1 to sort
+     */
     @Override
     public int compareTo(Object o) {
         Massage other=(Massage) o;
@@ -98,6 +104,10 @@ public class Massage implements Serializable, Comparable {
         return -1;
     }
 
+    /**
+     * @param o the object that this compares with
+     * @return a boolean that show two objects are equal or not
+     */
     @Override
     public boolean equals(Object o){
         Massage m=(Massage) o;

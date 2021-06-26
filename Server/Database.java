@@ -9,6 +9,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * <h1>Database</h1>
+ * <p>this class is the singleton that is the program database and it has all information in files.</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class Database {
     public static final String FILE_PREFIX="C:\\Users\\98917\\IdeaProjects\\project\\src\\database\\";
     public static final String UsersFile=FILE_PREFIX+"UsersDatabase.txt";
@@ -18,12 +25,21 @@ public class Database {
 
     private static Database ourInstance = new Database();
 
+    /**
+     * @return it give us the database
+     */
     public static Database getInstance() {
         return ourInstance;
     }
 
+    /**
+     * its just constructor that is private because class is singleton
+     */
     private Database() {}
 
+    /**
+     * after running server this method gives all information to server
+     */
     public synchronized void initializeServer(){
         try {
             FileInputStream fin=new FileInputStream(Database.UsersFile);
@@ -65,6 +81,9 @@ public class Database {
         }
     }
 
+    /**
+     * after every changes, we use this method to update database to not to lose any data
+     */
     public synchronized void updateDataBase() {
         try {
             FileOutputStream fout = new FileOutputStream(UsersFile);

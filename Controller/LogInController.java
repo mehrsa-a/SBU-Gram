@@ -19,6 +19,13 @@ import java.util.Map;
 import static Controller.TimeLineController.*;
 import static Model.Main.*;
 
+/**
+ * <h1>LogInController</h1>
+ * <p>a exist user can log in its page by entering its username and password correctly</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class LogInController {
     @FXML
     public JFXTextField username;
@@ -29,6 +36,10 @@ public class LogInController {
     public Label wrong;
     public JFXTextField visiblePass;
 
+    /**
+     * user can see its password or not
+     * @param actionEvent by click on a button
+     */
     public void showPassword(ActionEvent actionEvent){
         if (!visiblePass.isVisible()) {
             visiblePass.setVisible(true);
@@ -42,6 +53,11 @@ public class LogInController {
         }
     }
 
+    /**
+     * if username and password were for same user, this method loads the user's timeline
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void logIn(ActionEvent actionEvent) throws IOException{
         String user=username.getText();
         String pass;
@@ -66,10 +82,20 @@ public class LogInController {
         }
     }
 
+    /**
+     * user can made a new account here
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void signUp(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("Signup");
     }
 
+    /**
+     * it loads recovery password page
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void forgotPass(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("ForgetPassword");
     }

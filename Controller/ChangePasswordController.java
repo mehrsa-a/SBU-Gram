@@ -11,6 +11,13 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
+/**
+ * <h1>ChangePasswordController</h1>
+ * <p>user can change its password here</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class ChangePasswordController {
     public JFXPasswordField newPassword;
     public JFXPasswordField confirmNewPassword;
@@ -25,10 +32,20 @@ public class ChangePasswordController {
     public Label matchNew;
     public Label falsePass;
 
+    /**
+     * user can come back to last page that it been
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("EditProfile");
     }
 
+    /**
+     * this method confirm the changes and save new password
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void changePass(ActionEvent actionEvent) throws IOException {
         if (!newPassword.isVisible()){
             if(!(oldPassword.getText().equals(confirmOldPassword.getText()))){
@@ -67,6 +84,10 @@ public class ChangePasswordController {
         }
     }
 
+    /**
+     * user can see its password or not
+     * @param actionEvent by click on a button
+     */
     public void showPass(ActionEvent actionEvent) {
         if (!newPassword.isVisible()) {
             newPassword.setVisible(true);

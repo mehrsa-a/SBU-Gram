@@ -41,12 +41,59 @@ public class User implements Serializable, Comparable {
     private List<User> muted=new CopyOnWriteArrayList<>();
     private Set<User> massaged=new ConcurrentSkipListSet<>();
 
-    public void setMassaged(Set<User> massaged) {
-        this.massaged = massaged;
+    //constructors
+    public User(){
+
     }
 
-    public Set<User> getMassaged() {
-        return massaged;
+    public User(String username, String password){
+        this.username=username;
+        this.password=password;
+    }
+
+    //setters
+    public void setPosts(HashSet<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setLocation(String location) {
+        this.locationField = location;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setMassaged(Set<User> massaged) {
+        this.massaged = massaged;
     }
 
     public void setMuted(List<User> muted) {
@@ -61,24 +108,8 @@ public class User implements Serializable, Comparable {
         this.blocked = blocked;
     }
 
-    public List<User> getMuted() {
-        return muted;
-    }
-
-    public List<User> getBlocker() {
-        return blocker;
-    }
-
-    public List<User> getBlocked() {
-        return blocked;
-    }
-
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;
-    }
-
-    public String getProfilePath() {
-        return profilePath;
     }
 
     public void setAnswer(String answer) {
@@ -89,52 +120,8 @@ public class User implements Serializable, Comparable {
         this.question = question;
     }
 
-    public String getAnswer() {
-        return answer;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public String getTimeString() {
-        return timeString;
-    }
-
-    public long getCreatedTime() {
-        return createdTime;
-    }
-
-    public User(){
-
-    }
-
-    public User(String username, String password){
-        this.username=username;
-        this.password=password;
-    }
-
-    public User checkTruePass(String username, String password){
-        if(this.username.equals(username)&&this.password.equals(password)){
-            return this;
-        }
-        return null;
-    }
-
-    public List<User> getFollowing() {
-        return following;
-    }
-
-    public List<User> getFollower() {
-        return follower;
     }
 
     public void setFollowing(ArrayList<User> following) {
@@ -143,6 +130,27 @@ public class User implements Serializable, Comparable {
 
     public void setFollower(ArrayList<User> follower) {
         this.follower = follower;
+    }
+
+    //getters
+    public String getAnswer() {
+        return answer;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getProfilePath() {
+        return profilePath;
+    }
+
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public List<User> getFollower() {
+        return follower;
     }
 
     public byte[] getImage() {
@@ -193,46 +201,38 @@ public class User implements Serializable, Comparable {
         return username;
     }
 
-    public void setPosts(HashSet<Post> posts) {
-        this.posts = posts;
+    public Set<User> getMassaged() {
+        return massaged;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public List<User> getMuted() {
+        return muted;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public List<User> getBlocker() {
+        return blocker;
     }
 
-    public void setLocation(String location) {
-        this.locationField = location;
+    public List<User> getBlocked() {
+        return blocked;
     }
 
-    public void setEmail(String email) {
-        Email = email;
+    public String getBio() {
+        return bio;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public String getTimeString() {
+        return timeString;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public long getCreatedTime() {
+        return createdTime;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
+    /**
+     * @param o the object that this compares with
+     * @return 1 or -1 to sort
+     */
     @Override
     public int compareTo(Object o) {
         User other=(User) o;
@@ -245,9 +245,25 @@ public class User implements Serializable, Comparable {
         return 1;
     }
 
+    /**
+     * @param o the object that this compares with
+     * @return a boolean that show two objects are equal or not
+     */
     @Override
     public boolean equals(Object o){
         User other= (User) o;
         return other.getUsername().equals(this.getUsername());
+    }
+
+    /**
+     * @param username the username of a user
+     * @param password the password of that user
+     * @return a boolean that show username and password are belong to a same user or not
+     */
+    public User checkTruePass(String username, String password){
+        if(this.username.equals(username)&&this.password.equals(password)){
+            return this;
+        }
+        return null;
     }
 }

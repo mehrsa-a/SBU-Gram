@@ -9,12 +9,23 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Map;
 
+/**
+ * <h1>ClientHandler</h1>
+ * <p>this class handles each client that is connected to server and make new thread for it</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class ClientHandler implements Runnable {
     private Socket userSocket;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
     public Boolean clientOnline=true;
 
+    /**
+     * its just constructor and initialize class features
+     * @param socket it initialize the global socket
+     */
     public ClientHandler(Socket socket){
         try{
             userSocket=socket;
@@ -25,6 +36,10 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * it handles client requests with switch case and use methods in ServerAPI for this
+     * this method read and write objects in input and output streams too
+     */
     @Override
     public void run() {
         while(true){

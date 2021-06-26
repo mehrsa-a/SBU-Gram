@@ -19,6 +19,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * <h1>Main</h1>
+ * <p>this class runs the client side</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class Main extends Application {
 
     public static Post currentPost=new Post();
@@ -27,6 +34,9 @@ public class Main extends Application {
     public static Map<String, User> users=new ConcurrentHashMap<>();
     public static List<Massage> massages=new CopyOnWriteArrayList<>();
 
+    /**
+     * his method update information in client side
+     */
     public static void update(){
         if(ClientAPI.getAllPosts(Main.currentUser)!=null){
             posts=new CopyOnWriteArrayList<>(ClientAPI.getAllPosts(Main.currentUser));
@@ -43,13 +53,21 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * this method opens the program
+     * @param primaryStage it uses for initialize basic stage
+     * @throws Exception because of using pageLoader
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         PageLoader.initStage(primaryStage);
         new PageLoader().load("Login");
     }
 
-
+    /**
+     * it connect the client to server and runs the client side
+     * @param args it uses for opening program
+     */
     public static void main(String[] args) {
         ConnectClient.connectToServer();
         launch(args);

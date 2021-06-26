@@ -19,6 +19,13 @@ import java.util.Map;
 
 import static Model.Main.currentUser;
 
+/**
+ * <h1>UserController</h1>
+ * <p>this class shows users in a special view</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class UserController {
     public ImageView profile;
     public Label username;
@@ -34,12 +41,21 @@ public class UserController {
     public static User help;
     public String fullName;
 
+    /**
+     * its just a constructor
+     * @param user it initialize global user with this
+     * @throws IOException because of using pageLoader
+     */
     public UserController(User user) throws IOException {
         target=user;
         //currentUser=user;
         new PageLoader().load("User", this);
     }
 
+    /**
+     * this method initialize user features
+     * @return the pane that shows the user
+     */
     public AnchorPane init(){
         username.setText(target.getUsername());
         byte[] x=ClientAPI.getProfile(target);
@@ -82,6 +98,10 @@ public class UserController {
         return userPane;
     }
 
+    /**
+     * the user can follow target user with this method
+     * @param actionEvent by click on a button
+     */
     public void follow(ActionEvent actionEvent) {
         String temp= ClientAPI.follow(Main.currentUser, target);
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
@@ -90,11 +110,20 @@ public class UserController {
         followingButton.setVisible(false);
     }
 
+    /**
+     * user can view the target user's personal profile
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void viewProfile(ActionEvent actionEvent) throws IOException {
         help=target;
         new PageLoader().load("Users");
     }
 
+    /**
+     * the user can unfollow target user with this method
+     * @param actionEvent by click on a button
+     */
     public void unfollow(ActionEvent actionEvent) {
         String temp= ClientAPI.unfollow(Main.currentUser, target);
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));

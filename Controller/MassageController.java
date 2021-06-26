@@ -15,8 +15,16 @@ import javafx.scene.layout.AnchorPane;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * <h1>MassageController</h1>
+ * <p>this class shows messages in a special view</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class MassageController {
     public AnchorPane massagePane;
     public AnchorPane imagePane;
@@ -30,6 +38,11 @@ public class MassageController {
     public ImageView trash;
     public ImageView pen;
 
+    /**
+     * its just a constructor
+     * @param massage it initialize global massage with this
+     * @throws IOException because of using pageLoader
+     */
     public MassageController(Massage massage) throws IOException {
         target=massage;
         if(target.getFile()!=null){
@@ -39,6 +52,10 @@ public class MassageController {
         }
     }
 
+    /**
+     * this method initialize massage features
+     * @return the pane that shows the massage
+     */
     public AnchorPane init(){
         help=target.getFile();
         if(target.isDateFlag()){
@@ -57,25 +74,32 @@ public class MassageController {
         }
     }
 
+    /**
+     * user can delete the massage that it sent
+     * @param mouseEvent by click on a photo
+     * @throws IOException because of using pageLoader
+     */
     public void deleteMassage(MouseEvent mouseEvent) throws IOException {
         ClientAPI.deleteMassage(Main.currentUser, target);
-        List<Massage> massages=ClientAPI.getMassages(Main.currentUser).stream()
-                .filter(a-> ((a.getSender().getUsername().equals(Main.currentUser.getUsername()))&&(a.getReceiver().getUsername().equals(target.getReceiver().getUsername())))||((a.getSender().getUsername().equals(target.getReceiver().getUsername()))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
-                .collect(Collectors.toList());
-        if(massages==null||massages.size()==0){
-            new PageLoader().load("TimeLine");
-        }
-        else{
-            new PageLoader().load("MassagePage");
-        }
+        new PageLoader().load("MassagePage");
     }
 
+    /**
+     * it open a area that user types a new massage on
+     * @param mouseEvent by click on a photo
+     */
     public void edit(MouseEvent mouseEvent) {
         old=target;
         editField.setVisible(true);
+        editField.setText(target.getText());
         ce.setVisible(true);
     }
 
+    /**
+     * it confirms the changes that users add on a massage
+     * @param mouseEvent by click on a photo
+     * @throws IOException because of using pageLoader
+     */
     public void confirmEdit(MouseEvent mouseEvent) throws IOException {
         target.setText(editField.getText());
         ClientAPI.editMassage(Main.currentUser, old, target);

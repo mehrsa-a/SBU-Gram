@@ -8,9 +8,16 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Map;
 
+/**
+ * <h1>ConnectClient</h1>
+ * <p>this class is connection between client and server in client side</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class ConnectClient{
     public static String serverAddress="localhost";
-    public static final int port=2353;
+    public static final int port=2356;
     public static Socket socket;
     public static ObjectOutputStream objectOutputStream;
     public static ObjectInputStream objectInputStream;
@@ -20,6 +27,10 @@ public class ConnectClient{
         return isConnected;
     }
 
+    /**
+     * this method connects client to server
+     * @return a boolean that shows if client connected or not
+     */
     public static Boolean connectToServer(){
         if(socket!=null){
             return false;
@@ -36,6 +47,10 @@ public class ConnectClient{
         return false;
     }
 
+    /**
+     * this method disconnects client from server
+     * @return a boolean that shows if client connected or not
+     */
     public static Boolean disconnectFromServer(){
         try{
             objectInputStream.close();
@@ -55,6 +70,11 @@ public class ConnectClient{
         return false;
     }
 
+    /**
+     * this method send massage to server and receive massage from
+     * @param toSend its the map that this method send to server
+     * @return it returns server answer in map way
+     */
     public static Map<String,Object> serve(Map<String,Object> toSend){
         Map<String,Object> get=null;
         try{

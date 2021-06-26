@@ -22,6 +22,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * <h1>MassagePageController</h1>
+ * <p>this class shows messages between two users</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class MassagePageController {
     public ImageView image;
     public Text username;
@@ -36,6 +43,9 @@ public class MassagePageController {
     List<Massage> sent=new ArrayList<>();
     List<Massage> received=new ArrayList<>();
 
+    /**
+     * this method initialize chat between two user
+     */
     public void initialize(){
         target=DirectUsersController.help;
         byte[] x= ClientAPI.getProfile(target);
@@ -58,10 +68,20 @@ public class MassagePageController {
         otherMassages.setCellFactory(otherMassages -> new MassageItem());
     }
 
+    /**
+     * user can come back to last page that it been
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("TimeLine");
     }
 
+    /**
+     * user can attach a file to its massage
+     * @param actionEvent by click on a button
+     * @throws IOException because of using FileInputStream
+     */
     public void attachFile(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(new Popup());
@@ -73,6 +93,10 @@ public class MassagePageController {
         }
     }
 
+    /**
+     * this method send a massage to other user
+     * @param actionEvent by click on a button
+     */
     public void send(ActionEvent actionEvent) {
         Massage currentMassage=new Massage();
         currentMassage.setSender(Main.currentUser);
@@ -110,6 +134,11 @@ public class MassagePageController {
         Main.update();
     }
 
+    /**
+     * it refresh the chat for new massages
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void refresh(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("MassagePage");
     }

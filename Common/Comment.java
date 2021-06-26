@@ -17,6 +17,7 @@ public class Comment implements Serializable {
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
 
+    //setters
     public void setText(String text) {
         this.text = text;
     }
@@ -29,6 +30,7 @@ public class Comment implements Serializable {
         this.user = user;
     }
 
+    //getters
     public String getTimeString() {
         return timeString;
     }

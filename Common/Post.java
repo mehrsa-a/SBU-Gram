@@ -32,20 +32,9 @@ public class Post implements Serializable, Comparable {
     private final long createdTime = Time.getMilli();
     private final String timeString = Time.getTime();
 
-    public List<User> getPublisher() {
-        return publisher;
-    }
-
+    //setters
     public void setPublisher(List<User> publisher) {
         this.publisher = publisher;
-    }
-
-    public String getTimeString() {
-        return timeString;
-    }
-
-    public long getCreatedTime() {
-        return createdTime;
     }
 
     public void setCommented(ArrayList<Comment> commented) {
@@ -88,6 +77,7 @@ public class Post implements Serializable, Comparable {
         this.user = user;
     }
 
+    //getters
     public List<Comment> getCommented() {
         return commented;
     }
@@ -128,6 +118,22 @@ public class Post implements Serializable, Comparable {
         return user;
     }
 
+    public List<User> getPublisher() {
+        return publisher;
+    }
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    /**
+     * @param o the object that this compares with
+     * @return 1 or -1 to sort
+     */
     @Override
     public int compareTo(Object o) {
         Post other = (Post) o;
@@ -140,6 +146,10 @@ public class Post implements Serializable, Comparable {
         return 1;
     }
 
+    /**
+     * @param o the object that this compares with
+     * @return a boolean that show two objects are equal or not
+     */
     @Override
     public boolean equals(Object o){
         Post other= (Post) o;

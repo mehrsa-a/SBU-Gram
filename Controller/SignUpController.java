@@ -16,6 +16,13 @@ import java.util.ArrayList;
 
 import static Model.Main.currentUser;
 
+/**
+ * <h1>SignUpController</h1>
+ * <p>a new person can create a new account if its chosen username doesn't exist yet</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class SignUpController {
     public JFXTextField newUsername;
     public JFXPasswordField newPassword;
@@ -29,6 +36,10 @@ public class SignUpController {
     public Label matchPass;
     public Label truePassword;
 
+    /**
+     * user can see its password or not
+     * @param actionEvent by click on a button
+     */
     public void showPass(ActionEvent actionEvent) {
         if (!showNewPassword.isVisible()) {
             showNewPassword.setVisible(true);
@@ -48,11 +59,18 @@ public class SignUpController {
         }
     }
 
+    /**
+     * user can choose its password only by numbers and english letters
+     * @param pass its the password that user adds
+     * @return a boolean that shows the password is acceptable or not
+     */
     public boolean truePass(String pass){
         for(int i=0; i<pass.length(); i++){
             if('a'<=pass.charAt(i)&&pass.charAt(i)<='z'){
                 continue;
             } else if('0'<=pass.charAt(i)&&pass.charAt(i)<='9'){
+                continue;
+            } else if('A'<=pass.charAt(i)&&pass.charAt(i)<='Z'){
                 continue;
             } else{
                 return false;
@@ -61,6 +79,11 @@ public class SignUpController {
         return true;
     }
 
+    /**
+     * if username and password were in a right way, this method create a new account for user
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void continueSign(ActionEvent actionEvent) throws IOException {
         String user=newUsername.getText();
         String pass, confirm;
@@ -103,6 +126,11 @@ public class SignUpController {
         }
     }
 
+    /**
+     * user can log in with an existing account instead of create a new one
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void login(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("Login");
     }

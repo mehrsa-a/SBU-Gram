@@ -25,7 +25,7 @@ public class Time {
     }
 
     /**
-     * @return this method return millies time and we use it for comparing publication times
+     * @return this method return millis time and we use it for comparing publication times
      */
     public static Long getMilli(){
         return Instant.now().toEpochMilli();

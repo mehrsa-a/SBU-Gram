@@ -763,8 +763,10 @@ public class ServerAPI {
                 i=Server.massages.indexOf(m);
             }
         }
-        Server.massages.remove(i+1);
-        Server.massages.remove(i);
+        massage.setText("this massage was deleted");
+        Server.massages.set(i, massage);
+        /*Server.massages.remove(i+1);
+        Server.massages.remove(i);*/
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.deleteMassage);

@@ -23,6 +23,13 @@ import java.util.Map;
 
 import static Model.Main.currentUser;
 
+/**
+ * <h1>UsersController</h1>
+ * <p>this class shows all information of a user</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class UsersController {
     public JFXListView<Post> Posts;
     public Label Bio;
@@ -43,10 +50,19 @@ public class UsersController {
     public JFXButton muteButton;
     public JFXButton unMuteButton;
 
+    /**
+     * user can come back to last page that it been
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("TimeLine");
     }
 
+    /**
+     * this method initialize user features
+     * @return the pane that shows the user
+     */
     public AnchorPane initialize(){
         target=UserController.help;
         username.setText(target.getUsername());
@@ -111,6 +127,10 @@ public class UsersController {
         return userPane;
     }
 
+    /**
+     * the user can follow target user with this method
+     * @param actionEvent by click on a button
+     */
     public void follow(ActionEvent actionEvent) {
         String temp= ClientAPI.follow(Main.currentUser, target);
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
@@ -121,6 +141,10 @@ public class UsersController {
         unMuteButton.setVisible(false);
     }
 
+    /**
+     * the user can unfollow target user with this method
+     * @param actionEvent by click on a button
+     */
     public void unfollow(ActionEvent actionEvent) {
         String temp= ClientAPI.unfollow(Main.currentUser, target);
         followerNum=Integer.parseInt(temp.substring(temp.indexOf("|")+1));
@@ -131,6 +155,10 @@ public class UsersController {
         unMuteButton.setVisible(false);
     }
 
+    /**
+     * the user can block target user with this method
+     * @param actionEvent by click on a button
+     */
     public void block(ActionEvent actionEvent) {
         ClientAPI.block(currentUser, target);
         blockButton.setVisible(false);
@@ -139,6 +167,10 @@ public class UsersController {
         followingButton.setVisible(false);
     }
 
+    /**
+     * the user can unblock target user with this method
+     * @param actionEvent by click on a button
+     */
     public void unblock(ActionEvent actionEvent) {
         ClientAPI.unblock(currentUser, target);
         unblockButton.setVisible(false);
@@ -147,6 +179,10 @@ public class UsersController {
         unfollowing.setVisible(false);
     }
 
+    /**
+     * the user can mute target user with this method
+     * @param actionEvent by click on a button
+     */
     public void mute(ActionEvent actionEvent) {
         ClientAPI.mute(currentUser, target);
         muteButton.setVisible(false);
@@ -154,6 +190,10 @@ public class UsersController {
         currentUser.getMuted().add(target);
     }
 
+    /**
+     * the user can unMute target user with this method
+     * @param actionEvent by click on a button
+     */
     public void unMute(ActionEvent actionEvent) {
         ClientAPI.unMute(currentUser, target);
         unMuteButton.setVisible(false);

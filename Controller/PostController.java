@@ -24,6 +24,13 @@ import static Controller.TimeLineController.*;
 import static Model.Main.*;
 import static Model.Main.posts;
 
+/**
+ * <h1>PostController</h1>
+ * <p>this class shows posts in a special view</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class PostController {
     public ImageView profile;
     public Label username;
@@ -47,12 +54,21 @@ public class PostController {
     public Label alreadyRepost;
     public Label mineRepost;
 
+    /**
+     * its just a constructor
+     * @param post it initialize global post with this
+     * @throws IOException because of using pageLoader
+     */
     public PostController(Post post) throws IOException {
         target=post;
         //currentPost=post;
         new PageLoader().load("Post", this);
     }
 
+    /**
+     * this method initialize post features
+     * @return the pane that shows the post
+     */
     public AnchorPane init(){
         alreadyRepost.setVisible(false);
         mineRepost.setVisible(false);
@@ -100,6 +116,10 @@ public class PostController {
         return postPane;
     }
 
+    /**
+     * user can like or take its like back by this method
+     * @param actionEvent by click on a button
+     */
     public void like(ActionEvent actionEvent) {
         if(!liked.isVisible()){
             likeNum= ClientAPI.like(Main.currentUser, target);
@@ -115,6 +135,10 @@ public class PostController {
         }
     }
 
+    /**
+     * user can repost the target post and add it to its posts
+     * @param actionEvent by click on a button
+     */
     public void repost(ActionEvent actionEvent) {
         if(reposted.isVisible()){
             alreadyRepost.setVisible(true);
@@ -137,11 +161,21 @@ public class PostController {
         }
     }
 
+    /**
+     * user can view post's comments
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void viewComments(ActionEvent actionEvent) throws IOException {
         help=target;
         new PageLoader().load("Comments");
     }
 
+    /**
+     * user can view the post's writer's personal profile
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void viewProfile(ActionEvent actionEvent) throws IOException {
         UserController.help=target.getUser();
         if(!(target.getUser().getUsername().equals(currentUser.getUsername()))){

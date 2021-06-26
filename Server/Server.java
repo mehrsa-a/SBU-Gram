@@ -11,18 +11,24 @@ import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * <h1>Server</h1>
+ * <p>this class is the server's main and run the server side</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class Server implements Runnable{
-    public static final int port=2353;
-    private static boolean isServerUp=true;
+    public static final int port=2356;
     public static Map<String, User> users=new HashMap<>();
     public static Set<Post> posts=null;
     public static List<Massage> massages=new ArrayList<>();
     public static ServerSocket serverSocket=null;
 
-    public static boolean isServerUp(){
-        return isServerUp;
-    }
-
+    /**
+     * this method initialize all information in database and runs the server
+     * it make a new socket and start listening
+     */
     public static void main(String[] args) {
         Database.getInstance().initializeServer();
         try {
@@ -34,9 +40,12 @@ public class Server implements Runnable{
         t.start();
     }
 
+    /**
+     * this method is a socket that always listening and after connecting a new client, it makes a new client handler and new thread for it
+     */
     @Override
     public void run() {
-        while (isServerUp()){
+        while (true){
             Socket currentUserSocket=null;
             try {
                 currentUserSocket=serverSocket.accept();

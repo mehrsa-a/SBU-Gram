@@ -9,6 +9,13 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
+/**
+ * <h1>ForgetPasswordController</h1>
+ * <p>if user set a password recovery for its account; by forgot password, it can take its password back</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class ForgetPasswordController {
     public JFXTextField username;
     public Label question;
@@ -18,10 +25,19 @@ public class ForgetPasswordController {
     public Label userExist;
     public String help;
 
+    /**
+     * user can come back to last page that it been
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("Login");
     }
 
+    /**
+     * it checks if username exist or not
+     * @param actionEvent by click on a button
+     */
     public void checkUsername(ActionEvent actionEvent) {
         String temp= ClientAPI.getForgetPassword(username.getText());
         if(temp==null){
@@ -35,6 +51,10 @@ public class ForgetPasswordController {
         }
     }
 
+    /**
+     * if user answer the question in a right way it gives its password
+     * @param actionEvent by click on a button
+     */
     public void getPass(ActionEvent actionEvent) {
         if(answer.getText().equals(help)){
             text.setVisible(true);

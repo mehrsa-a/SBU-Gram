@@ -19,6 +19,13 @@ import java.util.Map;
 import static Controller.TimeLineController.*;
 import static Model.Main.*;
 
+/**
+ * <h1>AddInformationController</h1>
+ * <p>user can add some personal information in this page or not</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class AddInformationController {
     public ImageView image;
     public static byte[] help;
@@ -32,6 +39,11 @@ public class AddInformationController {
     public JFXTextField lastName;
     public JFXTextField firstName;
 
+    /**
+     * this method choose a photo for profile and saves it in array of bytes
+     * @param actionEvent by click on a button
+     * @throws IOException because of using FileInputStream
+     */
     public void setProfile(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(new Popup());
@@ -45,6 +57,11 @@ public class AddInformationController {
         }
     }
 
+    /**
+     * this method set information that user adds
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void signup(ActionEvent actionEvent) throws IOException {
         ClientAPI.setProfile(Main.currentUser, help, path);
         Map<String, String> info=new HashMap<>();
@@ -74,6 +91,11 @@ public class AddInformationController {
         new PageLoader().load("SetForgetPassword");
     }
 
+    /**
+     * this method ignore all information that user adds
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void skip(ActionEvent actionEvent) throws IOException {
         ClientAPI.setProfile(Main.currentUser, null, null);
         Main.update();
@@ -86,6 +108,11 @@ public class AddInformationController {
         //TimeLineController.username.setText(currentUser.getUsername());
     }
 
+    /**
+     * this method just load a page if user wants to login instead of sign up
+     * @param actionEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
     public void login(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("Login");
     }
