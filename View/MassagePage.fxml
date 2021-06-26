@@ -32,8 +32,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <JFXListView fx:id="otherMassages" layoutY="100.0" prefHeight="300.0" prefWidth="300.0" />
-      <JFXListView fx:id="myMassages" layoutX="300.0" layoutY="100.0" prefHeight="300.0" prefWidth="300.0" />
+      <JFXListView fx:id="myMassages" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" />
       <JFXButton layoutX="489.0" layoutY="405.0" onAction="#attachFile" prefHeight="78.0" prefWidth="43.0" text="File" textFill="#1c1194" />
       <JFXButton layoutX="543.0" layoutY="404.0" onAction="#send" prefHeight="78.0" prefWidth="43.0" text="Send" textFill="#1c1194" />
       <JFXTextArea fx:id="massageField" focusColor="#1c1194" layoutX="12.0" layoutY="403.0" prefHeight="78.0" prefWidth="465.0" promptText="write a massage..." unFocusColor="#1c1194" />

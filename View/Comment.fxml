@@ -20,8 +20,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="name" layoutX="110.0" layoutY="63.0" text="name" />
-      <Label fx:id="date" layoutX="112.0" layoutY="86.0" text="Date" />
+      <Label fx:id="date" layoutX="109.0" layoutY="65.0" text="Date" />
       <Label fx:id="title" layoutX="233.0" layoutY="39.0" prefHeight="35.0" prefWidth="289.0" text="                    Title" textFill="#1c1194">
          <font>
             <Font size="24.0" />

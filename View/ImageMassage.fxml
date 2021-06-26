@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="imagePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="imagePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#deleteMassage" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -12,5 +13,6 @@
          </image>
       </ImageView>
       <ImageView fx:id="image" fitHeight="162.0" fitWidth="200.0" layoutX="-1.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="date" layoutX="63.0" layoutY="14.0" text="date" wrapText="true" />
    </children>
 </AnchorPane>

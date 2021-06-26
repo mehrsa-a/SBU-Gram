@@ -684,9 +684,9 @@ public class ServerAPI {
         User sender= (User) income.get("sender");
         User receiver= (User) income.get("receiver");
         Massage massage= (Massage) income.get("massage");
-        Massage date= (Massage) income.get("date");
+        //Massage date= (Massage) income.get("date");
         Server.massages.add(massage);
-        Server.massages.add(date);
+        //Server.massages.add(date);
         Server.users.get(sender.getUsername()).getMassaged().removeIf(u -> u.getUsername().equals(receiver.getUsername()));
         Server.users.get(receiver.getUsername()).getMassaged().removeIf(u -> u.getUsername().equals(sender.getUsername()));
         Server.users.get(sender.getUsername()).getMassaged().add(receiver);
@@ -705,7 +705,7 @@ public class ServerAPI {
         User sender= (User) income.get("sender");
         User receiver= (User) income.get("receiver");
         Massage massage= (Massage) income.get("massage");
-        Massage date= (Massage) income.get("date");
+        //Massage date= (Massage) income.get("date");
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.receiveMassage);
         ans.put("answer", new Boolean(true));
@@ -760,13 +760,12 @@ public class ServerAPI {
         int i=0;
         for(Massage m: Server.massages){
             if(m.equals(massage)){
-                i=Server.massages.indexOf(m);
+                Server.massages.remove(m);
+                massage.setText("this massage was deleted");
+                Server.massages.add(massage);
+                break;
             }
         }
-        massage.setText("this massage was deleted");
-        Server.massages.set(i, massage);
-        /*Server.massages.remove(i+1);
-        Server.massages.remove(i);*/
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.deleteMassage);
@@ -781,10 +780,11 @@ public class ServerAPI {
         int i=0;
         for(Massage m: Server.massages){
             if(m.equals(oldMassage)){
-                i=Server.massages.indexOf(m);
+                Server.massages.remove(m);
+                Server.massages.add(newMassage);
+                break;
             }
         }
-        Server.massages.set(i, newMassage);
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.editMassage);

@@ -37,6 +37,7 @@ public class MassageController {
     public static Massage old;
     public ImageView trash;
     public ImageView pen;
+    public Label date;
 
     /**
      * its just a constructor
@@ -58,6 +59,7 @@ public class MassageController {
      */
     public AnchorPane init(){
         help=target.getFile();
+        date.setText(target.getTimeString());
         if(target.isDateFlag()){
             pen.setVisible(false);
             trash.setVisible(false);
@@ -65,11 +67,21 @@ public class MassageController {
         if(help!=null){
             Image newImage=new Image(new ByteArrayInputStream(help));
             image.setImage(newImage);
+            if(target.getSender().getUsername().equals(Main.currentUser.getUsername())){
+                imagePane.setStyle("-fx-background-color: white");
+            } else{
+                imagePane.setStyle("-fx-background-color: lightgray");
+            }
             return imagePane;
         } else{
             massage.setText(target.getText());
             editField.setVisible(false);
             ce.setVisible(false);
+            if(target.getSender().getUsername().equals(Main.currentUser.getUsername())){
+                massagePane.setStyle("-fx-background-color: white");
+            } else{
+                massagePane.setStyle("-fx-background-color: lightgray");
+            }
             return massagePane;
         }
     }

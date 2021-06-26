@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class MassagePageController {
     public ImageView image;
     public Text username;
-    public JFXListView<Massage> otherMassages;
+    //public JFXListView<Massage> otherMassages;
     public JFXListView<Massage> myMassages;
     public JFXTextArea massageField;
     public User target;
@@ -57,15 +57,13 @@ public class MassagePageController {
         massages=ClientAPI.getMassages(Main.currentUser);
         assert massages != null;
         sent=massages.stream()
-                .filter(a-> ((a.getSender().getUsername().equals(Main.currentUser.getUsername()))&&(a.getReceiver().getUsername().equals(target.getUsername()))))
+                .filter(a-> ((a.getSender().getUsername().equals(Main.currentUser.getUsername()))&&(a.getReceiver().getUsername().equals(target.getUsername())))||((a.getSender().getUsername().equals(target.getUsername()))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
                 .collect(Collectors.toList());
-        received=massages.stream()
+        /*received=massages.stream()
                 .filter(a-> ((a.getSender().getUsername().equals(target.getUsername()))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
         myMassages.setItems(FXCollections.observableArrayList(sent));
         myMassages.setCellFactory(myMassages -> new MassageItem());
-        otherMassages.setItems(FXCollections.observableArrayList(received));
-        otherMassages.setCellFactory(otherMassages -> new MassageItem());
     }
 
     /**
@@ -109,26 +107,20 @@ public class MassagePageController {
         }
         currentMassage.setDateFlag(false);
         currentMassage.setRead(false);
-        Massage date=new Massage();
-        date.setText(Time.getTime());
-        date.setSender(target);
-        date.setReceiver(Main.currentUser);
-        date.setRead(true);
-        date.setDateFlag(true);
-        ClientAPI.sendMassage(Main.currentUser, target, currentMassage, date);
-        ClientAPI.receiveMassage(Main.currentUser, target, currentMassage, date);
+        ClientAPI.sendMassage(Main.currentUser, target, currentMassage);
+        ClientAPI.receiveMassage(Main.currentUser, target, currentMassage);
         massages=ClientAPI.getMassages(Main.currentUser);
         assert massages != null;
         sent=massages.stream()
-                .filter(a-> ((a.getSender().getUsername().equals(Main.currentUser.getUsername()))&&(a.getReceiver().getUsername().equals(target.getUsername()))))
+                .filter(a-> ((a.getSender().getUsername().equals(Main.currentUser.getUsername()))&&(a.getReceiver().getUsername().equals(target.getUsername())))||((a.getSender().getUsername().equals(target.getUsername()))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
                 .collect(Collectors.toList());
-        received=massages.stream()
+        /*received=massages.stream()
                 .filter(a-> ((a.getSender().getUsername().equals(target.getUsername()))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
         myMassages.setItems(FXCollections.observableArrayList(sent));
         myMassages.setCellFactory(myMassages -> new MassageItem());
-        otherMassages.setItems(FXCollections.observableArrayList(received));
-        otherMassages.setCellFactory(otherMassages -> new MassageItem());
+        /*otherMassages.setItems(FXCollections.observableArrayList(received));
+        otherMassages.setCellFactory(otherMassages -> new MassageItem());*/
         massageField.setText("");
         help=null;
         Main.update();

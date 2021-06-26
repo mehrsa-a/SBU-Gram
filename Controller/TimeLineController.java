@@ -291,6 +291,7 @@ public class TimeLineController {
         title.setText("");
         post.setText("");
         image.setImage(null);
+        help=null;
     }
 
     /**

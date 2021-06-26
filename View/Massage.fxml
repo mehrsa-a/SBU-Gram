@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="massagePane" prefHeight="140.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="massagePane" prefHeight="140.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="massage" layoutX="14.0" layoutY="41.0" text="massage" wrapText="true" />
       <ImageView fx:id="trash" fitHeight="17.0" fitWidth="22.0" layoutX="14.0" layoutY="12.0" onMouseClicked="#deleteMassage" pickOnBounds="true" preserveRatio="true">
@@ -25,5 +25,6 @@
          </image>
       </ImageView>
       <JFXTextArea fx:id="editField" focusColor="#1c1194" layoutY="77.0" prefHeight="50.0" prefWidth="200.0" promptText="new text" unFocusColor="#1c1194" visible="false" />
+      <Label fx:id="date" layoutX="86.0" layoutY="12.0" text="date" wrapText="true" />
    </children>
 </AnchorPane>

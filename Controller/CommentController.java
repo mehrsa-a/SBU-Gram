@@ -26,7 +26,6 @@ import static Model.Main.currentUser;
 public class CommentController {
     public ImageView profile;
     public Label username;
-    public Label name;
     public Label date;
     public Label title;
     public Label post;
@@ -50,6 +49,7 @@ public class CommentController {
      */
     public AnchorPane init(){
         username.setText(target.getUser().getUsername());
+        date.setText(target.getTimeString());
         byte[] x=ClientAPI.getProfile(target.getUser());
         if(x!=null){
             Image newImage=new Image(new ByteArrayInputStream(x));

@@ -436,23 +436,23 @@ public class ClientAPI {
         return (List<String>) received.get("answer");
     }
 
-    public static void sendMassage(User cUser, User user, Massage massage, Massage date){
+    public static void sendMassage(User cUser, User user, Massage massage){
         Map<String,Object> toSend = new HashMap<>();
         toSend.put("request", Requests.sendMassage);
         toSend.put("sender", cUser);
         toSend.put("receiver", user);
         toSend.put("massage", massage);
-        toSend.put("date", date);
+        //toSend.put("date", date);
         ConnectClient.serve(toSend);
     }
 
-    public static void receiveMassage(User cUser, User user, Massage massage, Massage date){
+    public static void receiveMassage(User cUser, User user, Massage massage){
         Map<String,Object> toSend = new HashMap<>();
         toSend.put("request", Requests.receiveMassage);
         toSend.put("sender", cUser);
         toSend.put("receiver", user);
         toSend.put("massage", massage);
-        toSend.put("date", date);
+        //toSend.put("date", date);
         ConnectClient.serve(toSend);
     }
 
