@@ -19,10 +19,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version 1.0
  */
 public class Server implements Runnable{
-    public static final int port=2373;
+    public static final int port=2380;
     public static Map<String, User> users=new HashMap<>();
     public static Set<Post> posts=null;
-    public static Set<Massage> massages=null;
+    public static List<Massage> massages=null;
     public static ServerSocket serverSocket=null;
 
     /**

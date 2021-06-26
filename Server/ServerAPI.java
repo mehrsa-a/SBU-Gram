@@ -11,8 +11,20 @@ import java.util.stream.Collectors;
 import static Model.Main.currentUser;
 import static Model.Main.users;
 
+/**
+ * <h1>ServerAPI</h1>
+ * <p>this class receive massage from client and send respond to</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class ServerAPI {
 
+    /**
+     * this method check if the username's exist and its password is correct and let an existing user to log in
+     * @param received its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> login(Map<String, Object> received){
         String username=(String) received.get("username");
         String password=(String) received.get("password");
@@ -32,7 +44,11 @@ public class ServerAPI {
         return ans;
     }
 
-    //its for sign up time
+    /**
+     * this method check if the username's don't exist for sign up with that
+     * @param received its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> isUsernameValid(Map<String, Object> received){
         String username=(String) received.get("username");
         User user=Server.users.get(username);
@@ -43,6 +59,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method add the new user that signed up to all users
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> signUp(Map<String,Object> income){
         User newUser=(User) income.get("user");
         String username=newUser.getUsername();
@@ -54,6 +75,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all posts to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> getPosts(Map<String,Object> income){
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getPosts);
@@ -63,6 +89,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the posts of user following and the user, itself to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> getTimeLine(Map<String,Object> income){
         User user= (User) income.get("user");
         List<Post> set=new ArrayList<>();
@@ -79,6 +110,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all of a special user posts to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> getMyPosts(Map<String,Object> income){
         User user = (User) income.get("user");
         String username = user.getUsername();
@@ -89,6 +125,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method add new post to all posts
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> addPost(Map<String,Object> income){
         Post post = (Post) income.get("post");
         byte[] image= (byte[]) income.get("image");
@@ -117,6 +158,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all users to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> getUsers(Map<String,Object> income){
         User user = (User) income.get("user");
         String username = user.getUsername();
@@ -144,6 +190,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method add the target user to user's following and add the user to its followers too
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> follow(Map<String,Object> income){
         User user= (User) income.get("user");
         User followed= (User) income.get("followed");
@@ -160,6 +211,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send a user features to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getNum(Map<String, Object> income){
         User user= (User) income.get("user");
         String answer=Server.users.get(user.getUsername()).getFollowing().size()+"|"+Server.users.get(user.getUsername()).getFollower().size()+"|"+Server.users.get(user.getUsername()).getPosts().size();
@@ -169,6 +225,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send a user features to the client and it reports this too
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getNumbers(Map<String, Object> income){
         User user= (User) income.get("user");
         User cUser= (User) income.get("cUser");
@@ -182,6 +243,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all user's followers to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getFollowers(Map<String, Object> income){
         User user= (User) income.get("user");
         List<User> list=Server.users.get(user.getUsername()).getFollower();
@@ -195,6 +261,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all user's followings to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getFollowings(Map<String, Object> income){
         User user= (User) income.get("user");
         List<User> list=Server.users.get(user.getUsername()).getFollowing();
@@ -208,6 +279,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method remove the target user from user's following and remove the user from its followers too
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> unfollow(Map<String,Object> income){
         User user= (User) income.get("user");
         User unfollowed= (User) income.get("unfollowed");
@@ -225,6 +301,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method add the user to the target post's likes
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> like(Map<String, Object> income){
         User user= (User) income.get("user");
         Post liked= (Post) income.get("liked");
@@ -251,6 +332,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method remove the user from the target post's likes
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> dislike(Map<String, Object> income){
         User user= (User) income.get("user");
         Post disliked= (Post) income.get("disliked");
@@ -274,6 +360,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send a post features to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getPostFeatures(Map<String, Object> income){
         Post post= (Post) income.get("post");
         for(Post p: Server.posts){
@@ -288,6 +379,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all post's likes to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getLikes(Map<String, Object> income){
         Post post= (Post) income.get("post");
         for(Post p: Server.posts){
@@ -306,6 +402,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method add the user to the target post's reposts and add the target post to the user's posts
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> repost(Map<String, Object> income){
         User user= (User) income.get("user");
         Post post= (Post) income.get("repost");
@@ -333,6 +434,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all post's reposts to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getReposts(Map<String, Object> income){
         Post post= (Post) income.get("post");
         for(Post p: Server.posts){
@@ -351,6 +457,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method add new comment to all target post's comments
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> addComment(Map<String, Object> income){
         User user= (User) income.get("user");
         Post commented= (Post) income.get("commented");
@@ -377,6 +488,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all post's comments to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getComments(Map<String, Object> income){
         Post post= (Post) income.get("post");
         for(Post p: Server.posts){
@@ -391,6 +507,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method set a profile photo for the user
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> setProfile(Map<String, Object> income){
         User user= (User) income.get("user");
         byte[] image= (byte[]) income.get("image");
@@ -406,6 +527,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method set a new profile photo for the user
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> changeProfile(Map<String, Object> income){
         User user= (User) income.get("user");
         byte[] image= (byte[]) income.get("image");
@@ -422,6 +548,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the user's profile photo to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getProfile(Map<String, Object> income){
         User user= (User) income.get("user");
         byte[] image=Server.users.get(user.getUsername()).getImage();
@@ -431,6 +562,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method set the personal information that user add for itself
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> addInformation(Map<String, Object> income){
         User user= (User) income.get("user");
         Map<String, String> info= (Map<String, String>) income.get("info");
@@ -457,6 +593,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the user's personal information to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getInformation(Map<String, Object> income){
         User user= (User) income.get("user");
         Map<String, String> info=new HashMap<>();
@@ -484,6 +625,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method save a question and it answer for password recovering
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> setForgetPassword(Map<String,Object> income){
         User user=(User) income.get("user");
         Server.users.get(user.getUsername()).setQuestion((String) income.get("question"));
@@ -495,6 +641,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the question and it answer for password recovering
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> getForgetPassword(Map<String,Object> income){
         String user=(String) income.get("user");
         String answer=Server.users.get(user).getQuestion()+"|"
@@ -506,6 +657,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method change the user's password
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> changePassword(Map<String,Object> income){
         User user= (User) income.get("user");
         String pass= (String) income.get("password");
@@ -517,9 +673,15 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method delete the user from all users and clear all it's data
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> deleteAccount(Map<String,Object> income){
         User user= (User) income.get("user");
         String username=user.getUsername();
+        Server.users.get(user.getUsername()).getPosts().clear();
         for(Post p: Server.posts){
             p.getLiked().removeIf(a-> (a.getUsername().equals(username)));
             p.getReposted().removeIf(a-> (a.getUsername().equals(username)));
@@ -538,6 +700,7 @@ public class ServerAPI {
         }
         Server.posts.removeIf(p -> p.getUser().getUsername().equals(username));
         Server.massages.removeIf(m -> m.getSender().getUsername().equals(username) || m.getReceiver().getUsername().equals(username));
+        Server.users.get(user.getUsername()).getPosts().clear();
         user.getMassaged().clear();
         user.getMuted().clear();
         user.getBlocked().clear();
@@ -549,7 +712,6 @@ public class ServerAPI {
         user.getFollowing().clear();
         user.getFollower().clear();
         user.setImage(null);
-        user.getPosts().clear();
         user.setGender("");
         user.setBirthday("");
         user.setLocation("");
@@ -569,6 +731,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method reports the user's log out
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> logOut(Map<String,Object> income){
         User user= (User) income.get("user");
         Map<String,Object> ans = new HashMap<>();
@@ -579,6 +746,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method add the target user to user's blockeds and add the user to its blockers too
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> block(Map<String,Object> income){
         User user= (User) income.get("user");
         User cUser= (User) income.get("cUser");
@@ -598,6 +770,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method remove the target user from user's blockeds and remove the user from its blockers too
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> unblock(Map<String,Object> income){
         User user= (User) income.get("user");
         User cUser= (User) income.get("cUser");
@@ -613,6 +790,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the user's blockeds to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getBlocked(Map<String, Object> income){
         User user= (User) income.get("user");
         List<User> list=Server.users.get(user.getUsername()).getBlocked();
@@ -626,6 +808,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the user's blockers to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getBlockers(Map<String, Object> income){
         User user= (User) income.get("user");
         List<User> list=Server.users.get(user.getUsername()).getBlocker();
@@ -639,6 +826,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method add the target user to user's muteds
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> mute(Map<String,Object> income){
         User user= (User) income.get("user");
         User cUser= (User) income.get("cUser");
@@ -653,6 +845,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method from the target user from user's muteds
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> unMute(Map<String,Object> income){
         User user= (User) income.get("user");
         User cUser= (User) income.get("cUser");
@@ -667,6 +864,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the user's muteds to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getMuted(Map<String, Object> income){
         User user= (User) income.get("user");
         List<User> list=Server.users.get(user.getUsername()).getMuted();
@@ -680,6 +882,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the massage to the target user
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> sendMassage(Map<String,Object> income){
         User sender= (User) income.get("sender");
         User receiver= (User) income.get("receiver");
@@ -701,6 +908,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method reports the massage receiving to the target user
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> receiveMassage(Map<String,Object> income){
         User sender= (User) income.get("sender");
         User receiver= (User) income.get("receiver");
@@ -715,6 +927,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send all massages that the user is in one side of to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> getMassage(Map<String,Object> income){
         User sender= (User) income.get("sender");
         Map<String,Object> ans = new HashMap<>();
@@ -726,6 +943,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method changes the unread massage state to read
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String,Object> readMassage(Map<String,Object> income){
         User user= (User) income.get("user");
         Massage massage= (Massage) income.get("massage");
@@ -741,6 +963,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method send the users that have conversation with the user to the client
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> getMassaged(Map<String, Object> income){
         User user= (User) income.get("user");
         Set<User> list=Server.users.get(user.getUsername()).getMassaged();
@@ -754,15 +981,20 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method delete the massage
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> deleteMassage(Map<String, Object> income){
         User user= (User) income.get("user");
         Massage massage= (Massage) income.get("massage");
         int i=0;
         for(Massage m: Server.massages){
             if(m.equals(massage)){
-                Server.massages.remove(m);
+                i=Server.massages.indexOf(m);
                 massage.setText("this massage was deleted");
-                Server.massages.add(massage);
+                Server.massages.set(i, massage);
                 break;
             }
         }
@@ -773,6 +1005,11 @@ public class ServerAPI {
         return ans;
     }
 
+    /**
+     * this method edit the massage
+     * @param income its a map that server received from client and it filled by client's request
+     * @return it returns a map that filled with server's answer that it responds the client's request
+     */
     public static Map<String, Object> editMassage(Map<String, Object> income){
         User user= (User) income.get("user");
         Massage oldMassage= (Massage) income.get("oldMassage");
@@ -780,8 +1017,8 @@ public class ServerAPI {
         int i=0;
         for(Massage m: Server.massages){
             if(m.equals(oldMassage)){
-                Server.massages.remove(m);
-                Server.massages.add(newMassage);
+                i=Server.massages.indexOf(m);
+                Server.massages.set(i, newMassage);
                 break;
             }
         }

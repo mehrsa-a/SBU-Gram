@@ -70,19 +70,19 @@ public class Database {
         try {
             FileInputStream fin = new FileInputStream(Database.MassagesFile);
             ObjectInputStream inFromFile = new ObjectInputStream(fin);
-            Server.massages = new ConcurrentSkipListSet<>( (ConcurrentSkipListSet<Massage>) inFromFile.readObject());
+            Server.massages = new CopyOnWriteArrayList<>( (CopyOnWriteArrayList<Massage>) inFromFile.readObject());
             inFromFile.close();
             fin.close();
         }
         catch(EOFException | StreamCorruptedException e){
-            Server.massages = new ConcurrentSkipListSet<>();
+            Server.massages = new CopyOnWriteArrayList<>();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     /**
-     * after every changes, we use this method to update database to not to lose any data
+     * after every changes, we use this method to update database and save all information
      */
     public synchronized void updateDataBase() {
         try {
