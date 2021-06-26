@@ -7,6 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * <h1>ClientAPI</h1>
+ * <p>this class sends massage to server and receive its responds</p>
+ * @author Mehrsa Arabzadeh
+ * @since 6/2/2021
+ * @version 1.0
+ */
 public class ClientAPI {
 
     public static User login(String username, String password){
@@ -494,12 +501,12 @@ public class ClientAPI {
         ConnectClient.serve(toSend);
     }
 
-    public static void editMassage(User user, Massage oldMassage, Massage newMassage){
+    public static void editMassage(User user, Massage massage, String newText){
         Map<String,Object> toSend = new HashMap<>();
         toSend.put("request", Requests.editMassage);
         toSend.put("user", user);
-        toSend.put("oldMassage", oldMassage);
-        toSend.put("newMassage", newMassage);
+        toSend.put("oldMassage", massage);
+        toSend.put("newMassage", newText);
         ConnectClient.serve(toSend);
     }
 }

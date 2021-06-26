@@ -418,7 +418,7 @@ public class TimeLineController {
     public void openDM(Event event) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
-        List<String> blockers=ClientAPI.getBlockers(currentUser);
+        /*List<String> blockers=ClientAPI.getBlockers(currentUser);
         List<User> shown= users.values().stream()
                 .filter(a-> ((ClientAPI.getMassaged(currentUser).contains(a.getUsername()))&&(!(blockers.contains(a.getUsername())))))
                 .collect(Collectors.toList());
@@ -445,6 +445,34 @@ public class TimeLineController {
                     finalList.add(t);
                     strings.add(t.getUsername());
                 }
+            }
+        }*/
+        List<User> finalList=new ArrayList();
+        List<Massage> q=new ArrayList<>();
+        List<Massage> received=ClientAPI.getMassages(currentUser);
+        assert received != null;
+        for(Massage m: received){
+            String temp=m.getSender().getUsername();
+            if(temp.equals(currentUser.getUsername())){
+                temp=m.getReceiver().getUsername();
+            }
+            String finalTemp = temp;
+            List<Massage> f=received.stream()
+                    .filter(a-> (a.getSender().getUsername().equals(finalTemp)||a.getReceiver().getUsername().equals(finalTemp)))
+                    .sorted(mailCompare)
+                    .collect(Collectors.toList());
+            if(f.size()!=0){
+                q.add(f.get(0));
+            }
+        }
+        q=q.stream()
+                .sorted(mailCompare)
+                .collect(Collectors.toList());
+        for(Massage m: q){
+            if(m.getReceiver().getUsername().equals(currentUser.getUsername())){
+                finalList.add(m.getSender());
+            } else{
+                finalList.add(m.getReceiver());
             }
         }
         Massages.setItems(FXCollections.observableArrayList(finalList));

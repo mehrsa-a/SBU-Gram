@@ -4,6 +4,7 @@ import Common.Comment;
 import Model.*;
 import Common.Post;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ public class CommentsController {
     public List<Comment> comment=new ArrayList<>();
     public JFXListView<Comment> comments=new JFXListView<>();
     public Comment currentComment=new Comment();
-    public JFXTextField cm;
+    public JFXTextArea cm;
 
     /**
      * this method load all comments that post has

@@ -2,7 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,7 +17,6 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <JFXTextField fx:id="cm" focusColor="#1c1194" layoutX="53.0" layoutY="370.0" prefHeight="25.0" prefWidth="539.0" promptText="add a comment..." unFocusColor="#1c1194" />
       <ImageView fitHeight="25.0" fitWidth="24.0" layoutX="22.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/comment.png" />
@@ -30,5 +29,6 @@
          </image>
       </ImageView>
       <JFXButton layoutX="13.0" layoutY="6.0" onAction="#back" prefHeight="25.0" prefWidth="25.0" text="." textFill="WHITE" />
+      <JFXTextArea fx:id="cm" focusColor="#1c1194" layoutX="56.0" layoutY="371.0" prefHeight="118.0" prefWidth="533.0" promptText="add a comment..." unFocusColor="#1c1194" />
    </children>
 </AnchorPane>

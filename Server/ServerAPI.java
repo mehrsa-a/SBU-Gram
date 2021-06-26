@@ -894,10 +894,10 @@ public class ServerAPI {
         //Massage date= (Massage) income.get("date");
         Server.massages.add(massage);
         //Server.massages.add(date);
-        Server.users.get(sender.getUsername()).getMassaged().removeIf(u -> u.getUsername().equals(receiver.getUsername()));
+        /*Server.users.get(sender.getUsername()).getMassaged().removeIf(u -> u.getUsername().equals(receiver.getUsername()));
         Server.users.get(receiver.getUsername()).getMassaged().removeIf(u -> u.getUsername().equals(sender.getUsername()));
         Server.users.get(sender.getUsername()).getMassaged().add(receiver);
-        Server.users.get(receiver.getUsername()).getMassaged().add(sender);
+        Server.users.get(receiver.getUsername()).getMassaged().add(sender);*/
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.sendMassage);
@@ -937,7 +937,7 @@ public class ServerAPI {
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.getMassages);
         List<Massage> sent=Server.massages.stream()
-                .filter(a->((a.getSender().getUsername().equals(sender.getUsername()))||a.getReceiver().getUsername().equals(sender.getUsername())))
+                .filter(a->(((a.getSender().getUsername().equals(sender.getUsername()))||a.getReceiver().getUsername().equals(sender.getUsername()))))
                 .collect(Collectors.toList());
         ans.put("answer", sent);
         return ans;
@@ -1013,12 +1013,13 @@ public class ServerAPI {
     public static Map<String, Object> editMassage(Map<String, Object> income){
         User user= (User) income.get("user");
         Massage oldMassage= (Massage) income.get("oldMassage");
-        Massage newMassage= (Massage) income.get("newMassage");
+        String newMassage= (String) income.get("newMassage");
         int i=0;
         for(Massage m: Server.massages){
             if(m.equals(oldMassage)){
                 i=Server.massages.indexOf(m);
-                Server.massages.set(i, newMassage);
+                oldMassage.setText(newMassage);
+                Server.massages.set(i, oldMassage);
                 break;
             }
         }

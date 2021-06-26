@@ -39,7 +39,7 @@ public class User implements Serializable, Comparable {
     private List<User> blocked=new CopyOnWriteArrayList<>();
     private List<User> blocker=new CopyOnWriteArrayList<>();
     private List<User> muted=new CopyOnWriteArrayList<>();
-    private Set<User> massaged=new ConcurrentSkipListSet<>();
+    private transient Set<User> massaged=new ConcurrentSkipListSet<>();
 
     //constructors
     public User(){

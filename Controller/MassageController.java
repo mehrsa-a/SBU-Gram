@@ -71,6 +71,7 @@ public class MassageController {
                 imagePane.setStyle("-fx-background-color: white");
             } else{
                 imagePane.setStyle("-fx-background-color: lightgray");
+                trash.setVisible(false);
             }
             return imagePane;
         } else{
@@ -81,6 +82,8 @@ public class MassageController {
                 massagePane.setStyle("-fx-background-color: white");
             } else{
                 massagePane.setStyle("-fx-background-color: lightgray");
+                trash.setVisible(false);
+                pen.setVisible(false);
             }
             return massagePane;
         }
@@ -101,7 +104,6 @@ public class MassageController {
      * @param mouseEvent by click on a photo
      */
     public void edit(MouseEvent mouseEvent) {
-        old=target;
         editField.setVisible(true);
         editField.setText(target.getText());
         ce.setVisible(true);
@@ -113,8 +115,8 @@ public class MassageController {
      * @throws IOException because of using pageLoader
      */
     public void confirmEdit(MouseEvent mouseEvent) throws IOException {
-        target.setText(editField.getText());
-        ClientAPI.editMassage(Main.currentUser, old, target);
+        ClientAPI.editMassage(Main.currentUser, target, editField.getText());
+        //old=null;
         new PageLoader().load("MassagePage");
     }
 }
