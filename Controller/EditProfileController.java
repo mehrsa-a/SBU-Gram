@@ -111,6 +111,7 @@ public class EditProfileController {
     public void logOut(ActionEvent actionEvent) throws IOException {
         ClientAPI.logOut(currentUser);
         new PageLoader().load("Login");
+        help=null;
     }
 
     /**
@@ -145,6 +146,7 @@ public class EditProfileController {
         }
         ClientAPI.getAllUsers(currentUser);*/
         new PageLoader().load("TimeLine");
+        help=null;
     }
 
     /**
@@ -160,6 +162,7 @@ public class EditProfileController {
         }
         ClientAPI.getAllUsers(currentUser);*/
         new PageLoader().load("TimeLine");
+        help=null;
     }
 
     /**
@@ -169,6 +172,7 @@ public class EditProfileController {
      */
     public void deleteAccount(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("DeleteAccount");
+        help=null;
     }
 
     /**
@@ -178,5 +182,6 @@ public class EditProfileController {
      */
     public void changePass(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("ChangePassword");
+        help=null;
     }
 }

@@ -89,6 +89,7 @@ public class AddInformationController {
         }
         ClientAPI.getAllUsers(currentUser);
         new PageLoader().load("SetForgetPassword");
+        help=null;
     }
 
     /**
@@ -106,6 +107,7 @@ public class AddInformationController {
         ClientAPI.getAllUsers(currentUser);
         new PageLoader().load("SetForgetPassword");
         //TimeLineController.username.setText(currentUser.getUsername());
+        help=null;
     }
 
     /**
