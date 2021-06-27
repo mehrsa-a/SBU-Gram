@@ -690,7 +690,7 @@ public class ServerAPI {
         for(User u: Server.users.values()){
             u.getFollowing().removeIf(a-> (a.getUsername().equals(username)));
             u.getFollower().removeIf(a-> (a.getUsername().equals(username)));
-            u.getMassaged().removeIf(a-> a.getUsername().equals(username));
+            //u.getMassaged().removeIf(a-> a.getUsername().equals(username));
             u.getPosts().removeIf(a-> (a.getUser().getUsername().equals(username)));
             for(Post p: u.getPosts()){
                 p.getLiked().removeIf(a-> (a.getUsername().equals(username)));
@@ -699,7 +699,7 @@ public class ServerAPI {
             }
         }
         Server.posts.removeIf(p -> p.getUser().getUsername().equals(username));
-        Server.massages.removeIf(m -> m.getSender().getUsername().equals(username) || m.getReceiver().getUsername().equals(username));
+        /*Server.massages.removeIf(m -> m.getSender().getUsername().equals(username) || m.getReceiver().getUsername().equals(username));
         Server.users.get(user.getUsername()).getPosts().clear();
         user.getMassaged().clear();
         user.getMuted().clear();
@@ -718,10 +718,10 @@ public class ServerAPI {
         user.setEmail("");
         user.setPhoneNumber("");
         user.setLastName("");
-        user.setFirstName("");
+        user.setFirstName("");*/
         Server.users.remove(user.getUsername());
-        user.setPassword("");
-        user.setUsername("");
+        /*user.setPassword("");
+        user.setUsername("");*/
         Database.getInstance().updateDataBase();
         Map<String,Object> ans = new HashMap<>();
         ans.put("request", Requests.deleteAccount);

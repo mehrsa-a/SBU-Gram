@@ -71,7 +71,7 @@ public class MassageController {
                 imagePane.setStyle("-fx-background-color: white");
             } else{
                 imagePane.setStyle("-fx-background-color: lightgray");
-                trash.setVisible(false);
+                //trash.setVisible(false);
             }
             return imagePane;
         } else{

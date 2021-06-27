@@ -5,6 +5,7 @@ import Model.PageLoader;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -60,5 +61,14 @@ public class ForgetPasswordController {
             text.setVisible(true);
             password.setVisible(true);
         }
+    }
+
+    /**
+     * user can come back to last page that it been
+     * @param mouseEvent by click on a button
+     * @throws IOException because of using pageLoader
+     */
+    public void backToLogin(MouseEvent mouseEvent) throws IOException {
+        new PageLoader().load("Login");
     }
 }
