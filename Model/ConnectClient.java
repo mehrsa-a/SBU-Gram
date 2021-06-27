@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class ConnectClient{
     public static String serverAddress="localhost";
-    public static final int port=9996;
+    public static final int port=7777;
     public static Socket socket;
     public static ObjectOutputStream objectOutputStream;
     public static ObjectInputStream objectInputStream;

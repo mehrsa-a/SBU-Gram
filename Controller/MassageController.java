@@ -67,11 +67,11 @@ public class MassageController {
         if(help!=null){
             Image newImage=new Image(new ByteArrayInputStream(help));
             image.setImage(newImage);
+            trash.setVisible(false);
             if(target.getSender().getUsername().equals(Main.currentUser.getUsername())){
                 imagePane.setStyle("-fx-background-color: white");
             } else{
                 imagePane.setStyle("-fx-background-color: lightgray");
-                //trash.setVisible(false);
             }
             return imagePane;
         } else{
