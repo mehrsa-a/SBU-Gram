@@ -450,13 +450,17 @@ public class TimeLineController {
         List<User> finalList=new ArrayList();
         List<Massage> q=new ArrayList<>();
         List<Massage> received=ClientAPI.getMassages(currentUser);
+        List<String> strings=new ArrayList<>();
         assert received != null;
         for(Massage m: received){
-            String temp=m.getSender().getUsername();
-            if(temp.equals(currentUser.getUsername())){
+            String temp="";
+            if(m.getReceiver().getUsername().equals(currentUser.getUsername())&&!strings.contains(m.getReceiver().getUsername())){
+                temp=m.getSender().getUsername();
+            } else if(m.getSender().getUsername().equals(currentUser.getUsername())&&!strings.contains(m.getSender().getUsername())){
                 temp=m.getReceiver().getUsername();
             }
             String finalTemp = temp;
+            strings.add(finalTemp);
             List<Massage> f=received.stream()
                     .filter(a-> (a.getSender().getUsername().equals(finalTemp)||a.getReceiver().getUsername().equals(finalTemp)))
                     .sorted(mailCompare)
