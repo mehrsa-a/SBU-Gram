@@ -140,7 +140,7 @@ public class TimeLineController {
     }
 
     /**
-     * this method refresh user's account and shows it the new information
+     * this method refresh user's timeline and shows it the new information
      * @param actionEvent by click on a button
      * @throws IOException because of using pageLoader
      */
@@ -418,35 +418,6 @@ public class TimeLineController {
     public void openDM(Event event) {
         Main.update();
         ClientAPI.getAllUsers(currentUser);
-        /*List<String> blockers=ClientAPI.getBlockers(currentUser);
-        List<User> shown= users.values().stream()
-                .filter(a-> ((ClientAPI.getMassaged(currentUser).contains(a.getUsername()))&&(!(blockers.contains(a.getUsername())))))
-                .collect(Collectors.toList());
-        List<Massage> temp=new ArrayList<>();
-        for(String u: Objects.requireNonNull(ClientAPI.getMassaged(currentUser))){
-            List<Massage> received=ClientAPI.getMassages(currentUser).stream()
-                    .filter(a-> ((a.getSender().getUsername().equals(u))&&(a.getReceiver().getUsername().equals(Main.currentUser.getUsername()))))
-                    .sorted(mailCompare)
-                    .collect(Collectors.toList());
-            if(received.size()!=0){
-                temp.add(received.get(0));
-            }
-        }
-        List<User> f=temp.
-                stream()
-                .sorted(mailCompare)
-                .map(a-> a.getSender())
-                .collect(Collectors.toList());
-        List<String> strings=new ArrayList<>();
-        List<User> finalList=new ArrayList<>();
-        for(User u: f){
-            for(User t: shown){
-                if(t.getUsername().equals(u.getUsername())&&!(strings.contains(t.getUsername()))){
-                    finalList.add(t);
-                    strings.add(t.getUsername());
-                }
-            }
-        }*/
         List<User> finalList=new ArrayList();
         List<Massage> q=new ArrayList<>();
         List<Massage> received=ClientAPI.getMassages(currentUser);
@@ -454,10 +425,12 @@ public class TimeLineController {
         assert received != null;
         for(Massage m: received){
             String temp="";
-            if(m.getReceiver().getUsername().equals(currentUser.getUsername())&&!strings.contains(m.getReceiver().getUsername())){
+            if(m.getReceiver().getUsername().equals(currentUser.getUsername())&&!strings.contains(m.getSender().getUsername())){
                 temp=m.getSender().getUsername();
-            } else if(m.getSender().getUsername().equals(currentUser.getUsername())&&!strings.contains(m.getSender().getUsername())){
+            } else if(m.getSender().getUsername().equals(currentUser.getUsername())&&!strings.contains(m.getReceiver().getUsername())){
                 temp=m.getReceiver().getUsername();
+            } else {
+                continue;
             }
             String finalTemp = temp;
             strings.add(finalTemp);
@@ -524,5 +497,50 @@ public class TimeLineController {
      */
     public void back(ActionEvent actionEvent) throws IOException {
         new PageLoader().load("TimeLine");
+    }
+
+    /**
+     * this method refresh user's direct and shows it the new information
+     * @param actionEvent by click on a button
+     */
+    public void refreshDM(ActionEvent actionEvent) {
+        Main.update();
+        ClientAPI.getAllUsers(currentUser);
+        List<User> finalList=new ArrayList();
+        List<Massage> q=new ArrayList<>();
+        List<Massage> received=ClientAPI.getMassages(currentUser);
+        List<String> strings=new ArrayList<>();
+        assert received != null;
+        for(Massage m: received){
+            String temp="";
+            if(m.getReceiver().getUsername().equals(currentUser.getUsername())&&!strings.contains(m.getSender().getUsername())){
+                temp=m.getSender().getUsername();
+            } else if(m.getSender().getUsername().equals(currentUser.getUsername())&&!strings.contains(m.getReceiver().getUsername())){
+                temp=m.getReceiver().getUsername();
+            } else {
+                continue;
+            }
+            String finalTemp = temp;
+            strings.add(finalTemp);
+            List<Massage> f=received.stream()
+                    .filter(a-> (a.getSender().getUsername().equals(finalTemp)||a.getReceiver().getUsername().equals(finalTemp)))
+                    .sorted(mailCompare)
+                    .collect(Collectors.toList());
+            if(f.size()!=0){
+                q.add(f.get(0));
+            }
+        }
+        q=q.stream()
+                .sorted(mailCompare)
+                .collect(Collectors.toList());
+        for(Massage m: q){
+            if(m.getReceiver().getUsername().equals(currentUser.getUsername())){
+                finalList.add(m.getSender());
+            } else{
+                finalList.add(m.getReceiver());
+            }
+        }
+        Massages.setItems(FXCollections.observableArrayList(finalList));
+        Massages.setCellFactory(Massages -> new DirectUserItem());
     }
 }

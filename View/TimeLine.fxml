@@ -143,6 +143,12 @@
                         <Font size="24.0" />
                      </font>
                   </Text>
+                  <ImageView fitHeight="39.0" fitWidth="26.0" layoutX="560.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/refresh.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton layoutX="560.0" layoutY="14.0" onAction="#refreshDM" text="." textFill="WHITE" />
                </children>
             </AnchorPane>
          </content></Tab>

@@ -85,6 +85,10 @@ public class MassageController {
                 trash.setVisible(false);
                 pen.setVisible(false);
             }
+            if(target.getText().equals("this massage was deleted")){
+                trash.setVisible(false);
+                pen.setVisible(false);
+            }
             return massagePane;
         }
     }
